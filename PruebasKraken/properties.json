@@ -1,5 +1,7 @@
 {
     "TAG_MENU": "//a[@href=\"#/tags/\"]",
     "NEW_TAG_BOTON": "//a[@href=\"#/tags/new/\"]/span[text() = \"New tag\"]",
-    "SAVE_TAG_BOTON": "//button/span[text()='Save']"
+    "SAVE_TAG_BOTON": "//button/span[text()='Save']",
+    "USER": "j.gutierrezl@uniandes.edu.co",
+    "PASSWORD": "Campeon2022"
 }
