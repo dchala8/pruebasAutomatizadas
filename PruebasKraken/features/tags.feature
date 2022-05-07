@@ -2,7 +2,7 @@ Feature: Tags
 
 @user1 @web
 Scenario: Escenario 11
-  Given I navigate to page "http://localhost:2369/ghost"
+  Given I navigate to page "<GHOST_URL>"
   And I wait for 20 seconds
   And I click view with selector "<TAG_MENU>"
   And I wait for 2 seconds

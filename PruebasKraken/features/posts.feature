@@ -2,7 +2,7 @@ Feature: Escenarios que involucran la creacion de posts
 
 @user1 @web
 Scenario: Como administrador me gustaria crear post, publicarlo, y luego modificarlo
-  Given I navigate to page "http://localhost:2368/ghost"
+  Given I navigate to page "<GHOST_URL>"
   And I wait for 3 seconds
   When I enter correo "<USER>"
   And I wait for 3 seconds

@@ -1,7 +1,8 @@
 {
+    "GHOST_URL": "http://localhost:2369/ghost",
     "TAG_MENU": "//a[@href=\"#/tags/\"]",
     "NEW_TAG_BOTON": "//a[@href=\"#/tags/new/\"]/span[text() = \"New tag\"]",
     "SAVE_TAG_BOTON": "//button/span[text()='Save']",
-    "USER": "j.gutierrezl@uniandes.edu.co",
-    "PASSWORD": "Campeon2022"
+    "USER": "je.suarezg1@uniandes.edu.co",
+    "PASSWORD": "Colombia22"
 }
