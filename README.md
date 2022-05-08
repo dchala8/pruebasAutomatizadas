@@ -45,8 +45,26 @@
 
 ## Ejecución de Pruebas - Herramienta Kraken 
 
+1. Prerequisitos:
+    - NodeJS versión 16 o superior
+    - Ghost version 4.41.3
+    - Verificar que se cumplan los prerequisitos para instalar Kraken, indicados en la pagina de documentación (https://thesoftwaredesignlab.github.io/Kraken/)
 
-
+2. Instrucciones:
+    - Hacer un fork al repositorio
+    - Clonar desde el repositorio creado a partir del fork anterior
+    - Abrir el editor de código de su preferencia y ubicarse en la siguiente carpeta: **pruebasAutomatizadas/PruebasKraken**
+    - Abrir una consola de línea de comandos y ubicarse en la caperta mencionada anteriormente.
+    - Ejecutar el comando **npm install** para descargar las dependencias y librerías requeridas
+    - Antes de ejecutar las pruebas es necesario modificar las siguientes llaves del archivo properties.json ubicado en la carpeta: **pruebasAutomatizadas/PruebasKraken**:
+        - "GHOST_URL": "Colocar la URL donde se encuentra desplegada la instalación de Ghost". Ejemplo: http://localhost:2369.
+        - "USER": "El correo de autenticación del usuario principal creado en la instalación de Ghost".
+        - "PASSWORD": "Clave del usuario utilizado anteriormente en USER".
+        - "USER_NAME" "Nombre del usuario registrado como principal en Ghost".
+    - Para lanzar las pruebas definidas en el feature:
+        - Desde la consola de línea de comandos, ubicarse en la ruta **pruebasAutomatizadas/PruebasKraken**
+        - Ejecutar el comando npx kraken-node run
+    - Verificar los resultados de la ejecución en la carpeta **pruebasAutomatizadas/PruebasKraken/reports**
 
 ## Ejecución de Pruebas - Herramienta Puppeteer
 1. PreRequisitos: 
