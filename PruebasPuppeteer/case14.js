@@ -64,6 +64,7 @@ var fs = require('fs');
     //Post validation
     await page.goto(genVar.url+'posts?tag='+tagName.toLowerCase())
     await delay(1000)
+    console.log("Case 14")
     console.log("Is the post in the tag filtered list?")
     const [toTagsmain2] = await page.$x("//h3[contains(., '"+tituloPost+"')]");
     await page.screenshot({ path: caseFolder + '9-Post-validation.jpg' })

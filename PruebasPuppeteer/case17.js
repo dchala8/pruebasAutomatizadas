@@ -64,11 +64,12 @@ var fs = require('fs');
     await page.waitForSelector('.main-error')
     let element = await page.$('.main-error')
     let value = await page.evaluate(el => el.textContent, element)
+    console.log("Case 17")
     console.log("Login error?")
     if(value.includes("Your password is incorrect.")){
-        console.log("Yes, the password is incorrect")
+        console.log("Yes, the password is incorrect as expected")
     }else{
-        console.log("No, it is not")
+        console.log("No, there seems to be adifferent error")
     }
     await browser.close()
 

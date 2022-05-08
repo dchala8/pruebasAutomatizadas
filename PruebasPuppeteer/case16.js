@@ -49,6 +49,7 @@ var fs = require('fs');
     await page.waitForSelector('.gh-post-list-title')
     let element = await page.$('.gh-post-list-title')
     let value = await page.evaluate(el => el.textContent, element)
+    console.log("Case 16")
     console.log("Is the user name updated?")
     if(value.includes(currentFullName)){
         console.log("Yes, it is updated")

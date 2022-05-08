@@ -15,7 +15,7 @@ var fs = require('fs');
     await page.setViewport({ width: 1366, height: 768 });
 
     //Login
-    await page.goto(genVar.url + 'signin')
+    await page.goto(genVar.url)
     await page.screenshot({ path: caseFolder + '1-login1.jpg' })
     await page.type('#ember7', genVar.user)
     await page.type('#ember9', genVar.password)
@@ -61,7 +61,7 @@ var fs = require('fs');
         console.log("No, it was not")
     }
 
-    // await browser.close()
+    await browser.close()
 
 })().catch(e => console.log(e))
 

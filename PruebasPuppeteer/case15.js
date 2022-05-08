@@ -53,6 +53,7 @@ var fs = require('fs');
     }
 
     await delay(1000)
+    console.log("Case 15 1/2")
     console.log("Is the user in list?")
     const [UserInlist] = await page.$x("//h3[contains(., '"+userName+"')]");
     await page.screenshot({ path: caseFolder + '7-New-user-in-list.jpg' })
@@ -76,6 +77,7 @@ var fs = require('fs');
     }
 
     await delay(1000)
+    console.log("Case 15 2/2")
     console.log("Is the user in list updated?")
     const [UserInlist2] = await page.$x("//h3[contains(., '"+userName+"')]");
     await page.screenshot({ path: caseFolder + '9-New-user-in-list-updated.jpg' })

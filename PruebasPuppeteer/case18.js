@@ -65,6 +65,7 @@ var fs = require('fs');
     })
     await page.screenshot({ path: caseFolder + '3-home.jpg' })
     let element = await page.$('.gh-nav')
+    console.log("Case 18")
     console.log("Correctly logged in?")
     if(element){
         console.log("Yes, the correctly logged ing with original password")

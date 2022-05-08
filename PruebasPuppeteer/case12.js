@@ -83,11 +83,11 @@ var fs = require('fs');
     await page.bringToFront()
     await delay(500)
     await page.click('#tag-input')
-    await page2.screenshot({ path: caseFolder + '10-Post-tag-removed.jpg' })
+    await page.screenshot({ path: caseFolder + '10-Post-tag-removed.jpg' })
     await delay(500)
     await page.click('.gh-publishmenu-trigger').catch(() => console.log("error in click on publish button"))
     await page.click('.gh-btn-black').catch(() => console.log("error in click on publish confirmation"))
-    await page2.screenshot({ path: caseFolder + '11-Post-updated.jpg' })
+    await page.screenshot({ path: caseFolder + '11-Post-updated.jpg' })
     
     //Post validation 2/2
     await page2.bringToFront()
