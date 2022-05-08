@@ -56,7 +56,7 @@
     - Abrir el editor de código de su preferencia y ubicarse en la siguiente carpeta: **pruebasAutomatizadas/PruebasKraken**
     - Abrir una consola de línea de comandos y ubicarse en la caperta mencionada anteriormente.
     - Ejecutar el comando **npm install** para descargar las dependencias y librerías requeridas
-    - Antes de ejecutar las pruebas es necesario modificar las siguientes llaves del archivo properties.json ubicado en la carpeta: **pruebasAutomatizadas/PruebasKraken**:
+    - Antes de ejecutar las pruebas es necesario modificar las siguientes llaves del archivo **properties.json** ubicado en la carpeta: **pruebasAutomatizadas/PruebasKraken**:
         - "GHOST_URL": "Colocar la URL donde se encuentra desplegada la instalación de Ghost". Ejemplo: http://localhost:2369.
         - "USER": "El correo de autenticación del usuario principal creado en la instalación de Ghost".
         - "PASSWORD": "Clave del usuario utilizado anteriormente en USER".
