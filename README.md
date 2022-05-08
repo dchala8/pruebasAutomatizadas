@@ -63,7 +63,7 @@
         - "USER_NAME" "Nombre del usuario registrado como principal en Ghost".
     - Para lanzar las pruebas definidas en el feature:
         - Desde la consola de línea de comandos, ubicarse en la ruta **pruebasAutomatizadas/PruebasKraken**
-        - Ejecutar el comando npx kraken-node run
+        - Ejecutar el comando **npx kraken-node run**
     - Verificar los resultados de la ejecución en la carpeta **pruebasAutomatizadas/PruebasKraken/reports**
 
 ## Ejecución de Pruebas - Herramienta Puppeteer
