@@ -5,7 +5,7 @@ const { genVar } =  require('./generalVariables.js');
     const browser = await puppeteer.launch({headless: false});
     const page = await browser.newPage();
 
-    await page.goto('http://localhost:2368/ghost');
+    await page.goto(genVar.url);
     await new Promise(r => setTimeout(r, 1500));
     await page.screenshot({path: './case2/login.png'})
 
