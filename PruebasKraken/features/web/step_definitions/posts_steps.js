@@ -191,7 +191,6 @@ When('I publish my new page', async function(){
     let element = await this.driver.$("//span[contains(text(),'Publish')]");
     await element.click();
     let element2 = await this.driver.$("//button/span[contains(text(),'Publish')]");
-    await element2.click();
     return await element2.click();
 });
 

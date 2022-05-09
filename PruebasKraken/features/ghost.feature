@@ -366,7 +366,7 @@ Given I wait for a signal containing "Finished 13" for 9999999 seconds
   And I click view with selector "<POST_SETTINGS_BUTTON>"
   Then I define tag name "Kraken Scenario 14" into tags field
   And I wait for 2 seconds
-  And I publish my new page
+  And I publish the new page
   And I wait for 5 seconds
   #Validar que el post muestre el tag
   And I click view with selector "<RETURN_PAGES>"

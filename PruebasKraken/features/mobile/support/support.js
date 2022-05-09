@@ -15,4 +15,4 @@ class KrakenWorld {
 }
 
 setWorldConstructor(KrakenWorld);
-setDefaultTimeout(30 * 1000);
+setDefaultTimeout(9999999);
