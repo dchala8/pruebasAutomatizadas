@@ -1,7 +1,14 @@
-# Entrega - Semana 5
+# Pruebas E2E Automatizadas sobre Ghost
+
+## Equipo de proyecto
+| Apellidos          | Nombres        | Correo @uniandes             |
+| ------------------ | -------------- | ---------------------------- |
+| Chala Burbano      | Daniel Andres  | d.chala@uniandes.edu.co      |
+| Gutierrez Lizarazo | John Alexander | j.gutierrezl@uniandes.edu.co |
+| Mora Rocha         | Carlos Andres  | ca.morar1@uniandes.edu.co    |
+| Suárez González    | Jorge Enrique  | je.suarezg1@uniandes.edu.co  |
 
 ## Funcionalidades bajo prueba
-
 1. Login
 2. Crear post
 3. Modificar post
@@ -21,7 +28,6 @@
 17. Cambiar nombre del sitio
 
 ## Escenarios de prueba
-
 1. Crear post, publicarlo, modificar el post y ver que el post se actualice.
 2. Crear post, publicarlo, eliminar el post y verificar que ya no esté publicado.
 3. Crear post y no publicarlo, verificar que no esté publicado, publicarlo y verificar que esté publicado.
@@ -44,7 +50,6 @@
 20. Ingresar a configuraciones, seleccionar general, expandir títulos y descripción, cambiar nombre del sitio, verificar en el sitio que tenga el nuevo título.
 
 ## Ejecución de Pruebas - Herramienta Kraken 
-
 1. Prerequisitos:
     - NodeJS versión 16 o superior
     - Ghost version 4.41.3
@@ -77,7 +82,3 @@
     - Dentro del mismo encontrara una estructura llamada genVar, dentro de ella hay 4 campos, "user" representa el correo electronico para hacer login a Ghost debe colocar en este campo el correo correspondiente a su instalacion de Ghost, "password" representa la contraseña usada inicialmente para el loggin, "tempPassword" representa la contraseña usada para las pruebas de cambio de contraseña y "url" representa la URL sobre la cual fue desplegada su instalacion de Ghost, acomodar segun su ambiente local.
     - Una vez terminada la configuracion del archivo generalVariables.js, puede proceder a ejecutar los casos de prueba, para hacer esto escriba en la consola ubicada en la carpeta el comando node con el nombre del archivo segun el caso que corresponda, para el caso 1 seria case1.js, asi que el comando para correr el caso 1 seria "node case1.js", se recomienda correr los casos de prueba en orden, es decir, caso 1, luego caso 2 y asi sucesivamente, puesto que algunas pruebas estan diseñadas para funcionar con base a las anteriores.
     - Cuando la prueba alla terminado de correr dentro de la carpeta correspondiente al numero de caso, podra ver la evidencia tomada por Puppeteer.
-
-
-
-
