@@ -187,14 +187,6 @@ When('I create a new page with text {string}', async function(text){
     return await element4.click();
 });
 
-When('I publish my new page', async function(){
-    let element = await this.driver.$("//span[contains(text(),'Publish')]");
-    await element.click();
-    let element2 = await this.driver.$("//button/span[contains(text(),'Publish')]");
-    await element2.click();
-    return await element2.click();
-});
-
 When('I return to dashboard from pages', async function(){
     let element1 = await this.driver.$("//div/a/span[text()='Pages']");
     return await element1.click();
