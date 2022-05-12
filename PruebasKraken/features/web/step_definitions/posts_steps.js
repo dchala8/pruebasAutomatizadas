@@ -1,5 +1,7 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
 const expect = require('chai').expect;
+const fs = require('fs');
+const basePath = './screenshots/';
 
 When('I enter correo {kraken-string}', async function (email) {
     let element = await this.driver.$('[name="identification"]');
@@ -300,4 +302,12 @@ When('I select draft pages', async function(){
 Then('I should see draft page with text {string}', async function(text){
     let element1 = await this.driver.$(`h3*=${text}`).isDisplayed();
     expect(element1).to.equal(true);
+});
+
+When('I take a screenshot of scenario {string} and step number {string}', async function(scenarioID, stepNumber){
+    let dir = basePath+this.testScenarioId;
+    if (!fs.existsSync(dir)){
+        fs.mkdirSync(dir);
+    }
+    return await this.driver.saveScreenshot(dir+"/screenshotScenario"+scenarioID+"_StepNumber"+stepNumber+".png");
 });

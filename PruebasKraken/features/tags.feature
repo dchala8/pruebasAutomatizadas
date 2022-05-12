@@ -4,33 +4,51 @@ Feature: Escenarios que involucran la creacion de tags
 Scenario: 11 - Como administrador me gustaria cear tag, crear post con el tag creado y publicarlo, validar que el post muestre tag
   Given I navigate to edit page "<GHOST_URL>"  
   And I wait for 5 seconds
+  And I take a screenshot of scenario "11" and step number "01"
   When I make login with "<USER>" and "<PASSWORD>"
   And I wait for 5 seconds
+  And I take a screenshot of scenario "11" and step number "02"
   And I click view with selector "<TAG_MENU>"
   And I wait for 2 seconds
+  And I take a screenshot of scenario "11" and step number "03"
   And I click view with selector "<NEW_TAG_BUTTON>"
   And I wait for 2 seconds
+  And I take a screenshot of scenario "11" and step number "04"
   Then I enter text "Kraken Scenario 11" into field with id "name"
+  And I wait for 2 seconds
+  And I take a screenshot of scenario "11" and step number "05"
   And I click view with selector "<SAVE_TAG_BUTTON>"
   And I wait for 2 seconds
+  And I take a screenshot of scenario "11" and step number "06"
   And I select option posts
   And I wait for 3 seconds
+  And I take a screenshot of scenario "11" and step number "07"
   And I select New post
   And I wait for 3 seconds
+  And I take a screenshot of scenario "11" and step number "08"
   And I write a new post with title "This is a post with tag: Kraken Scenario 11"
   And I wait for 3 seconds
+  And I take a screenshot of scenario "11" and step number "09"
   #Asociar tag al post
   And I click view with selector "<POST_SETTINGS_BUTTON>"
+  And I wait for 3 seconds
+  And I take a screenshot of scenario "11" and step number "10"
   Then I define tag name "Kraken Scenario 11" into tags field
   And I wait for 3 seconds
+  And I take a screenshot of scenario "11" and step number "11"
   #Validar que el post muestre el tag
   And I publish my new post
   And I wait for 5 seconds
+  And I take a screenshot of scenario "11" and step number "12"
   And I return to dashboard
   And I wait for 5 seconds
+  And I take a screenshot of scenario "11" and step number "13"
   Then I navigate to view site page "<GHOST_URL>"
   And I wait for 5 seconds
+  And I take a screenshot of scenario "11" and step number "14"
   Then I found post "This is a post with tag: Kraken Scenario 11" with tag "Kraken Scenario 11" related
+  And I wait for 5 seconds
+  And I take a screenshot of scenario "11" and step number "15"
   And I send a signal to user 12 containing "Finished 11"
   
 @user12 @web

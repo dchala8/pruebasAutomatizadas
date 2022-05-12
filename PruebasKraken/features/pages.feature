@@ -4,23 +4,34 @@ Feature: Escenarios que involucran la creacion de páginas
  Scenario: Como administrador me gustaria crear una pagina, publicarla, modificarla y ver que se realice el cambio
   Given I navigate to edit page "<GHOST_URL>"
   And I wait for 5 seconds
+  And I take a screenshot of scenario "06" and step number "01"
   When I make login with "<USER>" and "<PASSWORD>"
   And I wait for 5 seconds
-  And I create a new page with text "This is a page for scenario 6"  
+  And I take a screenshot of scenario "06" and step number "02"
+  And I create a new page with text "This is a page for scenario 6"
   And I wait for 5 seconds
+  And I take a screenshot of scenario "06" and step number "03"
   And I publish my new page
   And I wait for 5 seconds
+  And I take a screenshot of scenario "06" and step number "04"
   And I return to dashboard from pages
   And I wait for 5 seconds
+  And I take a screenshot of scenario "06" and step number "05"
   And I search for published pages with text "This is a page for scenario 6"
   And I wait for 3 seconds
+  And I take a screenshot of scenario "06" and step number "06"
   And I modify the page writing "This page is modified for scenario 6"
   And I wait for 3 seconds
+  And I take a screenshot of scenario "06" and step number "07"
   And I publish my modified page
   And I wait for 3 seconds
+  And I take a screenshot of scenario "06" and step number "08"
+  And I take a screenshot of scenario "06" and step number "09"
   And I return to dashboard from pages
   And I wait for 3 seconds
+  And I take a screenshot of scenario "06" and step number "10"
   Then I should see the modified page with text "This page is modified for scenario 6"
+  And I take a screenshot of scenario "06" and step number "11"
   And I send a signal to user 7 containing "Finished 6"
 
 @user7 @web
