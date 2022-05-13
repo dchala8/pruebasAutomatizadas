@@ -1,6 +1,6 @@
 {
     "url":"https://monitor177.github.io/color-palette/",
-    "browsers":["chromium", "webkit"],
+    "browsers":["chromium"],
     "scenarios":[1,2,3,4,5],
     "options":{
         "output": {
