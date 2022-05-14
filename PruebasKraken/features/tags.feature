@@ -4,31 +4,31 @@ Feature: Escenarios que involucran la creacion de tags
 Scenario: 11 - Como administrador me gustaria cear tag, crear post con el tag creado y publicarlo, validar que el post muestre tag
   Given I navigate to edit page "<GHOST_URL>"  
   And I wait for 5 seconds
-  And I take a screenshot of scenario "11" and step number "01"
+  And I take a screenshot of scenario "11" and step number "1"
   When I make login with "<USER>" and "<PASSWORD>"
   And I wait for 5 seconds
-  And I take a screenshot of scenario "11" and step number "02"
+  And I take a screenshot of scenario "11" and step number "2"
   And I click view with selector "<TAG_MENU>"
   And I wait for 2 seconds
-  And I take a screenshot of scenario "11" and step number "03"
+  And I take a screenshot of scenario "11" and step number "3"
   And I click view with selector "<NEW_TAG_BUTTON>"
   And I wait for 2 seconds
-  And I take a screenshot of scenario "11" and step number "04"
+  And I take a screenshot of scenario "11" and step number "4"
   Then I enter text "Kraken Scenario 11" into field with id "name"
   And I wait for 2 seconds
-  And I take a screenshot of scenario "11" and step number "05"
+  And I take a screenshot of scenario "11" and step number "5"
   And I click view with selector "<SAVE_TAG_BUTTON>"
   And I wait for 2 seconds
-  And I take a screenshot of scenario "11" and step number "06"
+  And I take a screenshot of scenario "11" and step number "6"
   And I select option posts
   And I wait for 3 seconds
-  And I take a screenshot of scenario "11" and step number "07"
+  And I take a screenshot of scenario "11" and step number "7"
   And I select New post
   And I wait for 3 seconds
-  And I take a screenshot of scenario "11" and step number "08"
+  And I take a screenshot of scenario "11" and step number "8"
   And I write a new post with title "This is a post with tag: Kraken Scenario 11"
   And I wait for 3 seconds
-  And I take a screenshot of scenario "11" and step number "09"
+  And I take a screenshot of scenario "11" and step number "9"
   #Asociar tag al post
   And I click view with selector "<POST_SETTINGS_BUTTON>"
   And I wait for 3 seconds

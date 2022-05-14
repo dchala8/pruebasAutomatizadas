@@ -4,31 +4,31 @@ Feature: Escenarios que involucran cambios en la configuración del sitio y otro
 Scenario: 15 - Como administrador me gustaria crear miembro, verificar que se muestra en la ventana de miembros, modificar miembro, verificar que se muestre el miembro actualizado
 Given I navigate to edit page "<GHOST_URL>"
   And I wait for 5 seconds
-  And I take a screenshot of scenario "15" and step number "01"
+  And I take a screenshot of scenario "15" and step number "1"
   When I make login with "<USER>" and "<PASSWORD>"
   And I wait for 5 seconds
-  And I take a screenshot of scenario "15" and step number "02"
+  And I take a screenshot of scenario "15" and step number "2"
   And I click view with selector "<MEMBERS_MENU>"
   And I wait for 2 seconds
-  And I take a screenshot of scenario "15" and step number "03"
+  And I take a screenshot of scenario "15" and step number "3"
   And I click view with selector "<NEW_MEMBER_BUTTON>"
   And I wait for 2 seconds
-  And I take a screenshot of scenario "15" and step number "04"
+  And I take a screenshot of scenario "15" and step number "4"
   And I create member with name "$name_1" and email "$email_1"
   And I wait for 2 seconds
-  And I take a screenshot of scenario "15" and step number "05"
+  And I take a screenshot of scenario "15" and step number "5"
   And I click view with selector "<MEMBERS_MENU>"
   And I wait for 2 seconds
-  And I take a screenshot of scenario "15" and step number "06"
+  And I take a screenshot of scenario "15" and step number "6"
   Then I found member with name "$$name_1"
   And I wait for 2 seconds
-  And I take a screenshot of scenario "15" and step number "07"
+  And I take a screenshot of scenario "15" and step number "7"
   Then I set new name "$name_2" to member with name "$$name_1"
   And I wait for 2 seconds
-  And I take a screenshot of scenario "15" and step number "08"
+  And I take a screenshot of scenario "15" and step number "8"
   And I click view with selector "<MEMBERS_MENU>"
   And I wait for 2 seconds
-  And I take a screenshot of scenario "15" and step number "09"
+  And I take a screenshot of scenario "15" and step number "9"
   Then I found member with name "$$name_2"
   And I wait for 2 seconds
   And I take a screenshot of scenario "15" and step number "10"
@@ -39,32 +39,32 @@ Scenario: 16 - Como administrador me gustaria modificar el autor principal, ir a
 Given I wait for a signal containing "Finished 15" for 9999999 seconds
   And I navigate to edit page "<GHOST_URL>"
   And I wait for 5 seconds
-  And I take a screenshot of scenario "16" and step number "01"
+  And I take a screenshot of scenario "16" and step number "1"
   When I make login with "<USER>" and "<PASSWORD>"
   And I wait for 5 seconds
-  And I take a screenshot of scenario "16" and step number "02"
+  And I take a screenshot of scenario "16" and step number "2"
   And I select option posts
   And I wait for 3 seconds
-  And I take a screenshot of scenario "16" and step number "03"
+  And I take a screenshot of scenario "16" and step number "3"
   And I select New post
   And I wait for 3 seconds
-  And I take a screenshot of scenario "16" and step number "04"
+  And I take a screenshot of scenario "16" and step number "4"
   And I write a new post with title "This is a post with tag: Kraken Scenario 16"
   And I wait for 3 seconds
-  And I take a screenshot of scenario "16" and step number "05"
+  And I take a screenshot of scenario "16" and step number "5"
   And I click view with selector "<POST_SETTINGS_BUTTON>"
   And I wait for 2 seconds
-  And I take a screenshot of scenario "16" and step number "06"
+  And I take a screenshot of scenario "16" and step number "6"
   And I publish my new post
   And I wait for 5 seconds
-  And I take a screenshot of scenario "16" and step number "07"
+  And I take a screenshot of scenario "16" and step number "7"
   And I return to dashboard
   And I wait for 5 seconds
-  And I take a screenshot of scenario "16" and step number "08"
+  And I take a screenshot of scenario "16" and step number "8"
   #Modificar el autor principal
   And I click view with selector "<SETTINGS_BUTTON>"
   And I wait for 2 seconds
-  And I take a screenshot of scenario "16" and step number "09"
+  And I take a screenshot of scenario "16" and step number "9"
   And I click view with selector "<STAFF_OPTION>"
   And I wait for 2 seconds
   And I take a screenshot of scenario "16" and step number "10"
@@ -88,33 +88,33 @@ Scenario: 17 - Como administrador me gustaria crear post, visualizarlo en View s
 Given I wait for a signal containing "Finished 16" for 9999999 seconds
   And I navigate to edit page "<GHOST_URL>"
   And I wait for 5 seconds
-  And I take a screenshot of scenario "17" and step number "01"
+  And I take a screenshot of scenario "17" and step number "1"
   When I make login with "<USER>" and "<PASSWORD>"
   And I wait for 5 seconds
-  And I take a screenshot of scenario "17" and step number "02"
+  And I take a screenshot of scenario "17" and step number "2"
   And I select option posts
   And I wait for 3 seconds
-  And I take a screenshot of scenario "17" and step number "03"
+  And I take a screenshot of scenario "17" and step number "3"
   And I select New post
   And I wait for 3 seconds
-  And I take a screenshot of scenario "17" and step number "04"
+  And I take a screenshot of scenario "17" and step number "4"
   And I write a new post with title "This is a post with tag: Kraken Scenario 17"
   And I wait for 3 seconds
-  And I take a screenshot of scenario "17" and step number "05"
+  And I take a screenshot of scenario "17" and step number "5"
   And I publish my new post
   And I wait for 5 seconds
-  And I take a screenshot of scenario "17" and step number "06"
+  And I take a screenshot of scenario "17" and step number "6"
   And I return to dashboard
   And I wait for 5 seconds
-  And I take a screenshot of scenario "17" and step number "07"
+  And I take a screenshot of scenario "17" and step number "7"
   #Validar que el post se vea en el sitio
   Then I navigate to view site page "<GHOST_URL>"
   And I wait for 5 seconds
-  And I take a screenshot of scenario "17" and step number "08"
+  And I take a screenshot of scenario "17" and step number "8"
   Then I found post with title "This is a post with tag: Kraken Scenario 17"
   #Modificar el post
   And I wait for 3 seconds
-  And I take a screenshot of scenario "17" and step number "09"
+  And I take a screenshot of scenario "17" and step number "9"
   And I navigate to edit page "<GHOST_URL>"
   And I wait for 5 seconds
   And I take a screenshot of scenario "17" and step number "10"
@@ -147,28 +147,28 @@ Scenario: 18 - Como administrador me gustaria modificar el título del sitio
 Given I wait for a signal containing "Finished 17" for 9999999 seconds
   And I navigate to edit page "<GHOST_URL>"
   And I wait for 5 seconds
-  And I take a screenshot of scenario "18" and step number "01"
+  And I take a screenshot of scenario "18" and step number "1"
   When I make login with "<USER>" and "<PASSWORD>"
   And I wait for 5 seconds
-  And I take a screenshot of scenario "18" and step number "02"
+  And I take a screenshot of scenario "18" and step number "2"
   #Modificar el titulo del sitio
   And I click view with selector "<SETTINGS_BUTTON>"
   And I wait for 2 seconds
-  And I take a screenshot of scenario "18" and step number "03"
+  And I take a screenshot of scenario "18" and step number "3"
   And I click view with selector "<GENERAL_OPTION>"
   And I wait for 2 seconds
-  And I take a screenshot of scenario "18" and step number "04"
+  And I take a screenshot of scenario "18" and step number "4"
   And I click view with selector "<EXPAND_TITLE_AND_DESCRIPTION_BUTTON>"
   And I wait for 2 seconds
-  And I take a screenshot of scenario "18" and step number "05"
+  And I take a screenshot of scenario "18" and step number "5"
   And I set title with "Sitio probado con Kraken"
   And I wait for 2 seconds
-  And I take a screenshot of scenario "18" and step number "06"
+  And I take a screenshot of scenario "18" and step number "6"
   And I click view with selector "<SAVE_TAG_BUTTON>"
   And I wait for 2 seconds
-  And I take a screenshot of scenario "18" and step number "07"
+  And I take a screenshot of scenario "18" and step number "7"
   #Verificar el nuevo titulo en el sitio
   Then I navigate to view site page "<GHOST_URL>"
   And I wait for 2 seconds
-  And I take a screenshot of scenario "18" and step number "08"
+  And I take a screenshot of scenario "18" and step number "8"
   Then I found site with title "Sitio probado con Kraken"

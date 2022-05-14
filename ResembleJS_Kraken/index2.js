@@ -6,12 +6,12 @@ const { isStringObject } = require('util/types');
 
 
 const { viewportHeight, viewportWidth, browsers, options } = config;
-const dir = './results/Ghost_4_29';
+const dir = './results/Ghost_4_26';
 
 async function executeTest(){  
 
   var files = fs.readdirSync(dir);
-  let scenario = 10;
+  let scenario = config.scenario;
   let resultInfo = {}
   let datetime = new Date().toISOString().replace(/:/g,".");
   if (!fs.existsSync(`./results/${datetime}`)){
@@ -19,16 +19,16 @@ async function executeTest(){
   }
 
   let executionResults = [];
-  let scenario10 = {
-    "scenarioID": 10,
+  let currentScenario = {
+    "scenarioID": config.scenario,
     "results": []
   }
-  executionResults.push(scenario10);
-  for (let index = 1; index < files.length; index++) {    
-
+  executionResults.push(currentScenario);
+  for (let index = 1; index < files.length; index++) {
+    
     const data = await compareImages(
-      fs.readFileSync(`./results/Ghost_4_29/screenshotScenario${scenario}_StepNumber0${index}.png`),
-      fs.readFileSync(`./results/Ghost_4_41/screenshotScenario${scenario}_StepNumber0${index}.png`),
+      fs.readFileSync(`./results/Ghost_4_26/screenshotScenario${scenario}_StepNumber${index}.png`),
+      fs.readFileSync(`./results/Ghost_4_41/screenshotScenario${scenario}_StepNumber${index}.png`),
       options
     );
 
@@ -45,12 +45,12 @@ async function executeTest(){
   let exceution = executionResults.find(executionResults => executionResults.scenarioID === scenario);
   exceution.results.push(resultInfo);
 
-  fs.copyFile(`./results/Ghost_4_29/screenshotScenario${scenario}_StepNumber0${index}.png`,
+  fs.copyFile(`./results/Ghost_4_26/screenshotScenario${scenario}_StepNumber${index}.png`,
   `./results/${datetime}/screenshotScenario${scenario}_before${index}.png`, (err)=>{
     if(err)throw err;
     });
 
-  fs.copyFile(`./results/Ghost_4_41/screenshotScenario${scenario}_StepNumber0${index}.png`,
+  fs.copyFile(`./results/Ghost_4_41/screenshotScenario${scenario}_StepNumber${index}.png`,
   `./results/${datetime}/screenshotScenario${scenario}_after${index}.png`, (err)=>{
     if(err)throw err;
     });
