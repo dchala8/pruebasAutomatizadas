@@ -19,45 +19,51 @@ async function executeTest(){
   }
 
   let executionResults = [];
-  let currentScenario = {
-    "scenarioID": config.scenario,
-    "results": []
-  }
-  executionResults.push(currentScenario);
-  for (let index = 1; index < files.length; index++) {
+  for (let i = 0; i < 2; i++) {
+    var steps = files.filter(p => String(p).startsWith("screenshotScenario"+scenario[i]))
+
+    let currentScenario = {
+      "scenarioID": scenario[i],
+      "results": []
+    }
+    executionResults.push(currentScenario);
+    for (let index = 1; index < steps.length + 1; index++) {
+      
+      const data = await compareImages(
+        fs.readFileSync(`./results/Ghost_4_26/screenshotScenario${scenario[i]}_StepNumber${index}.png`),
+        fs.readFileSync(`./results/Ghost_4_41/screenshotScenario${scenario[i]}_StepNumber${index}.png`),
+        options
+      );
+  
+    resultInfo = {
+      isSameDimensions: data.isSameDimensions,
+      dimensionDifference: data.dimensionDifference,
+      rawMisMatchPercentage: data.rawMisMatchPercentage,
+      misMatchPercentage: data.misMatchPercentage,
+      diffBounds: data.diffBounds,
+      analysisTime: data.analysisTime,
+      "stepNumber": index
+    }
+    executionResults["scenario"]
+    let exceution = executionResults.find(executionResults => executionResults.scenarioID === scenario[i]);
+    exceution.results.push(resultInfo);
+  
+    fs.copyFile(`./results/Ghost_4_26/screenshotScenario${scenario[i]}_StepNumber${index}.png`,
+    `./results/${datetime}/screenshotScenario${scenario[i]}_before${index}.png`, (err)=>{
+      if(err)throw err;
+      });
+  
+    fs.copyFile(`./results/Ghost_4_41/screenshotScenario${scenario[i]}_StepNumber${index}.png`,
+    `./results/${datetime}/screenshotScenario${scenario[i]}_after${index}.png`, (err)=>{
+      if(err)throw err;
+      });
+  
+    fs.writeFileSync(`./results/${datetime}/screenshotScenario${scenario[i]}_compare${index}.png`, data.getBuffer());
+      
+    }
     
-    const data = await compareImages(
-      fs.readFileSync(`./results/Ghost_4_26/screenshotScenario${scenario}_StepNumber${index}.png`),
-      fs.readFileSync(`./results/Ghost_4_41/screenshotScenario${scenario}_StepNumber${index}.png`),
-      options
-    );
-
-  resultInfo = {
-    isSameDimensions: data.isSameDimensions,
-    dimensionDifference: data.dimensionDifference,
-    rawMisMatchPercentage: data.rawMisMatchPercentage,
-    misMatchPercentage: data.misMatchPercentage,
-    diffBounds: data.diffBounds,
-    analysisTime: data.analysisTime,
-    "stepNumber": index
-  }
-  executionResults["scenario"]
-  let exceution = executionResults.find(executionResults => executionResults.scenarioID === scenario);
-  exceution.results.push(resultInfo);
-
-  fs.copyFile(`./results/Ghost_4_26/screenshotScenario${scenario}_StepNumber${index}.png`,
-  `./results/${datetime}/screenshotScenario${scenario}_before${index}.png`, (err)=>{
-    if(err)throw err;
-    });
-
-  fs.copyFile(`./results/Ghost_4_41/screenshotScenario${scenario}_StepNumber${index}.png`,
-  `./results/${datetime}/screenshotScenario${scenario}_after${index}.png`, (err)=>{
-    if(err)throw err;
-    });
-
-  fs.writeFileSync(`./results/${datetime}/screenshotScenario${scenario}_compare${index}.png`, data.getBuffer());
-    
-  }
+  } 
+  
 
   fs.writeFileSync(`./results/${datetime}/report.html`, createReport(datetime, executionResults));
   fs.copyFileSync('./index.css', `./results/${datetime}/index.css`);
