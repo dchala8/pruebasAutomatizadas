@@ -1,19 +1,27 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
 const expect = require('chai').expect;
+const tagsPO = require('../pageObjects/tags')
+const postsPO = require('../pageObjects/posts')
+const sitePO = require('../pageObjects/site')
+const pagesPO = require('../pageObjects/pages')
+const membersPO = require('../pageObjects/members')
+const settingsPO = require('../pageObjects/settings')
+const loginPO = require('../pageObjects/login')
+const mainPO = require('../pageObjects/main')
 
 Then('I enter text {string} into field with id "name"', async function (tagName) {
-    let element = await this.driver.$('//input[@name="name"]');
+    let element = await this.driver.$(tagsPO.tagNameSelector);
     return await element.setValue(tagName);
 });
 
 Then('I define tag name {string} into tags field', async function (tagName) {
-    let element = await this.driver.$('//div[@id="tag-input"]/ul/input');
+    let element = await this.driver.$(postsPO.relatedTagsNameSelector);
     await element.setValue(tagName);
     return await element.setValue('\uE007');
 });
 
 Then('I found post {string} with tag {string} related', async function (postTitle,tagName) {
-    let element = await this.driver.$('//header[@class="post-card-header"]/div[text()="'+tagName+'"]/following::h2[text()="'+postTitle+'"]');
+    let element = await this.driver.$(sitePO.getPostHeaderSelector(tagName,postTitle));
     let exists = false;
     if(element){
         exists = true;
@@ -22,34 +30,34 @@ Then('I found post {string} with tag {string} related', async function (postTitl
 });
 
 Then('I select a tag with name {string}', async function (tagName) {
-    let element = await this.driver.$('//h3[text()="'+tagName+'"]');
+    let element = await this.driver.$(tagsPO.getTagElementSelector(tagName));
     return await element.click();
 });
 
 Then('I dont found post {string} with tag {string} related', async function (postTitle,tagName) {
-    let elements = await this.driver.$$('//header[@class="post-card-header"]/div[text()="'+tagName+'"]/following::h2[text()="'+postTitle+'"]');
+    let elements = await this.driver.$$(sitePO.getPostHeaderSelector(tagName,postTitle));
     expect(elements.length).to.equal(0);
 });
 
 When('I write a new page with title {string}', async function(text) {
-    let element = await this.driver.$('//textarea[@placeholder="Page title"]');
+    let element = await this.driver.$(pagesPO.pageTitleSelector);
     return await element.setValue(text);
 });
 
 When('I return to main page', async function(){
-    let element1 = await this.driver.$("//div/a/span[text()='Posts']");
+    let element1 = await this.driver.$(postsPO.returnToMainSelector);
     return await element1.click();
 });
 
 When('I filter by tag {string}', async function(tagName){
-    let element1 = await this.driver.$("//span[@class='ember-power-select-selected-item' and text()='All tags']");
+    let element1 = await this.driver.$(pagesPO.filterByTagSelector);
     await element1.click();
-    let element2 = await this.driver.$("//li[@class='ember-power-select-option' and text()='"+tagName+"']");
+    let element2 = await this.driver.$(pagesPO.selectTagFromFilter(tagName));
     return await element2.click();
 });
 
 Then('I found page {string}', async function (pageTitle) {
-    let element = await this.driver.$("//h3[@class='gh-content-entry-title' and text()='"+pageTitle+"']");
+    let element = await this.driver.$(pagesPO.getpageElementSelector(pageTitle));
     let exists = false;
     if(element){
         exists = true;
@@ -57,24 +65,24 @@ Then('I found page {string}', async function (pageTitle) {
     return expect(exists).to.be.true;
 });
 
-When('I publish the new page', async function(){
-    let element = await this.driver.$("//span[contains(text(),'Publish')]");
+When('I publish my new page', async function(){
+    let element = await this.driver.$(pagesPO.publishPageLinkSelector);
     await element.click();
-    let element2 = await this.driver.$("//button/span[contains(text(),'Publish')]");
+    let element2 = await this.driver.$(pagesPO.publishPageButtonSelector);
     return await element2.click();
 });
 
 When('I create member with name {kraken-string} and email {kraken-string}', async function(memberName,memberEmail){
-    let element = await this.driver.$("[name='name']");
+    let element = await this.driver.$(membersPO.nameInputSelector);
     await element.setValue(memberName);
-    let element2 = await this.driver.$("[name='email']");
+    let element2 = await this.driver.$(membersPO.emailInputSelector);
     await element2.setValue(memberEmail);
-    let element3= await this.driver.$("//button/span[text()='Save']");
+    let element3= await this.driver.$(membersPO.saveButtonSelector);
     return await element3.click();
 });
 
 Then('I found member with name {kraken-string}', async function (memberName) {
-    let element = await this.driver.$("//h3[@class='ma0 pa0 gh-members-list-name ' and text()='"+memberName+"']");
+    let element = await this.driver.$(membersPO.getMemberElement(memberName));
     let exists = false;
     if(element){
         exists = true;
@@ -83,34 +91,34 @@ Then('I found member with name {kraken-string}', async function (memberName) {
 });
 
 Then('I set new name {kraken-string} to member with name {kraken-string}', async function (newMemberName,memberName) {
-    let element = await this.driver.$("//h3[@class='ma0 pa0 gh-members-list-name ' and text()='"+memberName+"']");
+    let element = await this.driver.$(membersPO.getMemberElement(memberName));
     await element.click();
-    let element2 = await this.driver.$("[name='name']");
+    let element2 = await this.driver.$(membersPO.nameInputSelector);
     await element2.waitForDisplayed({ timeout: 3000 });
     await element2.setValue(newMemberName);
-    let element3= await this.driver.$("//button/span[text()='Save']");
+    let element3= await this.driver.$(membersPO.saveButtonSelector);
     return await element3.click();
 });
 
-When('I filter by author {kraken-string}', async function(autorName){
-    let element1 = await this.driver.$("//span[@class='ember-power-select-selected-item' and text()='All authors']");
+When('I filter by author {kraken-string}', async function(authorName){
+    let element1 = await this.driver.$(postsPO.filterByAuthorSelector);
     await element1.click();
-    let element2 = await this.driver.$("//li[@class='ember-power-select-option' and text()='"+autorName+"']");
+    let element2 = await this.driver.$(postsPO.selectAuthorFromFilter(authorName));
     return await element2.click();
 });
 
 Then('I set new name {kraken-string} to author with name {kraken-string}', async function (newAuthorName,authorName) {
-    let element = await this.driver.$("//h3[@class='apps-card-app-title' and text()='"+authorName+"']");
+    let element = await this.driver.$(settingsPO.getAuthorElement(authorName));
     await element.click();
-    let element2 = await this.driver.$("//input[@id='user-name']");
+    let element2 = await this.driver.$(settingsPO.userNameInputSelector);
     await element2.waitForDisplayed({ timeout: 3000 });
     await element2.setValue(newAuthorName);
-    let element3= await this.driver.$("//button/span[text()='Save']");
+    let element3= await this.driver.$(settingsPO.saveButtonSelector);
     return await element3.click();
 });
 
 Then('I found post with title {string}', async function (postTitle) {
-    let element = await this.driver.$("//h2[@class='post-card-title' and text()='"+postTitle+"']");
+    let element = await this.driver.$(sitePO.getPostHeaderWithTitleSelector(postTitle));
     let exists = false;
     if(element){
         exists = true;
@@ -127,27 +135,27 @@ When('I navigate to edit page {kraken-string}', async function (baseUrl) {
 });
 
 Then('I change title to {string} of post with title {string}', async function (newPostTitle,postTitle) {
-    let element = await this.driver.$("//h3[@class='gh-content-entry-title' and text()='"+postTitle+"']");
+    let element = await this.driver.$(postsPO.getPostElementSelector(postTitle));
     await element.click();
-    let element3 = await this.driver.$('//textarea[@placeholder="Post title"]');
+    let element3 = await this.driver.$(postsPO.postTitleInputSelector);
     await element3.waitForDisplayed({ timeout: 3000 });
     return await element3.setValue(newPostTitle);
 });
 
 When('I update my new post', async function(){
-    let element = await this.driver.$("//span[contains(text(),'Update')]");
+    let element = await this.driver.$(postsPO.updatePostLinkSelector);
     await element.click();
-    let element2 = await this.driver.$("//button/span[contains(text(),'Update')]");
+    let element2 = await this.driver.$(postsPO.updatePostButtonSelector);
     return await element2.click();
 });
 
 When('I set title with {string}', async function(newTitle){
-    let element = await this.driver.$("//p[text()='The name of your site']/preceding-sibling::input");
+    let element = await this.driver.$(settingsPO.siteTitleInputSelector);
     return await element.setValue(newTitle);
 });
 
 Then('I found site with title {string}', async function (siteTitle) {
-    let element = await this.driver.$("//h1[contains(text(), '"+siteTitle+"') and @class='site-title']");
+    let element = await this.driver.$(sitePO.getSiteTitleSelector(siteTitle));
     let exists = false;
     if(element){
         exists = true;
@@ -156,16 +164,16 @@ Then('I found site with title {string}', async function (siteTitle) {
 });
 
 Then('I change current password {kraken-string} to new password {kraken-string}', async function (currentPassword,newPassword) {
-    let element = await this.driver.$("//input[@id='user-password-old']");
+    let element = await this.driver.$(settingsPO.oldPasswordInputSelector);
     await element.setValue(currentPassword);
-    let element2 = await this.driver.$("//input[@id='user-password-new']");
+    let element2 = await this.driver.$(settingsPO.newPasswordInputSelect);
     await element2.setValue(newPassword);
-    let element3 = await this.driver.$("//input[@id='user-new-password-verification']");
+    let element3 = await this.driver.$(settingsPO.newPasswordVerificationInputSelect);
     return await element3.setValue(newPassword);
 });
 
 Then('I found password error message', async function () {
-    let element = await this.driver.$("//p[@class='main-error' and contains(text(),'Your password is incorrect')]");
+    let element = await this.driver.$(loginPO.passwordErrorLabelSelector);
     let exists = false;
     if(element){
         exists = true;
@@ -174,7 +182,7 @@ Then('I found password error message', async function () {
 });
 
 Then('I am on dashboard page', async function () {
-    let element = await this.driver.$("//h2[@class='gh-canvas-title' and contains(text(), 'Dashboard')]");
+    let element = await this.driver.$(mainPO.dashboardCanvanSelector);
     let exists = false;
     if(element){
         exists = true;
