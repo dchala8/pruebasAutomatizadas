@@ -1,7 +1,7 @@
 {
     "url":"https://monitor177.github.io/color-palette/",
     "browsers":["chromium"],
-    "scenario":[10,11],
+    "scenario":[14,15,18,19,20],
     "options":{
         "output": {
             "errorColor": {

@@ -6,7 +6,7 @@ const { isStringObject } = require('util/types');
 
 
 const { viewportHeight, viewportWidth, browsers, options } = config;
-const dir = './results/Ghost_4_29';
+const dir = './results/Ghost_4_26';
 
 async function executeTest(){  
 
@@ -30,7 +30,7 @@ async function executeTest(){
     for (let index = 1; index < steps.length + 1; index++) {
       
       const data = await compareImages(
-        fs.readFileSync(`./results/Ghost_4_29/screenshotScenario${scenario[i]}_StepNumber${index}.png`),
+        fs.readFileSync(`./results/Ghost_4_26/screenshotScenario${scenario[i]}_StepNumber${index}.png`),
         fs.readFileSync(`./results/Ghost_4_41/screenshotScenario${scenario[i]}_StepNumber${index}.png`),
         options
       );
@@ -47,7 +47,7 @@ async function executeTest(){
       //let execution = executionResults.find(executionResults => executionResults.scenarioID === scenario[i]);
       currentScenario.results.push(resultInfo);
     
-      fs.copyFile(`./results/Ghost_4_29/screenshotScenario${scenario[i]}_StepNumber${index}.png`,
+      fs.copyFile(`./results/Ghost_4_26/screenshotScenario${scenario[i]}_StepNumber${index}.png`,
       `./results/${datetime}/screenshotScenario${scenario[i]}_before${index}.png`, (err)=>{
         if(err)throw err;
         });
