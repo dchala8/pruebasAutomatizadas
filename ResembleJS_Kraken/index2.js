@@ -6,7 +6,7 @@ const { isStringObject } = require('util/types');
 
 
 const { viewportHeight, viewportWidth, browsers, options } = config;
-const dir = './results/Ghost_4_26';
+const dir = './results/Ghost_4_29';
 
 async function executeTest(){  
 
@@ -19,52 +19,51 @@ async function executeTest(){
   }
 
   let executionResults = [];
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < scenario.length; i++) {
     var steps = files.filter(p => String(p).startsWith("screenshotScenario"+scenario[i]))
 
     let currentScenario = {
       "scenarioID": scenario[i],
       "results": []
     }
-    executionResults.push(currentScenario);
+    
     for (let index = 1; index < steps.length + 1; index++) {
       
       const data = await compareImages(
-        fs.readFileSync(`./results/Ghost_4_26/screenshotScenario${scenario[i]}_StepNumber${index}.png`),
+        fs.readFileSync(`./results/Ghost_4_29/screenshotScenario${scenario[i]}_StepNumber${index}.png`),
         fs.readFileSync(`./results/Ghost_4_41/screenshotScenario${scenario[i]}_StepNumber${index}.png`),
         options
       );
   
-    resultInfo = {
-      isSameDimensions: data.isSameDimensions,
-      dimensionDifference: data.dimensionDifference,
-      rawMisMatchPercentage: data.rawMisMatchPercentage,
-      misMatchPercentage: data.misMatchPercentage,
-      diffBounds: data.diffBounds,
-      analysisTime: data.analysisTime,
-      "stepNumber": index
-    }
-    executionResults["scenario"]
-    let exceution = executionResults.find(executionResults => executionResults.scenarioID === scenario[i]);
-    exceution.results.push(resultInfo);
-  
-    fs.copyFile(`./results/Ghost_4_26/screenshotScenario${scenario[i]}_StepNumber${index}.png`,
-    `./results/${datetime}/screenshotScenario${scenario[i]}_before${index}.png`, (err)=>{
-      if(err)throw err;
-      });
-  
-    fs.copyFile(`./results/Ghost_4_41/screenshotScenario${scenario[i]}_StepNumber${index}.png`,
-    `./results/${datetime}/screenshotScenario${scenario[i]}_after${index}.png`, (err)=>{
-      if(err)throw err;
-      });
-  
-    fs.writeFileSync(`./results/${datetime}/screenshotScenario${scenario[i]}_compare${index}.png`, data.getBuffer());
+      resultInfo = {
+        isSameDimensions: data.isSameDimensions,
+        dimensionDifference: data.dimensionDifference,
+        rawMisMatchPercentage: data.rawMisMatchPercentage,
+        misMatchPercentage: data.misMatchPercentage,
+        diffBounds: data.diffBounds,
+        analysisTime: data.analysisTime,
+        "stepNumber": index
+      }
+      //let execution = executionResults.find(executionResults => executionResults.scenarioID === scenario[i]);
+      currentScenario.results.push(resultInfo);
+    
+      fs.copyFile(`./results/Ghost_4_29/screenshotScenario${scenario[i]}_StepNumber${index}.png`,
+      `./results/${datetime}/screenshotScenario${scenario[i]}_before${index}.png`, (err)=>{
+        if(err)throw err;
+        });
+    
+      fs.copyFile(`./results/Ghost_4_41/screenshotScenario${scenario[i]}_StepNumber${index}.png`,
+      `./results/${datetime}/screenshotScenario${scenario[i]}_after${index}.png`, (err)=>{
+        if(err)throw err;
+        });
+    
+      fs.writeFileSync(`./results/${datetime}/screenshotScenario${scenario[i]}_compare${index}.png`, data.getBuffer());
       
     }
+    executionResults.push(currentScenario);
     
   } 
   
-
   fs.writeFileSync(`./results/${datetime}/report.html`, createReport(datetime, executionResults));
   fs.copyFileSync('./index.css', `./results/${datetime}/index.css`);
 
@@ -75,10 +74,9 @@ async function executeTest(){
 (async ()=>console.log(await executeTest()))();
 
 function browser(info, scenarioID){
-    console.log(JSON.stringify(info))
     htmlResult = `<div class=" browser" id="test0">`;
-    for(index=0; index < info.length; index++){
-      let infoI = info[index];
+    for(let i=0; i < info.length; i++){
+      let infoI = info[i];
       let stepNumber = infoI["stepNumber"];
       htmlResult = htmlResult+`<div class=" btitle">
                   <h2>Step: ${stepNumber}</h2>
@@ -111,27 +109,24 @@ function browser(info, scenarioID){
 }
 
 function createReport(datetime, executionResults){
-  console.log(executionResults)
-  htmlResult = `
+  let htmlResult = `
     <html>
         <head>
             <title> VRT Report </title>
             <link href="index.css" type="text/css" rel="stylesheet">
         </head>
-        <body>
-            <h1>Report for`
+        <body>`
   for(index=0; index < executionResults.length; index++){
     let scenarioID = executionResults[index]["scenarioID"];
     let results = executionResults[index]["results"];
-    htmlResult = htmlResult+`Scenario: ${scenarioID}
-                    </h1>
+    htmlResult = htmlResult+`<h1>Report forScenario: ${scenarioID}</h1>
                     <p>Executed: ${datetime}</p>
                     <div id="visualizer">
                         ${config.browsers.map(b=>browser(results, scenarioID))}
-                    </div>
-                </body>
-                </html>`
+                    </div>`
   } 
+  htmlResult = htmlResult + `</body>
+  </html>`
                  
   return htmlResult;
 }
