@@ -29,8 +29,8 @@ async function executeTest() {
 
         for (let im = 1; im <= cai[1]; im++) {
             // resultInfo.push("hi")
-            let route1 = `./Case${c}/${genVar.port1}-i${im}.png`
-            let route2 = `./Case${c}/${genVar.port2}-i${im}.png`
+            let route1 = `./V1/Case${c}/${genVar.port1}-i${im}.png`
+            let route2 = `./V1/Case${c}/${genVar.port2}-i${im}.png`
             const data = await compareImages(
                 // Images need to be names starting with v1- or v2- and followed by letter i and the numer of the image starting by 1
                 fs.readFileSync(route1),

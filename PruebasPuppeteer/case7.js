@@ -6,7 +6,7 @@ var fs = require('fs');
     const browser = await puppeteer.launch({headless: false});
     const page = await browser.newPage();
 
-    const caseFolder = '../resemble-c/case7/'
+    const caseFolder = '../resemble-c/V1/case7/'
     if (!fs.existsSync(caseFolder)) {
         fs.mkdirSync(caseFolder);
     }
