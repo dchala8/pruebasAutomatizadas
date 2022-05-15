@@ -1,0 +1,120 @@
+[
+  {
+    "keyword": "Feature",
+    "name": "case1",
+    "line": 1,
+    "id": "case1",
+    "tags": [],
+    "uri": "features\\case1.feature",
+    "elements": [
+      {
+        "id": "case1;create-a-post-on-ghost",
+        "keyword": "Scenario",
+        "line": 2,
+        "name": "create a post on ghost",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 3,
+            "name": "User visits ghost",
+            "match": {
+              "location": "features\\support\\steps.test.js:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2666000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 4,
+            "name": "User creates a new post",
+            "match": {
+              "location": "features\\support\\steps.test.js:26"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4794000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 5,
+            "name": "validate if post was created",
+            "match": {
+              "location": "features\\support\\steps.test.js:38"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 527000000
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "keyword": "Feature",
+    "name": "case2",
+    "line": 1,
+    "id": "case2",
+    "tags": [],
+    "uri": "features\\case2.feature",
+    "elements": [
+      {
+        "id": "case2;create-a-post-on-ghost",
+        "keyword": "Scenario",
+        "line": 2,
+        "name": "create a post on ghost",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 3,
+            "name": "User visits ghost",
+            "match": {
+              "location": "features\\support\\steps.test.js:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2649000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 4,
+            "name": "User creates a new post and User deletes the new post",
+            "match": {
+              "location": "features\\support\\steps.test.js:65"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 8430000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 5,
+            "name": "Validate if the post was deleted",
+            "match": {
+              "location": "features\\support\\steps.test.js:108"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 536000000
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
