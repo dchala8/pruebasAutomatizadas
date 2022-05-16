@@ -82,6 +82,7 @@ When('User creates a new post and User deletes the new post', async function () 
     await pageObject.goToCreatePost(page,caseToUse);
     //Crear Nuevo Post
     await pageObject.createPost(page,caseToUse,caseToUse,caseToUse);
+    // va en 7
     //Validar que si se creo el nuevo post
     const grabItems = await page.evaluate(() => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
@@ -107,13 +108,13 @@ When('User creates a new post and User deletes the new post', async function () 
     console.log(grabItems);
 
     //Ingreso al post para eliminarlo
-    await pageObject.goToSpecificPost(page,caseToUse);
+    await pageObject.goToSpecificPost(page,caseToUse,8);
     
     //Elimino el post
     await pageObject.deletePost(page,caseToUse);
 
     await new Promise(r => setTimeout(r, 100));
-    await page.screenshot({path: './case2/listPostAfterDelete.png'});
+    await page.screenshot({path: `${caseFolder}/${genVar.port}-i12.png`})
 });
 
 Then('Validate if the post was deleted', async function () {
@@ -203,7 +204,7 @@ When('User creates a new post as a draft', async function () {
 Then('publish the draft and validate it was published', async function () {
     
     //Ingreso al post para publicarlo
-    await pageObject.goToSpecificPost(page,caseToUse);
+    await pageObject.goToSpecificPost(page,caseToUse,6);
     //Publico el post
     await pageObject.publishDraftPost(page,caseToUse);
     //Valido si se publico el post
@@ -292,7 +293,7 @@ Then('wait five minutes and validate if it was published', async function () {
      })
     console.log("WAS THE POST PUBLISHED?")
     console.log(grabItems2)
-    await page.screenshot({path: './case4/published.png'})
+    await page.screenshot({path: `${caseFolder}/${genVar.port}-i8.png`})
 
     //...
     await browser.close();
@@ -309,6 +310,7 @@ When('User publishes a new post and then unpublishes it', async function () {
     await pageObject.goToCreatePost(page,caseToUse);
     //Crear Nuevo Post
     await pageObject.createPost(page,caseToUse,caseToUse,caseToUse);
+    //va en 7
 
 
     //THEN
@@ -336,9 +338,9 @@ When('User publishes a new post and then unpublishes it', async function () {
     console.log(grabItems)
 
     //Ingreso al post para marcarlo como Draft
-    await pageObject.goToSpecificPost(page,caseToUse);
+    await pageObject.goToSpecificPost(page,caseToUse,8);
     //Se marca el post como draft
-    await pageObject.setPostAsDraft(page,caseToUse);
+    await pageObject.setPostAsDraft(page,caseToUse,9);
 });
 
 Then('validate if the post was drafted', async function () {

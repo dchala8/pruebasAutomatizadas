@@ -86,15 +86,26 @@ Para realizar las pruebas VRT se seleccionó la herramienta ResembleJS, siguiend
 
 El reporte HTML de las pruebas de regresión visual de estos escenarios se encuentra en la ruta **pruebasAutomatizadas/ResembleJS_Kraken/results/2022-05-15T20.38.23.354Z/** con el nombre **report.html**. En el reporte se evidencian las comparaciones y resultados de cada uno de los pasos de los escenarios indicados anteriormente.
 
-## Ejecución de Pruebas - Herramienta Puppeteer
+## Ejecución de Pruebas - Herramienta Puppeteer (carpeta cucumber implementation)
 1. PreRequisitos: 
     - Instalacion de NodeJS almenos en Version 12.22.1
     - Instalacion de Ghost en Version 4.41.3
     - Instalacion de Ghost en Version 4.26.1
 2. Instrucciones:
-    - Entrar a la carpeta llamada Pruebas Puppeteer.
-    - Ejecutar el comando  npm i para instalar los paquetes necesarios.
+    - Entrar a la carpeta llamada "cucumber implementation".
+    - Ejecutar el comando npm i para instalar los paquetes necesarios.
     - Ir al archivo llamado generalVariables.js y abrirlo
-    - Dentro del mismo encontrara una estructura llamada genVar, dentro de ella hay 4 campos, "user" representa el correo electronico para hacer login a Ghost debe colocar en este campo el correo correspondiente a su instalacion de Ghost, "password" representa la contraseña usada inicialmente para el loggin, "tempPassword" representa la contraseña usada para las pruebas de cambio de contraseña y "url" representa la URL sobre la cual fue desplegada su instalacion de Ghost, acomodar segun su ambiente local y segun la version de ghost sobre la cual vaya a ejecutar las pruebas.
-    - Una vez terminada la configuracion del archivo generalVariables.js, puede proceder a ejecutar los casos de prueba, para hacer esto escriba en la consola ubicada en la carpeta el comando npm test de esta manera se ejecutaran los features correspondientes a cada caso.
-    - Cuando la prueba alla terminado de correr dentro de la carpeta correspondiente al numero de caso, podra ver la evidencia tomada por Puppeteer.
+    - Dentro del mismo encontrara una estructura llamada genVar, dentro de ella podra editar los campos, "user" que representa el correo electronico para hacer login a Ghost debe colocar en este campo el correo correspondiente a su usuario de Ghost, "password" representa la contraseña usada inicialmente para el loggin, "tempPassword" representa la contraseña usada para las pruebas de cambio de contraseña, finalmente port1 y port2 representan los puertos de localhost que se usan para cada instalacion de ghost, podra comentar y descomentar en el area indicada para probar una version u otra.
+    - Una vez terminada la configuracion del archivo generalVariables.js, puede proceder a ejecutar los casos de prueba, para hacer esto escriba en la consola ubicada en la carpeta "cucumber implementation" el comando npm test de esta manera se ejecutaran los features correspondientes a cada caso.
+    - Debido a que estas imagenes seran usadas en las pruebas usando resemble, las evidencisa de cada prueba se ubicaran en la carpeta "resemble-c/V2" con la siguiente estructura "case<numero_de_caso>/<numero_de_puerto>-i<numero_de_imagen>"
+    - La prueba debe correrse una seguna vez con el puerto de la segunda isntalacion de ghost
+
+## Ejecucion de pruebas con resemble
+1. PreRequisitos: 
+    - Instalacion de NodeJS almenos en Version 12.22.1
+2. Instrucciones:
+    - Entrar a la carpeta llamada "resemble-c".
+    - Ejecutar el comando npm i para instalar los paquetes necesarios.
+    - Ejecutar el comando node index2.js, en este arcvhivo se encuentra una constante llamada "casesAndImages", la cual es un array compuesto de arrays de 2 elementos en donde se indica el numero de caso y la cantidad de imagenes por caso, se encuentra comentado para los casos que no fueron usados para la busqueda de bugs, en este caso se usaron los casos del 6 al 10, pero si se desea se puede descomentar para los demas casos en donde ya fue implementado el patron pageObject
+    - Los resultados de resmble se podran observar en la carpeta "results2" en donde hay una carpeta para cada caso en donde estan las imagnes comparadas y el archivo html, en el repositorio se encuetra la evidencia de los casos usados para la busqueda de bugs aunque las demas carpetas se pueden generar como se indico en el paso anterior
+
