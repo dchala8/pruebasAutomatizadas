@@ -70,17 +70,16 @@
         - Desde la consola de línea de comandos, ubicarse en la ruta **pruebasAutomatizadas/PruebasKraken**
         - Ejecutar el comando **npx kraken-node run**
     - Verificar los resultados de la ejecución en la carpeta **pruebasAutomatizadas/PruebasKraken/reports**
+3. Ejecución casos versión de regresión 4.26.1:
+    - Para ejecutar los casos de la versión 4.26.1 se ejecuta el mismo comando indicado anteriormente, pero desde la rama **Ghost_4.26.1**. En este caso se ejecutarán los siguientes escenarios, seleccionados para ejecutar posteriormente las pruebas VRT:
+        - Escenario 14: Crear tag, crear la pagina con el tag asociado, ir a la lista de paginas, filtrar por el tag creado y verificar que retorne la pagina creada.
+        - Escenario 15. Crear miembro, verificar que se muestra en la ventana de miembros, modificar miembro, verificar que se muestre el miembro actualizado.
+        - Escenario 18. Cambiar la contraseña del usuario, cerrar sesión, intentar con la nueva contraseña, validar que le permita ingresar, dejar la contraseña original.
+        - Escenario 19. Crear post, visualizarlo en View site, modificar post, validar en View Site post con el cambio realizado.
+        - Escenario 20. Ingresar a configuraciones, seleccionar general, expandir títulos y descripción, cambiar nombre del sitio, verificar en el sitio que tenga el nuevo título.
 
 ## Ejecución de pruebas de regresión visual VRT / KRAKEN
-Para realizar las pruebas VRT se seleccionó la herramienta ResembleJS y se realizó sobre los siguientes escenarios ejecutados con la herramienta Kraken:
-
-    - Escenario 14: Crear tag, crear la pagina con el tag asociado, ir a la lista de paginas, filtrar por el tag creado y verificar que retorne la pagina creada.
-    - Escenario 15. Crear miembro, verificar que se muestra en la ventana de miembros, modificar miembro, verificar que se muestre el miembro actualizado.
-    - Escenario 18. Cambiar la contraseña del usuario, cerrar sesión, intentar con la nueva contraseña, validar que le permita ingresar, dejar la contraseña original.
-    - Escenario 19. Crear post, visualizarlo en View site, modificar post, validar en View Site post con el cambio realizado.
-    - Escenario 20. Ingresar a configuraciones, seleccionar general, expandir títulos y descripción, cambiar nombre del sitio, verificar en el sitio que tenga el nuevo título.
-    
-Para ejecutar las pruebas VRT se siguieron los siguientes pasos:
+Para realizar las pruebas VRT se seleccionó la herramienta ResembleJS, siguiendo los siguientes pasos:
 
 1. Se almacenaron las imagenes obtenidas de las pruebas E2E de cada versión de la aplicación en dos carpetas diferentes. Las rutas de las carpetas son **pruebasAutomatizadas/ResembleJS_Kraken/results/Ghost_4_26/** y **pruebasAutomatizadas/ResembleJS_Kraken/results/Ghost_4_41/**
 2. Una vez almacenadas, se ejecutó el comando **node index2.js** desde la ruta **pruebasAutomatizadas/ResembleJS_Kraken/**
