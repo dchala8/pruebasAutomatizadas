@@ -71,6 +71,16 @@
         - Ejecutar el comando **npx kraken-node run**
     - Verificar los resultados de la ejecución en la carpeta **pruebasAutomatizadas/PruebasKraken/reports**
 
+3. Ejecución de pruebas de regresión visual VRT:
+    - Para realizar las pruebas VRT se seleccionó la herramienta ResembleJS y se realizó sobre los siguientes escenarios ejecutados con la herramienta Kraken:
+        - Escenario 14: Crear tag, crear la pagina con el tag asociado, ir a la lista de paginas, filtrar por el tag creado y verificar que retorne la pagina creada.
+        - Escenario 15. Crear miembro, verificar que se muestra en la ventana de miembros, modificar miembro, verificar que se muestre el miembro actualizado.
+        - Escenario 18. Cambiar la contraseña del usuario, cerrar sesión, intentar con la nueva contraseña, validar que le permita ingresar, dejar la contraseña original.
+        - Escenario 19. Crear post, visualizarlo en View site, modificar post, validar en View Site post con el cambio realizado.
+        - Escenario 20. Ingresar a configuraciones, seleccionar general, expandir títulos y descripción, cambiar nombre del sitio, verificar en el sitio que tenga el nuevo título.
+
+    - El reporte HTML de las pruebas de regresión visual de estos escenarios se encuentra en la ruta **pruebasAutomatizadas/ResembleJS_Kraken/results/2022-05-15T20.38.23.354Z/** con el nombre **report.html**. En el reporte se evidencian las comparaciones y resultados de cada uno de los pasos de los escenarios indicados anteriormente.
+
 ## Ejecución de Pruebas - Herramienta Puppeteer
 1. PreRequisitos: 
     - Instalacion de NodeJS almenos en Version 12.22.1
