@@ -79,6 +79,11 @@ Para realizar las pruebas VRT se seleccionó la herramienta ResembleJS y se real
     - Escenario 18. Cambiar la contraseña del usuario, cerrar sesión, intentar con la nueva contraseña, validar que le permita ingresar, dejar la contraseña original.
     - Escenario 19. Crear post, visualizarlo en View site, modificar post, validar en View Site post con el cambio realizado.
     - Escenario 20. Ingresar a configuraciones, seleccionar general, expandir títulos y descripción, cambiar nombre del sitio, verificar en el sitio que tenga el nuevo título.
+    
+Para ejecutar las pruebas VRT se siguieron los siguientes pasos:
+
+1. Se almacenaron las imagenes obtenidas de las pruebas E2E de cada versión de la aplicación en dos carpetas diferentes. Las rutas de las carpetas son **pruebasAutomatizadas/ResembleJS_Kraken/results/Ghost_4_26/** y **pruebasAutomatizadas/ResembleJS_Kraken/results/Ghost_4_41/**
+2. Una vez almacenadas, se ejecutó el comando **node index2.js** desde la ruta **pruebasAutomatizadas/ResembleJS_Kraken/**
 
 El reporte HTML de las pruebas de regresión visual de estos escenarios se encuentra en la ruta **pruebasAutomatizadas/ResembleJS_Kraken/results/2022-05-15T20.38.23.354Z/** con el nombre **report.html**. En el reporte se evidencian las comparaciones y resultados de cada uno de los pasos de los escenarios indicados anteriormente.
 
