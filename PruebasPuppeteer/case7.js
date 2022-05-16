@@ -1,13 +1,18 @@
 const puppeteer = require('puppeteer');
 const { genVar } =  require('./generalVariables.js');
+var fs = require('fs');
 
 (async()=>{
     const browser = await puppeteer.launch({headless: false});
     const page = await browser.newPage();
 
+    const caseFolder = '../resemble-c/V1/case7/'
+    if (!fs.existsSync(caseFolder)) {
+        fs.mkdirSync(caseFolder);
+    }
     await page.goto(genVar.url);
     await new Promise(r => setTimeout(r, 1500));
-    await page.screenshot({path: './case7/login.png'})
+    await page.screenshot({path: `${caseFolder}${genVar.port}-i1.png`})
 
     //Autenticar
     await new Promise(r => setTimeout(r, 1500));
@@ -15,7 +20,7 @@ const { genVar } =  require('./generalVariables.js');
     await page.type(".password.ember-text-field.gh-input.ember-view", genVar.password)
     await page.click(".login.gh-btn.gh-btn-login.gh-btn-block.gh-btn-icon.js-login-button.ember-view")
     await new Promise(r => setTimeout(r, 1500));
-    await page.screenshot({path: './case7/logged.png'})
+    await page.screenshot({path: `${caseFolder}${genVar.port}-i2.png`})
     await new Promise(r => setTimeout(r, 1500));
 
     //Ingresar a Paginas
@@ -25,29 +30,29 @@ const { genVar } =  require('./generalVariables.js');
     if (button) {
         await button.click();
     }
-    await page.screenshot({path: './case7/pages.png'})
+    await page.screenshot({path: `${caseFolder}${genVar.port}-i3.png`})
 
     //Ingresar a Crear Pagina
     await page.click(".ember-view.gh-btn.gh-btn-primary.view-actions-top-row")
-    await page.screenshot({path: './case7/newPage.png'})
+    await page.screenshot({path: `${caseFolder}${genVar.port}-i4.png`})
     await new Promise(r => setTimeout(r, 1500));
 
     //Crear Nueva pagina
     await page.type(".gh-editor-title.ember-text-area.gh-input.ember-view", "caso7")
-    await page.screenshot({path: './case7/setTituloPagina.png'})
+    await page.screenshot({path: `${caseFolder}${genVar.port}-i5.png`})
     await new Promise(r => setTimeout(r, 2500));
     await page.type(".koenig-editor__editor.__mobiledoc-editor.__has-no-content","caso7")
     await new Promise(r => setTimeout(r, 1500));
     await page.click(".ember-view.ember-basic-dropdown-trigger")
     await new Promise(r => setTimeout(r, 1500));
-    await page.screenshot({path: './case7/abrirPublish.png'})
+    await page.screenshot({path: `${caseFolder}${genVar.port}-i6.png`})
     await page.click(".gh-btn.gh-btn-black.gh-publishmenu-button.gh-btn-icon.ember-view")
     await new Promise(r => setTimeout(r, 1500));
     await page.click(".gh-btn.gh-btn-black.gh-btn-icon.ember-view")
     await new Promise(r => setTimeout(r, 1500));
     await page.click(".ember-view.gh-editor-back-button")
     await new Promise(r => setTimeout(r, 1500));
-    await page.screenshot({path: './case7/published.png'})
+    await page.screenshot({path: `${caseFolder}${genVar.port}-i7.png`})
 
 
 
@@ -82,24 +87,24 @@ const { genVar } =  require('./generalVariables.js');
         await button2.click();
     }
     await new Promise(r => setTimeout(r, 1500));
-    await page.screenshot({path: './case7/intoPage.png'})
+    await page.screenshot({path: `${caseFolder}${genVar.port}-i8.png`})
 
     //Elimino a la pagina
     await new Promise(r => setTimeout(r, 1500));
     await page.click(".settings-menu-toggle.gh-btn.gh-btn-editor.gh-btn-icon.icon-only.gh-btn-action-icon")
     await new Promise(r => setTimeout(r, 1500));
-    await page.screenshot({path: './case7/openMenu.png'})
+    await page.screenshot({path: `${caseFolder}${genVar.port}-i9.png`})
     await page.click(".gh-btn.gh-btn-hover-red.gh-btn-icon.settings-menu-delete-button")
     await new Promise(r => setTimeout(r, 1500));
-    await page.screenshot({path: './case7/clickDelete.png'})
+    await page.screenshot({path: `${caseFolder}${genVar.port}-i10.png`})
     await page.click(".gh-btn.gh-btn-red.gh-btn-icon.ember-view")
     await new Promise(r => setTimeout(r, 1500));
-    await page.screenshot({path: './case7/clickDelete.png'})
+    await page.screenshot({path: `${caseFolder}${genVar.port}-i11.png`})
 
 
     
     await new Promise(r => setTimeout(r, 1500));
-    await page.screenshot({path: './case7/listPageAfterDelete.png'})
+    await page.screenshot({path: `${caseFolder}${genVar.port}-i12.png`})
 
     //Validar que si se elimino la nueva pagina
     const grabItems2 = await page.evaluate(() => {
