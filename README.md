@@ -92,5 +92,5 @@
     - Entrar a la carpeta llamada "resemble-c".
     - Ejecutar el comando npm i para instalar los paquetes necesarios.
     - Ejecutar el comando node index2.js, en este arcvhivo se encuentra una constante llamada "casesAndImages", la cual es un array compuesto de arrays de 2 elementos en donde se indica el numero de caso y la cantidad de imagenes por caso, se encuentra comentado para los casos que no fueron usados para la busqueda de bugs, en este caso se usaron los casos del 6 al 10, pero si se desea se puede descomentar para los demas casos en donde ya fue implementado el patron pageObject
-    - Los resultados de resmble se podran observar en la carpeta "results2" en donde hay una carpeta para cada caso en donde estan las imagnes comparadas y el archivo html
+    - Los resultados de resmble se podran observar en la carpeta "results2" en donde hay una carpeta para cada caso en donde estan las imagnes comparadas y el archivo html, en el repositorio se encuetra la evidencia de los casos usados para la busqueda de bugs aunque las demas carpetas se pueden generar como se indico en el paso anterior
 
