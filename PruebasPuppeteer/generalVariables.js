@@ -2,8 +2,11 @@ let initialPassword = "carlosmora345"
 let secondPassword = "carlosmora346"
 let port1 = '2368'
 let port2 = '2369'
+
+//comente y descomente segun la version a probar
 // let port = port1
 let port = port2
+
 var genVar = {
     user: 'morandres.carlos@gmail.com',
     password: initialPassword,

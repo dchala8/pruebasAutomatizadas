@@ -20,44 +20,44 @@ class PageObject {
 
     async goToPost(page,caseToUse) {
         await page.click("#ember16")
-        await page.screenshot({path: './'+caseToUse+'/posts.png'})
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i3.png`})
         await new Promise(r => setTimeout(r, 100));
         return true;
     }
 
     async goToCreatePost(page,caseToUse) {
         await page.click(".ember-view.gh-btn.gh-btn-primary.view-actions-top-row")
-        await page.screenshot({path: './'+caseToUse+'/newPost.png'})
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i4.png`})
         await new Promise(r => setTimeout(r, 100));
         return true;
     }
 
     async createPost(page,caseToUse,title,content){    
         await page.type(".gh-editor-title.ember-text-area.gh-input.ember-view", title)
-        await page.screenshot({path: './'+caseToUse+'/setTituloPost.png'})
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i5.png`})
         await new Promise(r => setTimeout(r, 1000));
         await page.type(".koenig-editor__editor.__mobiledoc-editor.__has-no-content",content)
         await new Promise(r => setTimeout(r, 100));
         await page.click(".ember-view.ember-basic-dropdown-trigger")
         await new Promise(r => setTimeout(r, 100));
-        await page.screenshot({path: './'+caseToUse+'/abrirPublish.png'})
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i6.png`})
         await page.click(".gh-btn.gh-btn-black.gh-publishmenu-button.gh-btn-icon.ember-view")
         await new Promise(r => setTimeout(r, 100));
         await page.click(".gh-btn.gh-btn-black.gh-btn-icon.ember-view")
         await new Promise(r => setTimeout(r, 100));
         await page.click(".ember-view.gh-editor-back-button")
         await new Promise(r => setTimeout(r, 100));
-        await page.screenshot({path: './'+caseToUse+'/published.png'})
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i7.png`})
         return true;
     }
 
-    async goToSpecificPost(page,caseToUse){
+    async goToSpecificPost(page,caseToUse,ss){
         const [button] = await page.$x("//a[contains(., '"+caseToUse+"')]");
         if (button) {
             await button.click();
         }
         await new Promise(r => setTimeout(r, 100));
-        await page.screenshot({path: './'+caseToUse+'/intoPost.png'})
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i${ss}.png`})
         return true;
     }
 
@@ -65,19 +65,19 @@ class PageObject {
         await new Promise(r => setTimeout(r, 100));
         await page.click(".settings-menu-toggle.gh-btn.gh-btn-editor.gh-btn-icon.icon-only.gh-btn-action-icon")
         await new Promise(r => setTimeout(r, 100));
-        await page.screenshot({path: './'+caseToUse+'/openMenu.png'})
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i9.png`})
         await page.click(".gh-btn.gh-btn-hover-red.gh-btn-icon.settings-menu-delete-button")
         await new Promise(r => setTimeout(r, 100));
-        await page.screenshot({path: './'+caseToUse+'/clickDelete.png'})
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i10.png`})
         await page.click(".gh-btn.gh-btn-red.gh-btn-icon.ember-view")
         await new Promise(r => setTimeout(r, 100));
-        await page.screenshot({path: './'+caseToUse+'/clickDelete.png'})
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i11.png`})
         return true
     }
 
     async draftPost(page,caseToUse){
         await page.type(".gh-editor-title.ember-text-area.gh-input.ember-view", caseToUse)
-        await page.screenshot({path: './'+caseToUse+'/setTituloPost.png'})
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i5.png`})
         await new Promise(r => setTimeout(r, 1000));
         await page.type(".koenig-editor__editor.__mobiledoc-editor.__has-no-content",caseToUse)
         await new Promise(r => setTimeout(r, 100));
@@ -89,27 +89,27 @@ class PageObject {
     async publishDraftPost(page,caseToUse){
         await page.click(".ember-view.ember-basic-dropdown-trigger")
         await new Promise(r => setTimeout(r, 100));
-        await page.screenshot({path: './'+caseToUse+'/dropDown.png'})
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i7.png`})
         await page.click(".gh-btn.gh-btn-black.gh-publishmenu-button.gh-btn-icon.ember-view")
         await new Promise(r => setTimeout(r, 100));
-        await page.screenshot({path: './'+caseToUse+'/publishing.png'})
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i8.png`})
         await page.click(".gh-btn.gh-btn-black.gh-btn-icon.ember-view")
         await new Promise(r => setTimeout(r, 100));
         await page.click(".ember-view.gh-editor-back-button")
-        await page.screenshot({path: './'+caseToUse+'/published.png'})
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i9.png`})
         await new Promise(r => setTimeout(r, 100));
         return true;
     }
 
     async schedulePost(page,caseToUse){
         await page.type(".gh-editor-title.ember-text-area.gh-input.ember-view", caseToUse)
-        await page.screenshot({path: './'+caseToUse+'/setTituloPost.png'})
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i5.png`})
         await new Promise(r => setTimeout(r, 1000));
         await page.type(".koenig-editor__editor.__mobiledoc-editor.__has-no-content",caseToUse)
         await new Promise(r => setTimeout(r, 100));
         await page.click(".ember-view.ember-basic-dropdown-trigger")
         await new Promise(r => setTimeout(r, 100));
-        await page.screenshot({path: './'+caseToUse+'/abrirPublish.png'})
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i6.png`})
         await page.click(".gh-publishmenu-radio-button")
         await new Promise(r => setTimeout(r, 100));
         await page.click(".gh-date-time-picker-time input")
@@ -120,11 +120,11 @@ class PageObject {
         await new Promise(r => setTimeout(r, 100));
         await page.click(".ember-view.gh-editor-back-button")
         await new Promise(r => setTimeout(r, 100));
-        await page.screenshot({path: './'+caseToUse+'/scheduled.png'})
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i7.png`})
         return true;
     }
 
-    async setPostAsDraft(page,caseToUse){
+    async setPostAsDraft(page,caseToUse,ss){
         await page.click(".ember-view.ember-basic-dropdown-trigger")
         await new Promise(r => setTimeout(r, 100));
         await page.click(".gh-publishmenu-radio-button")
@@ -132,7 +132,7 @@ class PageObject {
         await page.click(".gh-btn.gh-btn-black.gh-publishmenu-button.gh-btn-icon.ember-view")
         await new Promise(r => setTimeout(r, 100));
         await page.click(".ember-view.gh-editor-back-button")
-        await page.screenshot({path: './'+caseToUse+'/drafted.png'})
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i${ss}.png`})
         return true;       
     }
 

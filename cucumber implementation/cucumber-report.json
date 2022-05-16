@@ -1,6 +1,65 @@
 [
   {
     "keyword": "Feature",
+    "name": "case1",
+    "line": 1,
+    "id": "case1",
+    "tags": [],
+    "uri": "features\\case1.feature",
+    "elements": [
+      {
+        "id": "case1;create-a-post-on-ghost",
+        "keyword": "Scenario",
+        "line": 2,
+        "name": "create a post on ghost",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 3,
+            "name": "User visits ghost for \"case1\"",
+            "match": {
+              "location": "features\\support\\steps.test.js:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3449000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 4,
+            "name": "User creates a new post",
+            "match": {
+              "location": "features\\support\\steps.test.js:37"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3970000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 5,
+            "name": "validate if post was created",
+            "match": {
+              "location": "features\\support\\steps.test.js:49"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 264000000
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "keyword": "Feature",
     "name": "case10",
     "line": 1,
     "id": "case10",
@@ -25,7 +84,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 4521000000
+              "duration": 3646000000
             }
           },
           {
@@ -34,11 +93,11 @@
             "line": 4,
             "name": "User publishes a new page and then unpublishes it",
             "match": {
-              "location": "features\\support\\steps.test.js:676"
+              "location": "features\\support\\steps.test.js:678"
             },
             "result": {
               "status": "passed",
-              "duration": 5260000000
+              "duration": 5325000000
             }
           },
           {
@@ -47,11 +106,247 @@
             "line": 5,
             "name": "validate if the page was drafted",
             "match": {
-              "location": "features\\support\\steps.test.js:718"
+              "location": "features\\support\\steps.test.js:720"
             },
             "result": {
               "status": "passed",
-              "duration": 363000000
+              "duration": 242000000
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "keyword": "Feature",
+    "name": "case2",
+    "line": 1,
+    "id": "case2",
+    "tags": [],
+    "uri": "features\\case2.feature",
+    "elements": [
+      {
+        "id": "case2;create-a-post-on-ghost",
+        "keyword": "Scenario",
+        "line": 2,
+        "name": "create a post on ghost",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 3,
+            "name": "User visits ghost for \"case2\"",
+            "match": {
+              "location": "features\\support\\steps.test.js:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3669000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 4,
+            "name": "User creates a new post and User deletes the new post",
+            "match": {
+              "location": "features\\support\\steps.test.js:76"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 5510000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 5,
+            "name": "Validate if the post was deleted",
+            "match": {
+              "location": "features\\support\\steps.test.js:120"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 242000000
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "keyword": "Feature",
+    "name": "case3",
+    "line": 1,
+    "id": "case3",
+    "tags": [],
+    "uri": "features\\case3.feature",
+    "elements": [
+      {
+        "id": "case3;create-a-post,-not-publish-it,-validate-it-isnt-published,-finally-publish-it",
+        "keyword": "Scenario",
+        "line": 2,
+        "name": "create a post, not publish it, validate it isnt published, finally publish it",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 3,
+            "name": "User visits ghost for \"case3\"",
+            "match": {
+              "location": "features\\support\\steps.test.js:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1689000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 4,
+            "name": "User creates a new post as a draft",
+            "match": {
+              "location": "features\\support\\steps.test.js:143"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 5220000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 5,
+            "name": "publish the draft and validate it was published",
+            "match": {
+              "location": "features\\support\\steps.test.js:204"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1765000000
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "keyword": "Feature",
+    "name": "case4",
+    "line": 1,
+    "id": "case4",
+    "tags": [],
+    "uri": "features\\case4.feature",
+    "elements": [
+      {
+        "id": "case4;create-a-post,-schedule-it,-wait-5-minutes,-validate-if-it-published-it-self",
+        "keyword": "Scenario",
+        "line": 2,
+        "name": "create a post, schedule it, wait 5 minutes, validate if it published it self",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 3,
+            "name": "User visits ghost for \"case4\"",
+            "match": {
+              "location": "features\\support\\steps.test.js:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3819000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 4,
+            "name": "User creates a new post and shcedules it",
+            "match": {
+              "location": "features\\support\\steps.test.js:235"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4277000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 5,
+            "name": "wait five minutes and validate if it was published",
+            "match": {
+              "location": "features\\support\\steps.test.js:247"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 310335000000
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "keyword": "Feature",
+    "name": "case5",
+    "line": 1,
+    "id": "case5",
+    "tags": [],
+    "uri": "features\\case5.feature",
+    "elements": [
+      {
+        "id": "case5;create-a-post,-publish-it,-unpublish-it,-validate-if-it-was-drafted",
+        "keyword": "Scenario",
+        "line": 2,
+        "name": "create a post, publish it, unpublish it, validate if it was drafted",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 3,
+            "name": "User visits ghost for \"case5\"",
+            "match": {
+              "location": "features\\support\\steps.test.js:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 8854000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 4,
+            "name": "User publishes a new post and then unpublishes it",
+            "match": {
+              "location": "features\\support\\steps.test.js:303"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4948000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 5,
+            "name": "validate if the post was drafted",
+            "match": {
+              "location": "features\\support\\steps.test.js:346"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 218000000
             }
           }
         ]
@@ -84,7 +379,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 3668000000
+              "duration": 1532000000
             }
           },
           {
@@ -93,11 +388,11 @@
             "line": 4,
             "name": "User creates a new page",
             "match": {
-              "location": "features\\support\\steps.test.js:393"
+              "location": "features\\support\\steps.test.js:395"
             },
             "result": {
               "status": "passed",
-              "duration": 4307000000
+              "duration": 6461000000
             }
           },
           {
@@ -106,11 +401,11 @@
             "line": 5,
             "name": "validate if page was created",
             "match": {
-              "location": "features\\support\\steps.test.js:404"
+              "location": "features\\support\\steps.test.js:406"
             },
             "result": {
               "status": "passed",
-              "duration": 221000000
+              "duration": 228000000
             }
           }
         ]
@@ -143,7 +438,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 18674000000
+              "duration": 1477000000
             }
           },
           {
@@ -152,11 +447,11 @@
             "line": 4,
             "name": "User creates a new page and User deletes the new page",
             "match": {
-              "location": "features\\support\\steps.test.js:433"
+              "location": "features\\support\\steps.test.js:435"
             },
             "result": {
               "status": "passed",
-              "duration": 5785000000
+              "duration": 5722000000
             }
           },
           {
@@ -165,11 +460,11 @@
             "line": 5,
             "name": "Validate if the page was deleted",
             "match": {
-              "location": "features\\support\\steps.test.js:476"
+              "location": "features\\support\\steps.test.js:478"
             },
             "result": {
               "status": "passed",
-              "duration": 226000000
+              "duration": 212000000
             }
           }
         ]
@@ -202,7 +497,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 1606000000
+              "duration": 1582000000
             }
           },
           {
@@ -211,11 +506,11 @@
             "line": 4,
             "name": "User creates a new page as a draft",
             "match": {
-              "location": "features\\support\\steps.test.js:504"
+              "location": "features\\support\\steps.test.js:506"
             },
             "result": {
               "status": "passed",
-              "duration": 3339000000
+              "duration": 3543000000
             }
           },
           {
@@ -224,11 +519,11 @@
             "line": 5,
             "name": "publish the draft page and validate it was published",
             "match": {
-              "location": "features\\support\\steps.test.js:566"
+              "location": "features\\support\\steps.test.js:568"
             },
             "result": {
               "status": "passed",
-              "duration": 1732000000
+              "duration": 1727000000
             }
           }
         ]
@@ -261,7 +556,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 1529000000
+              "duration": 1560000000
             }
           },
           {
@@ -270,11 +565,11 @@
             "line": 4,
             "name": "User creates a new page and shcedules it",
             "match": {
-              "location": "features\\support\\steps.test.js:603"
+              "location": "features\\support\\steps.test.js:605"
             },
             "result": {
               "status": "passed",
-              "duration": 4450000000
+              "duration": 4615000000
             }
           },
           {
@@ -283,11 +578,11 @@
             "line": 5,
             "name": "wait five minutes and validate if the page was published",
             "match": {
-              "location": "features\\support\\steps.test.js:639"
+              "location": "features\\support\\steps.test.js:641"
             },
             "result": {
               "status": "passed",
-              "duration": 310678000000
+              "duration": 321720000000
             }
           }
         ]
