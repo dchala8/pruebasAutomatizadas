@@ -2,6 +2,8 @@ const PageObject = require("../../pageObject.js");
 const { When, Then, Given, } = require("cucumber")
 const puppeteer = require("puppeteer")
 var { setDefaultTimeout } = require('cucumber');
+const { genVar } = require("../../generalVariables.js");
+var fs = require('fs');
  
 let caseToUse = 'case1';
 const pageObject = new PageObject();
@@ -9,15 +11,22 @@ const pageObject = new PageObject();
 setDefaultTimeout(600 * 1000);
 
 let browser, page
-
+let caseFolder
 Given('User visits ghost for {string}',async function (string) {
     caseToUse = string
+
+    caseFolder = `../resemble-c/V2/${caseToUse}`
+    if (!fs.existsSync(caseFolder)) {
+        fs.mkdirSync(caseFolder);
+    }
+
     browser = await puppeteer.launch({headless: false});
     page = await browser.newPage();
 
-    await page.goto('http://localhost:2368/ghost');
+    await page.goto(`http://localhost:${genVar.port}/ghost`);
     await new Promise(r => setTimeout(r, 100));
-    await page.screenshot({path: './'+caseToUse+'/login.png'})
+    await page.screenshot({path: `${caseFolder}/${genVar.port}-i1.png`})
+
 
     console.log("-------------------------------"+caseToUse+"-------------------------------")
 
@@ -430,7 +439,7 @@ When('User creates a new page and User deletes the new page', async function () 
      await pageObject.goToNewPages(page,caseToUse);
      //Crear Nuevo Page
      await pageObject.createNewPage(page,caseToUse,caseToUse,caseToUse);
-     
+     // screenshot va en 7
      //Validar que si se publico la nueva pagina
      const grabItems = await page.evaluate(() => {
          const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
@@ -455,13 +464,13 @@ When('User creates a new page and User deletes the new page', async function () 
      console.log("WAS THE PAGE CREATED?")
      console.log(grabItems)
      //Ingreso a la pagina para eliminarla
-     await pageObject.goToSpecificPage(page,caseToUse);
+     await pageObject.goToSpecificPage(page,caseToUse,8);
      //Elimino a la pagina
-     await pageObject.deletePage(page,caseToUse);
+     await pageObject.deletePage(page,caseToUse,9);
  
      
      await new Promise(r => setTimeout(r, 100));
-     await page.screenshot({path: './case7/listPageAfterDelete.png'}) 
+     await page.screenshot({path: `${caseFolder}/${genVar.port}-i10.png`})
 });
 
 Then('Validate if the page was deleted', async function () {
@@ -501,6 +510,7 @@ When('User creates a new page as a draft', async function () {
     await pageObject.goToNewPages(page,caseToUse);
     //Crear Nueva Pagina como draft
     await pageObject.draftPage(page,caseToUse);
+    //screenshot va en 5
 
 
     //Validar que si se Publico la nueva pagina
@@ -555,12 +565,11 @@ When('User creates a new page as a draft', async function () {
 
 Then('publish the draft page and validate it was published', async function () {
     //Ingreso a la pagina para publicarla
-    await pageObject.goToSpecificPage(page,caseToUse);
+    await pageObject.goToSpecificPage(page,caseToUse,6);
 
 
     //Publico la pagina
-    await pageObject.publishDraftedPage(page,caseToUse);
-
+    await pageObject.publishDraftedPage(page,caseToUse,7);
     //Valido si se publico la Pagina
     const grabItems3 = await page.evaluate(() => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
@@ -600,6 +609,7 @@ When('User creates a new page and shcedules it', async function () {
     await pageObject.goToNewPages(page,caseToUse);
     //Crear Nuevo Page
     await pageObject.schedulePage(page,caseToUse);
+    //screenshot va en 7
     //Validar que si se programo para release la nueva Page 5 minutos despues de la hora de creacion
     const grabItems = await page.evaluate(() => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
@@ -656,7 +666,7 @@ Then('wait five minutes and validate if the page was published', async function 
     console.log("WAS THE PAGE PUBLISHED?")
     console.log(grabItems2)
 
-    await page.screenshot({path: './case9/published.png'})
+    await page.screenshot({path: `${caseFolder}/${genVar.port}-i8.png`})
 
     //...
     await browser.close();
@@ -672,6 +682,7 @@ When('User publishes a new page and then unpublishes it', async function () {
     await pageObject.goToNewPages(page,caseToUse);
     //Crear Nuevo Page
     await pageObject.createNewPage(page,caseToUse,caseToUse,caseToUse);
+    // screenshot va en 7
 
 
     //Validar que si se creo la nueva pagina
@@ -698,10 +709,10 @@ When('User publishes a new page and then unpublishes it', async function () {
     console.log(grabItems)
 
     //Ingreso a la page para marcarlo como Draft
-    await pageObject.goToSpecificPage(page,caseToUse)
+    await pageObject.goToSpecificPage(page,caseToUse,8)
 
     //Se marca la pagina como draft
-    await pageObject.setPageAsDraft(page,caseToUse);
+    await pageObject.setPageAsDraft(page,caseToUse,9);
 });
 
 Then('validate if the page was drafted', async function () {
