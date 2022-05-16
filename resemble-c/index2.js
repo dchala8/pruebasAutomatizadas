@@ -13,12 +13,12 @@ async function executeTest() {
     let resultInfo = []
     let datetime = new Date().toISOString().replace(/:/g, ".");
     const casesAndImages = [
-        // [1, 7]
-        // ,[2, 12]
-        // ,[3, 9]
-        // ,[4, 8]
-        // ,[5, 9]
-        // ,
+        [1, 7]
+        ,[2, 12]
+        ,[3, 9]
+        ,[4, 8]
+        ,[5, 9]
+        ,
         [6, 7]
         ,[7,10]
         ,[8,8]
