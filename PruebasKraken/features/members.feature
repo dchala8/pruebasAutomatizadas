@@ -10,11 +10,7 @@ Given I navigate to edit page "<GHOST_URL>"
   And I wait for 2 seconds
   And I click view with selector "<NEW_MEMBER_BUTTON>"
   And I wait for 2 seconds
-  And I create member with name "$name_1" and email "$email_1"
-  And I wait for 2 seconds
-  And I click view with selector "<MEMBERS_MENU>"
-  And I wait for 2 seconds
-  Then I found member with name "$$name_1"
+  And I create member with valid data
   And I send a signal to user 2 containing "Finished 1"
 
 @user2 @web

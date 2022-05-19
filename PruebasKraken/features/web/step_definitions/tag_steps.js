@@ -8,6 +8,7 @@ const membersPO = require('../pageObjects/members')
 const settingsPO = require('../pageObjects/settings')
 const loginPO = require('../pageObjects/login')
 const mainPO = require('../pageObjects/main')
+const membersPoolData = require('../poolData/members')
 const localFaker = require('@faker-js/faker');
 
 Then('I enter text {string} into field with id "name"', async function (tagName) {
@@ -240,4 +241,20 @@ Then('I define member note with {kraken-string} characters', async function(note
     var note = localFaker.faker.random.alphaNumeric(length);
     let element = await this.driver.$(membersPO.noteTextAreaSelector);
     return await element.setValue(note);
+});
+
+Then('I create member with valid data', async function(){
+    let data = membersPoolData.getValidRow();
+    let element = await this.driver.$(membersPO.nameInputSelector);
+    await element.setValue(data["name"]);
+    let element2 = await this.driver.$(membersPO.emailInputSelector);
+    await element2.setValue(data["email"]);
+    let element3 = await this.driver.$(membersPO.noteTextAreaSelector);
+    await element3.setValue(data["note"]);
+    let elementSave = await this.driver.$(membersPO.saveButtonSelector);
+    await elementSave.click();
+    let elementMenu = await this.driver.$(mainPO.membersMenu);
+    await elementMenu.click();
+    let elementList = await this.driver.$(membersPO.getMemberElement(data["name"])).isDisplayed();
+    expect(elementList).to.equal(true);
 });
