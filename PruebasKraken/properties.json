@@ -25,5 +25,6 @@
     "PROFILE_OPTION": "//a[contains(@href,'#/settings/staff')]",
     "CHANGE_PASSWORD_BUTTON": "//button/span[text()='Change Password']",
     "SIGNOUT_OPTION": "//a[contains(@href,'#/signout')]",
-    "SAVE_SETTINGS_BUTTON": "//button/span[text()='Save settings']"
+    "SAVE_SETTINGS_BUTTON": "//button/span[text()='Save settings']",
+    "SAVE_BUTTON": "//button/span[text()='Save']"
 }

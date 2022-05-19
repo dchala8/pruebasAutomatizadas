@@ -6,6 +6,7 @@ const draftSelector = "//a[@title='Drafts']";
 const scheduleSelector = "//a[@title='Scheduled']";
 const pageSelector = "//li/a[@href='#/pages/']";
 const pageButton = "span=New page";
+const retrySaveSelector = "//*[name()='svg' and @class='retry_svg__retry-animated']";
 
 function selectPublishedPost(title){
     return "h3*="+title;
@@ -20,6 +21,7 @@ module.exports = {
     draftSelector,
     pageSelector,
     pageButton,
-    scheduleSelector
+    scheduleSelector,
+    retrySaveSelector
 }
 

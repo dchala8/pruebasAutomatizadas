@@ -214,7 +214,7 @@ Then('I define tag color with {kraken-string} characters', async function(tagCol
 });
 
 Then('I should see the retry save button', async function(){
-    let element1 = await this.driver.$(tagsPO.retrySaveSelector).isDisplayed();
+    let element1 = await this.driver.$(mainPO.retrySaveSelector).isDisplayed();
     expect(element1).to.equal(true);
 });
 
@@ -223,4 +223,21 @@ Then('I define description with {kraken-string} characters', async function(desc
     var description = localFaker.faker.random.alphaNumeric(length);
     let element = await this.driver.$(tagsPO.descTextAreaSelector);
     return await element.setValue(description);
+});
+
+Then('I define member with name {kraken-string}', async function(memberName){
+    let element = await this.driver.$(membersPO.nameInputSelector);
+    return await element.setValue(memberName);
+});
+
+Then('I define member with email {kraken-string}', async function(memberEmail){
+    let element2 = await this.driver.$(membersPO.emailInputSelector);
+    return await element2.setValue(memberEmail);
+});
+
+Then('I define member note with {kraken-string} characters', async function(noteLengthString){
+    var length = Number.parseInt(noteLengthString);
+    var note = localFaker.faker.random.alphaNumeric(length);
+    let element = await this.driver.$(membersPO.noteTextAreaSelector);
+    return await element.setValue(note);
 });

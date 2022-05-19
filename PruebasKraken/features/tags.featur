@@ -252,8 +252,9 @@ Given I wait for a signal containing "Finished 16" for 9999999 seconds
   Then I define tag name as "$name_1"
   Then I define tag color with "7" characters
   And I click view with selector "<SAVE_TAG_BUTTON>"
+  And I click view with selector "<TAG_MENU>"
   And I wait for 2 seconds
-  Then I should see the retry save button
+  Then I should see the new tag with name "$$name_1" in tags list
   And I send a signal to user 18 containing "Finished 17"
 
 @user18 @web
@@ -296,7 +297,7 @@ Given I wait for a signal containing "Finished 18" for 9999999 seconds
 
 @user20 @web
 Scenario: 26 - Como administrador me gustaría crear un nuevo tag, definir nombre, ingresar una descripción con menos de 500 caracteres e intentar salvar
-Given I wait for a signal containing "Finished 14" for 9999999 seconds
+Given I wait for a signal containing "Finished 19" for 9999999 seconds
   And I navigate to edit page "<GHOST_URL>"
   And I wait for 5 seconds
   When I make login with "<USER>" and "<PASSWORD>"
