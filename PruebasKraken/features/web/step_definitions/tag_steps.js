@@ -17,13 +17,13 @@ Then('I enter text {string} into field with id "name"', async function (tagName)
     return await element.setValue(tagName);
 });
 
-Then('I define tag name {string} into tags field', async function (tagName) {
+Then('I define tag name {kraken-string} into tags field', async function (tagName) {
     let element = await this.driver.$(postsPO.relatedTagsNameSelector);
     await element.setValue(tagName);
     return await element.setValue('\uE007');
 });
 
-Then('I found post {string} with tag {string} related', async function (postTitle,tagName) {
+Then('I found post {kraken-string} with tag {kraken-string} related', async function (postTitle,tagName) {
     let element = await this.driver.$(sitePO.getPostHeaderSelector(tagName,postTitle));
     let exists = false;
     if(element){
@@ -32,17 +32,17 @@ Then('I found post {string} with tag {string} related', async function (postTitl
     return expect(exists).to.be.true;
 });
 
-Then('I select a tag with name {string}', async function (tagName) {
+Then('I select a tag with name {kraken-string}', async function (tagName) {
     let element = await this.driver.$(tagsPO.getTagElementSelector(tagName));
     return await element.click();
 });
 
-Then('I dont found post {string} with tag {string} related', async function (postTitle,tagName) {
+Then('I dont found post {kraken-string} with tag {kraken-string} related', async function (postTitle,tagName) {
     let elements = await this.driver.$$(sitePO.getPostHeaderSelector(tagName,postTitle));
     expect(elements.length).to.equal(0);
 });
 
-When('I write a new page with title {string}', async function(text) {
+When('I write a new page with title {kraken-string}', async function(text) {
     let element = await this.driver.$(pagesPO.pageTitleSelector);
     return await element.setValue(text);
 });
@@ -52,14 +52,14 @@ When('I return to main page', async function(){
     return await element1.click();
 });
 
-When('I filter by tag {string}', async function(tagName){
+When('I filter by tag {kraken-string}', async function(tagName){
     let element1 = await this.driver.$(pagesPO.filterByTagSelector);
     await element1.click();
     let element2 = await this.driver.$(pagesPO.selectTagFromFilter(tagName));
     return await element2.click();
 });
 
-Then('I found page {string}', async function (pageTitle) {
+Then('I found page {kraken-string}', async function (pageTitle) {
     let element = await this.driver.$(pagesPO.getpageElementSelector(pageTitle));
     let exists = false;
     if(element){
@@ -120,7 +120,7 @@ Then('I set new name {kraken-string} to author with name {kraken-string}', async
     return await element3.click();
 });
 
-Then('I found post with title {string}', async function (postTitle) {
+Then('I found post with title {kraken-string}', async function (postTitle) {
     let element = await this.driver.$(sitePO.getPostHeaderWithTitleSelector(postTitle));
     let exists = false;
     if(element){
@@ -137,7 +137,7 @@ When('I navigate to edit page {kraken-string}', async function (baseUrl) {
     return await this.driver.url(baseUrl+"/ghost");
 });
 
-Then('I change title to {string} of post with title {string}', async function (newPostTitle,postTitle) {
+Then('I change title to {kraken-string} of post with title {kraken-string}', async function (newPostTitle,postTitle) {
     let element = await this.driver.$(postsPO.getPostElementSelector(postTitle));
     await element.click();
     let element3 = await this.driver.$(postsPO.postTitleInputSelector);
@@ -152,12 +152,12 @@ When('I update my new post', async function(){
     return await element2.click();
 });
 
-When('I set title with {string}', async function(newTitle){
+When('I set title with {kraken-string}', async function(newTitle){
     let element = await this.driver.$(settingsPO.siteTitleInputSelector);
     return await element.setValue(newTitle);
 });
 
-Then('I found site with title {string}', async function (siteTitle) {
+Then('I found site with title {kraken-string}', async function (siteTitle) {
     let element = await this.driver.$(sitePO.getSiteTitleSelector(siteTitle));
     let exists = false;
     if(element){
@@ -301,6 +301,12 @@ Then('I update my profile with valid name and email', async function(){
     return await element2.setValue(data["email"]);
 });
 
+Then('I update my profile with valid email', async function(){
+    let data = personPoolData.getValidRow();
+    let element2 = await this.driver.$(profilePO.emailInputSelector);
+    return await element2.setValue(data["email"]);
+});
+
 Then('I should see the saved confirmation button', async function(){
     let element1 = await this.driver.$(mainPO.savedConfirmationButton).isDisplayed();
     expect(element1).to.equal(true);
@@ -322,3 +328,19 @@ Then('I define bio with {kraken-string} characters', async function(bioLengthStr
     let element = await this.driver.$(profilePO.bioInputSelector);
     return await element.setValue(bio);
 });
+
+When('I write a new post with random title {kraken-string}', async function(text) {
+    let element = await this.driver.$(postsPO.titlePostSelector);
+    await element.setValue(text);
+    let element2 = await this.driver.$(postsPO.clickOutTitleSelector)
+    return await element2.click();
+});
+
+
+Then('I enter random text {kraken-string} into tag name field', async function(tagName){
+    var length = Number.parseInt(bioLengthString);
+    var bio = localFaker.faker.random.alphaNumeric(length);
+    let element = await this.driver.$(profilePO.bioInputSelector);
+    return await element.setValue(bio);
+});
+
