@@ -8,7 +8,8 @@ const membersPO = require('../pageObjects/members')
 const settingsPO = require('../pageObjects/settings')
 const loginPO = require('../pageObjects/login')
 const mainPO = require('../pageObjects/main')
-const membersPoolData = require('../poolData/members')
+const profilePO = require('../pageObjects/profile')
+const personPoolData = require('../poolData/person')
 const localFaker = require('@faker-js/faker');
 
 Then('I enter text {string} into field with id "name"', async function (tagName) {
@@ -244,7 +245,7 @@ Then('I define member note with {kraken-string} characters', async function(note
 });
 
 Then('I create member with valid data', async function(){
-    let data = membersPoolData.getValidRow();
+    let data = personPoolData.getValidRow();
     let element = await this.driver.$(membersPO.nameInputSelector);
     await element.setValue(data["name"]);
     let element2 = await this.driver.$(membersPO.emailInputSelector);
@@ -257,4 +258,67 @@ Then('I create member with valid data', async function(){
     await elementMenu.click();
     let elementList = await this.driver.$(membersPO.getMemberElement(data["name"])).isDisplayed();
     expect(elementList).to.equal(true);
+});
+
+Then('I define profile full name with name {string}', async function(name){
+    let element2 = await this.driver.$(profilePO.nameInputSelector);
+    return await element2.setValue(name);
+});
+
+Then('I define profile full name with fake name {kraken-string}', async function(name){
+    let element2 = await this.driver.$(profilePO.nameInputSelector);
+    return await element2.setValue(name);
+});
+
+Then('I should see the profile full name {kraken-string}', async function(name){
+    let element1 = await this.driver.$(profilePO.getProfileFullNameElement(name)).isDisplayed();
+    expect(element1).to.equal(true);
+});
+
+Then('I update my profile with valid data', async function(){
+    let data = personPoolData.getValidRow();
+    let element = await this.driver.$(profilePO.nameInputSelector);
+    await element.setValue(data["name"]);
+    let element2 = await this.driver.$(profilePO.emailInputSelector);
+    await element2.setValue(data["email"]);
+    let element3 = await this.driver.$(profilePO.bioInputSelector);
+    return await element3.setValue(data["bio"]);
+});
+
+Then('I update my profile with valid name', async function(){
+    let data = personPoolData.getValidRow();
+    let element = await this.driver.$(profilePO.nameInputSelector);
+    await element.setValue(data["name"]);
+    let element2 = await this.driver.$(profilePO.emailInputSelector);
+    return await element2.setValue(data["email"]);
+});
+
+Then('I update my profile with valid name and email', async function(){
+    let data = personPoolData.getValidRow();
+    let element = await this.driver.$(profilePO.nameInputSelector);
+    await element.setValue(data["name"]);
+    let element2 = await this.driver.$(profilePO.emailInputSelector);
+    return await element2.setValue(data["email"]);
+});
+
+Then('I should see the saved confirmation button', async function(){
+    let element1 = await this.driver.$(mainPO.savedConfirmationButton).isDisplayed();
+    expect(element1).to.equal(true);
+});
+
+Then('I update my profile with email {kraken-string}', async function(email){
+    let element2 = await this.driver.$(profilePO.emailInputSelector);
+    return await element2.setValue(email);
+});
+
+Then('I define profile email with string {kraken-string}', async function(email){
+    let element2 = await this.driver.$(profilePO.emailInputSelector);
+    return await element2.setValue(email);
+});
+
+Then('I define bio with {kraken-string} characters', async function(bioLengthString){
+    var length = Number.parseInt(bioLengthString);
+    var bio = localFaker.faker.random.alphaNumeric(length);
+    let element = await this.driver.$(profilePO.bioInputSelector);
+    return await element.setValue(bio);
 });

@@ -8,6 +8,7 @@ const pageSelector = "//li/a[@href='#/pages/']";
 const pageButton = "span=New page";
 const retrySaveSelector = "//*[name()='svg' and @class='retry_svg__retry-animated']";
 const membersMenu = "//li/a[@href='#/members/']";
+const savedConfirmationButton = "//button/span[text()='Saved']";
 
 function selectPublishedPost(title){
     return "h3*="+title;
@@ -24,6 +25,7 @@ module.exports = {
     pageButton,
     scheduleSelector,
     retrySaveSelector,
-    membersMenu
+    membersMenu,
+    savedConfirmationButton
 }
 
