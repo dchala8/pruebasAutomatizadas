@@ -199,4 +199,136 @@ Given I wait for a signal containing "Finished 13" for 9999999 seconds
   And I take a screenshot of scenario "14" and step number "14"
   Then I found page "Page for scenario 14"
   And I take a screenshot of scenario "14" and step number "15"
- 
+  And I send a signal to user 15 containing "Finished 14"
+
+@user15 @web
+Scenario: 21 - Como administrador me gustaría crear tag, definir nombre, salvar y verificar que se haya creado
+Given I wait for a signal containing "Finished 14" for 9999999 seconds
+  And I navigate to edit page "<GHOST_URL>"
+  And I wait for 5 seconds
+  When I make login with "<USER>" and "<PASSWORD>"
+  And I wait for 5 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  And I click view with selector "<NEW_TAG_BUTTON>"
+  And I wait for 2 seconds
+  Then I define tag name as "$name_1"
+  And I click view with selector "<SAVE_TAG_BUTTON>"
+  And I wait for 2 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  Then I should see the new tag with name "$$name_1" in tags list
+  And I send a signal to user 16 containing "Finished 15"
+
+@user16 @web
+Scenario: 22 - Como administrador me gustaría crear un nuevo tag, definir nombre, ingresar un color con menos de 6 caracteres e intentar salvar
+Given I wait for a signal containing "Finished 15" for 9999999 seconds
+  And I navigate to edit page "<GHOST_URL>"
+  And I wait for 5 seconds
+  When I make login with "<USER>" and "<PASSWORD>"
+  And I wait for 5 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  And I click view with selector "<NEW_TAG_BUTTON>"
+  And I wait for 2 seconds
+  Then I define tag name as "$name_1"
+  Then I define tag color with "5" characters
+  And I click view with selector "<SAVE_TAG_BUTTON>"
+  And I wait for 2 seconds
+  Then I should see the retry save button
+  And I send a signal to user 17 containing "Finished 16"
+
+@user17 @web
+Scenario: 23 - Como administrador me gustaría crear un nuevo tag, definir nombre, ingresar un color con más de 6 caracteres e intentar salvar
+Given I wait for a signal containing "Finished 16" for 9999999 seconds
+  And I navigate to edit page "<GHOST_URL>"
+  And I wait for 5 seconds
+  When I make login with "<USER>" and "<PASSWORD>"
+  And I wait for 5 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  And I click view with selector "<NEW_TAG_BUTTON>"
+  And I wait for 2 seconds
+  Then I define tag name as "$name_1"
+  Then I define tag color with "7" characters
+  And I click view with selector "<SAVE_TAG_BUTTON>"
+  And I wait for 2 seconds
+  Then I should see the retry save button
+  And I send a signal to user 18 containing "Finished 17"
+
+@user18 @web
+Scenario: 24 - Como administrador me gustaría crear un nuevo tag, definir nombre, ingresar un color con 6 caracteres e intentar salvar
+Given I wait for a signal containing "Finished 17" for 9999999 seconds
+  And I navigate to edit page "<GHOST_URL>"
+  And I wait for 5 seconds
+  When I make login with "<USER>" and "<PASSWORD>"
+  And I wait for 5 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  And I click view with selector "<NEW_TAG_BUTTON>"
+  And I wait for 2 seconds
+  Then I define tag name as "$name_1"
+  Then I define tag color with "6" characters
+  And I click view with selector "<SAVE_TAG_BUTTON>"
+  And I wait for 2 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  Then I should see the new tag with name "$$name_1" in tags list
+  And I send a signal to user 19 containing "Finished 18"
+
+@user19 @web
+Scenario: 25 - Como administrador me gustaría crear un nuevo tag, definir nombre, ingresar una descripción con mas de 500 caracteres e intentar salvar
+Given I wait for a signal containing "Finished 18" for 9999999 seconds
+  And I navigate to edit page "<GHOST_URL>"
+  And I wait for 5 seconds
+  When I make login with "<USER>" and "<PASSWORD>"
+  And I wait for 5 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  And I click view with selector "<NEW_TAG_BUTTON>"
+  And I wait for 2 seconds
+  Then I define tag name as "$name_1"
+  Then I define description with "501" characters
+  And I click view with selector "<SAVE_TAG_BUTTON>"
+  And I wait for 2 seconds
+  Then I should see the retry save button
+  And I send a signal to user 20 containing "Finished 19"
+
+@user20 @web
+Scenario: 26 - Como administrador me gustaría crear un nuevo tag, definir nombre, ingresar una descripción con menos de 500 caracteres e intentar salvar
+Given I wait for a signal containing "Finished 14" for 9999999 seconds
+  And I navigate to edit page "<GHOST_URL>"
+  And I wait for 5 seconds
+  When I make login with "<USER>" and "<PASSWORD>"
+  And I wait for 5 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  And I click view with selector "<NEW_TAG_BUTTON>"
+  And I wait for 2 seconds
+  Then I define tag name as "$name_1"
+  Then I define description with "490" characters
+  And I click view with selector "<SAVE_TAG_BUTTON>"
+  And I wait for 2 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  Then I should see the new tag with name "$$name_1" in tags list
+  And I send a signal to user 21 containing "Finished 20"
+
+@user21 @web
+Scenario: 27 - Como administrador me gustaría crear un nuevo tag, definir nombre, ingresar una descripción con 500 caracteres, salvar y verificar que se haya creado
+Given I wait for a signal containing "Finished 20" for 9999999 seconds
+  And I navigate to edit page "<GHOST_URL>"
+  And I wait for 5 seconds
+  When I make login with "<USER>" and "<PASSWORD>"
+  And I wait for 5 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  And I click view with selector "<NEW_TAG_BUTTON>"
+  And I wait for 2 seconds
+  Then I define tag name as "$name_1"
+  Then I define description with "500" characters
+  And I click view with selector "<SAVE_TAG_BUTTON>"
+  And I wait for 2 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  Then I should see the new tag with name "$$name_1" in tags list

@@ -8,6 +8,7 @@ const membersPO = require('../pageObjects/members')
 const settingsPO = require('../pageObjects/settings')
 const loginPO = require('../pageObjects/login')
 const mainPO = require('../pageObjects/main')
+const localFaker = require('@faker-js/faker');
 
 Then('I enter text {string} into field with id "name"', async function (tagName) {
     let element = await this.driver.$(tagsPO.tagNameSelector);
@@ -188,4 +189,38 @@ Then('I am on dashboard page', async function () {
         exists = true;
     }
     return expect(exists).to.be.true;
+});
+
+Then('I define tag name as {kraken-string}', async function (tagName) {
+    let element = await this.driver.$(tagsPO.tagNameSelector);
+    return await element.setValue(tagName);
+});
+
+Then('I should see the new tag with name {kraken-string} in tags list', async function(tagName){
+    let element1 = await this.driver.$(tagsPO.getTagElementSelector(tagName)).isDisplayed();
+    expect(element1).to.equal(true);
+});
+
+Then('I define tag color with {kraken-string} characters', async function(tagColorLengthString){
+    var length = Number.parseInt(tagColorLengthString);
+    var colorResult = '';
+    var characters = 'ABCDEF';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        colorResult += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    let element = await this.driver.$(tagsPO.tagColorTextSelector);
+    return await element.setValue(colorResult);
+});
+
+Then('I should see the retry save button', async function(){
+    let element1 = await this.driver.$(tagsPO.retrySaveSelector).isDisplayed();
+    expect(element1).to.equal(true);
+});
+
+Then('I define description with {kraken-string} characters', async function(descLengthString){
+    var length = Number.parseInt(descLengthString);
+    var description = localFaker.faker.random.alphaNumeric(length);
+    let element = await this.driver.$(tagsPO.descTextAreaSelector);
+    return await element.setValue(description);
 });
