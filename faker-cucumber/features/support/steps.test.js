@@ -12,6 +12,7 @@ setDefaultTimeout(600 * 1000);
 
 let browser, page
 let caseFolder
+let tagName
 Given('User visits ghost for {string}', async function (string) {
     caseToUse = string
 
@@ -22,6 +23,27 @@ Given('User visits ghost for {string}', async function (string) {
 
     browser = await puppeteer.launch({ headless: false });
     page = await browser.newPage();
+
+    await page.goto(`http://localhost:${genVar.port}/ghost`);
+    await new Promise(r => setTimeout(r, 100));
+    await page.screenshot({ path: `${caseFolder}/${genVar.port}-i1.png` })
+
+
+    console.log("-------------------------------" + caseToUse + "-------------------------------")
+
+});
+
+Given('User is visiting ghost for {string}', async function (string) {
+    caseToUse = string
+
+    caseFolder = `../resemble-c/V2/${caseToUse}`
+    if (!fs.existsSync(caseFolder)) {
+        fs.mkdirSync(caseFolder);
+    }
+
+    browser = await puppeteer.launch({ headless: false });
+    page = await browser.newPage();
+    await page.setViewport({ width: 1366, height: 768 });
 
     await page.goto(`http://localhost:${genVar.port}/ghost`);
     await new Promise(r => setTimeout(r, 100));
@@ -775,96 +797,33 @@ Then('validate if the page was drafted', async function () {
 When('User creates a tag, a post with tag and publishes it', async function () {
     //Autenticar
     await pageObject.loggin(page, caseToUse);
-    //Ingresar a Paginas
-    await pageObject.goToPages(page, caseToUse);
+    //Ingresar a tags
+    await pageObject.goToTags(page, caseToUse);
+    //Crear Nuevo tag
+    tagName = await pageObject.createNewTag(page, caseToUse);
     //Ingresar a Crear Pages
-    await pageObject.goToNewPages(page, caseToUse);
+    // await pageObject.goToNewPages(page, caseToUse);
     //Crear Nuevo Page
-    await pageObject.createNewPage(page, caseToUse, caseToUse, caseToUse);
+    await pageObject.createNewPostWithTag(page, caseToUse, tagName);
     // screenshot va en 7
-
-
-    //Validar que si se creo la nueva pagina
-    const grabItems = await page.evaluate(() => {
-        const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
-        let isItContained = false
-
-        elements.forEach((publication) => {
-            const actualPublication = publication.querySelectorAll("a")
-            const firstElement = actualPublication[0]
-            const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case10")) {
-                const lastElement = actualPublication[1]
-                const span = lastElement.querySelector(".flex.items-center span")
-                if (span.innerText.includes("PUBLISHED")) {
-                    isItContained = true
-                }
-            }
-        })
-        return isItContained;
-    })
-
-    console.log("WAS THE PAGE PUBLISHED?")
-    console.log(grabItems)
-
-    //Ingreso a la page para marcarlo como Draft
-    await pageObject.goToSpecificPage(page, caseToUse, 8)
-
-    //Se marca la pagina como draft
-    await pageObject.setPageAsDraft(page, caseToUse, 9);
 });
 
 Then('validate post with tag', async function () {
-    //Validamos si la pagina esta Publicado
-    const grabItems2 = await page.evaluate(() => {
-        const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
-        let isItContained = false
+    let pages = await browser.pages()
+    const page2 = await pages[2]
+    await page2.setViewport({ width: 1366, height: 768 });
+    await page.screenshot({path: `${caseFolder}/${genVar.port}-i9.png`})
+    await new Promise(r => setTimeout(r, 500));
 
-        elements.forEach((publication) => {
-            const actualPublication = publication.querySelectorAll("a")
-            const firstElement = actualPublication[0]
-            const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case10")) {
-                const lastElement = actualPublication[1]
-                const span = lastElement.querySelector(".flex.items-center span")
-                if (span.innerText.includes("PUBLISHED")) {
-                    isItContained = true
-                }
-            }
-        })
-        return isItContained;
-    })
-
-    console.log("WAS THE PAGE PUBLISHED?")
-    console.log(grabItems2)
-
-
-    //Validamos si la page esta se guardo como Draft
-    const grabItems3 = await page.evaluate(() => {
-        const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
-        let isItContained = false
-
-        elements.forEach((publication) => {
-            const actualPublication = publication.querySelectorAll("a")
-            const firstElement = actualPublication[0]
-            const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case10")) {
-                const lastElement = actualPublication[1]
-                const span = lastElement.querySelector(".flex.items-center span")
-                if (span.innerText.includes("DRAFT")) {
-                    isItContained = true
-                }
-            }
-        })
-        return isItContained;
-    })
-
-    console.log("WAS THE PAGE DRAFTED?")
-    console.log(grabItems3)
-
-
-
-    //...
+    console.log("Case 11")
+    console.log("Was the post created with the Tag: "+ tagName+"?")
+    const [toTagsmain] = await page2.$x("//a[contains(., '"+tagName+"')]");
+    if (toTagsmain) {
+        console.log("Yes, it was")
+    }else{
+        console.log("No, it was not")
+    }
+    await browser.close()
     await browser.close();
     return;
 });
