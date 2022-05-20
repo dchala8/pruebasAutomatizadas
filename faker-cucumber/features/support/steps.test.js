@@ -13,6 +13,7 @@ setDefaultTimeout(600 * 1000);
 let browser, page, page2
 let caseFolder
 let tagName
+let publication
 
 function delay(time) {
     return new Promise(function (resolve) {
@@ -812,6 +813,7 @@ When('User creates a tag, a post with tag and publishes it', async function () {
     tagName = await pageObject.createNewTag(page, caseToUse);
     //Crear Nuevo Page
     await pageObject.createNewPostWithTag(page, caseToUse, tagName);
+    await pageObject.goToPublishedPost(page, caseToUse, tagName);
     // screenshot va en 7
 });
 
@@ -845,6 +847,7 @@ When('User creates a tag, a post with tag, publishes it and deletes the tag', as
     tagName = await pageObject.createNewTag(page, caseToUse);
     //Crear Nuevo Page
     await pageObject.createNewPostWithTag(page, caseToUse, tagName);
+    await pageObject.goToPublishedPost(page, caseToUse, tagName);
      //Post validation 1/2
      let pages = await browser.pages()
      page2 = await pages[2]
@@ -879,6 +882,7 @@ Then('validate post with no tag', async function () {
     return;
 });
 
+//case 13
 When('User creates a tag, a post with tag, publishes it and modifies the tag', async function () {
     //Autenticar
     await pageObject.loggin(page, caseToUse);
@@ -888,6 +892,7 @@ When('User creates a tag, a post with tag, publishes it and modifies the tag', a
     tagName = await pageObject.createNewTag(page, caseToUse);
     //Crear Nuevo Page
     await pageObject.createNewPostWithTag(page, caseToUse, tagName);
+    await pageObject.goToPublishedPost(page, caseToUse, tagName);
      //Post validation 1/2
      let pages = await browser.pages()
      page2 = await pages[2]
@@ -917,6 +922,34 @@ Then('validate post with modified tag', async function () {
         console.log("Yes, it was")
     }else{
         console.log("No, it was not")
+    }
+    await browser.close()
+    return;
+});
+
+// case 14
+When('User creates a tag, a post with tag,and filter posts with tag', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a tags
+    await pageObject.goToTags(page, caseToUse);
+    //Crear Nuevo tag
+    tagName = await pageObject.createNewTag(page, caseToUse);
+    //Crear Nuevo Page
+    publication = await pageObject.createNewPostWithTag(page, caseToUse, tagName);
+});
+
+Then('validate post with tag on list', async function () {
+    await page.goto(genVar.url+'posts?tag='+tagName.toLowerCase())
+    await delay(1000)
+    console.log("Case 14")
+    console.log("Is the post in the tag filtered list?")
+    const [toTagsmain2] = await page.$x("//h3[contains(., '"+publication.titulo+"')]");
+    await page.screenshot({path: `${caseFolder}/${genVar.port}-i100.png`})
+    if (toTagsmain2) {
+        console.log("Yes, it is")
+    }else{
+        console.log("No, it is not")
     }
     await browser.close()
     return;

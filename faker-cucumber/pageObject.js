@@ -296,11 +296,14 @@ class PageObject {
         await page.click(pos.publishMenu).catch(() => console.log("error in click on publish menu"))
         await page.click(pos.publisButton).catch(() => console.log("error in click on publish button"))
         await page.click(pos.blackButton).catch(() => console.log("error in click on publish confirmation"))
+        
+
+        return {titulo:tituloPost};
+    }
+    async goToPublishedPost(page,caseToUse, tagName){
         await delay(1000)
         await page.click(pos.viewPost).catch(() => console.log("error in click on view post"))
         await delay(1000)
-
-        return true;
     }
     async removeTag(page,caseToUse, tagName){
         await page.bringToFront()
