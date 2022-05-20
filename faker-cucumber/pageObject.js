@@ -1,5 +1,7 @@
 const { Page } = require('puppeteer');
 const { genVar } = require('./generalVariables.js');
+const pos = require('./pageObjectSupport.js');
+
 
 let caseFolder = ''
 class PageObject {
@@ -260,7 +262,7 @@ class PageObject {
 
     //TAGS
     async goToTags(page,caseToUse){
-        const [toTags] = await page.$x("//a[contains(., 'Tags')]");
+        const [toTags] = await page.$x(pos.tagsPageLink);
         if (toTags) {await toTags.click();}
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i4.png`})
 
@@ -268,38 +270,52 @@ class PageObject {
     }
 
     async createNewTag(page,caseToUse){
-        await page.waitForSelector('.gh-btn-primary', { timeout: 5000 })
-        await page.click('.gh-btn-primary').catch(() => console.log("error in click on New tag button")) //new tag button
+        await page.waitForSelector(pos.primaryButton, { timeout: 5000 })
+        await page.click(pos.primaryButton).catch(() => console.log("error in click on New tag button")) //new tag button
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i5.png`})
         const tagName = "TestTag"+ Date.now();
         await delay(500)
-        await page.type('input[name="name"]', tagName);
-        await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button")) //save button
+        await page.type(pos.inputName, tagName);
+        await page.click(pos.primaryButton).catch(() => console.log("error in click on Save button")) //save button
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i6.png`})
         return tagName;
     }
 
     async createNewPostWithTag(page,caseToUse, tagName){
-        await page.click('.gh-nav-new-post').catch(() => console.log("error in click on new post button"))
+        await page.click(pos.newPost).catch(() => console.log("error in click on new post button"))
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i7.png`})        
         const tituloPost = "Mi post de prueba " + Date.now()
         const textoPost = " Mi texto de prueba"
-        await page.type('.gh-editor-title', tituloPost)
-        await page.type('.koenig-editor__editor', textoPost)
+        await page.type(pos.postTitleEdit, tituloPost)
+        await page.type(pos.postContentEdit, textoPost)
         await delay(1000)
-        await page.click('.settings-menu-toggle').catch(() => console.log("error in click on menu button"))
-        await page.type('.ember-power-select-trigger-multiple-input', tagName)
+        await page.click(pos.toogleMenu).catch(() => console.log("error in click on menu button"))
+        await page.type(pos.multiMenusSelect, tagName)
         page.keyboard.press('Enter')
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i8.png`})
-        await page.click('.gh-publishmenu').catch(() => console.log("error in click on publish menu"))
-        await page.click('.gh-publishmenu-button').catch(() => console.log("error in click on publish button"))
-        await page.click('.gh-btn-black').catch(() => console.log("error in click on publish confirmation"))
+        await page.click(pos.publishMenu).catch(() => console.log("error in click on publish menu"))
+        await page.click(pos.publisButton).catch(() => console.log("error in click on publish button"))
+        await page.click(pos.blackButton).catch(() => console.log("error in click on publish confirmation"))
         await delay(1000)
-        await page.click('.post-view-link').catch(() => console.log("error in click on view post"))
+        await page.click(pos.viewPost).catch(() => console.log("error in click on view post"))
         await delay(1000)
 
         return true;
     }
+    async removeTag(page,caseToUse, tagName){
+        await page.bringToFront()
+        await delay(500)
+        await page.click('#tag-input')
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i9.png`})
+        await delay(500)
+        await page.click('.gh-publishmenu-trigger').catch(() => console.log("error in click on publish button"))
+        await page.click('.gh-btn-black').catch(() => console.log("error in click on publish confirmation"))
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i10.png`})
+
+        return true;
+    }
+
+
 }
 
 function delay(time) {
