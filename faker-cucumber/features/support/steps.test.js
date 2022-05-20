@@ -13,6 +13,13 @@ setDefaultTimeout(600 * 1000);
 let browser, page, page2
 let caseFolder
 let tagName
+
+function delay(time) {
+    return new Promise(function (resolve) {
+        setTimeout(resolve, time)
+    });
+}
+
 Given('User visits ghost for {string}', async function (string) {
     caseToUse = string
 
@@ -842,7 +849,7 @@ When('User creates a tag, a post with tag, publishes it and deletes the tag', as
      let pages = await browser.pages()
      page2 = await pages[2]
      await page2.setViewport({ width: 1366, height: 768 });
-     await page2.screenshot({ path: caseFolder + '9-Post-page.jpg' })
+     await page.screenshot({path: `${caseFolder}/${genVar.port}-i8.png`})
      await delay(500)
      
      console.log("Case 12")
@@ -860,7 +867,7 @@ When('User creates a tag, a post with tag, publishes it and deletes the tag', as
 Then('validate post with no tag', async function () {
     await page2.bringToFront()
     await page2.reload()
-    await page2.screenshot({ path: caseFolder + '12-Post-page-updated.jpg' })
+    await page.screenshot({path: `${caseFolder}/${genVar.port}-i100.png`})
     console.log("Was the tag removed?")
     const [toTagsmain2] = await page2.$x("//a[contains(., '"+tagName+"')]");
     if (toTagsmain2) {
@@ -872,8 +879,46 @@ Then('validate post with no tag', async function () {
     return;
 });
 
-function delay(time) {
-    return new Promise(function (resolve) {
-        setTimeout(resolve, time)
-    });
-}
+When('User creates a tag, a post with tag, publishes it and modifies the tag', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a tags
+    await pageObject.goToTags(page, caseToUse);
+    //Crear Nuevo tag
+    tagName = await pageObject.createNewTag(page, caseToUse);
+    //Crear Nuevo Page
+    await pageObject.createNewPostWithTag(page, caseToUse, tagName);
+     //Post validation 1/2
+     let pages = await browser.pages()
+     page2 = await pages[2]
+     await page2.setViewport({ width: 1366, height: 768 });
+     await page.screenshot({path: `${caseFolder}/${genVar.port}-i8.png`})
+     await delay(500)
+     
+     console.log("Case 12")
+     console.log("Was the post created with the Tag: "+ tagName+"?")
+     const [toTagsmain] = await page2.$x("//a[contains(., '"+tagName+"')]");
+     if (toTagsmain) {
+         console.log("Yes, it was")
+     }else{
+         console.log("No, it was not")
+     }
+    // screenshot va en 7
+    tagName = await pageObject.modifyTag(page, caseToUse, tagName);
+});
+
+Then('validate post with modified tag', async function () {
+    await page2.bringToFront()
+    await page2.reload()
+    console.log("Was the tag updated?")
+    const [toTagsmain2] = await page2.$x("//a[contains(., '"+tagName+"')]");
+    await page.screenshot({path: `${caseFolder}/${genVar.port}-i100.png`})
+    if (toTagsmain2) {
+        console.log("Yes, it was")
+    }else{
+        console.log("No, it was not")
+    }
+    await browser.close()
+    return;
+});
+

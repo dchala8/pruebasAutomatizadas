@@ -315,6 +315,20 @@ class PageObject {
         return true;
     }
 
+    async modifyTag(page,caseToUse, tagName){
+        await page.bringToFront()
+
+        await page.goto(genVar.url+'tags/'+tagName.toLowerCase())
+
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i11.png`})
+        tagName = tagName + "Modified"
+        await page.type('input[name="name"]', "Modified");
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button")) //save button
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i12.png`})
+
+        return tagName;
+    }
+
 
 }
 
