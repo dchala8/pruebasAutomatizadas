@@ -13,6 +13,17 @@ setDefaultTimeout(600 * 1000);
 let browser, page, page2
 let caseFolder
 let tagName
+let publication
+let userName
+let tituloPost
+let siteTitle
+
+function delay(time) {
+    return new Promise(function (resolve) {
+        setTimeout(resolve, time)
+    });
+}
+
 Given('User visits ghost for {string}', async function (string) {
     caseToUse = string
 
@@ -805,6 +816,7 @@ When('User creates a tag, a post with tag and publishes it', async function () {
     tagName = await pageObject.createNewTag(page, caseToUse);
     //Crear Nuevo Page
     await pageObject.createNewPostWithTag(page, caseToUse, tagName);
+    await pageObject.goToPublishedPost(page, caseToUse, tagName);
     // screenshot va en 7
 });
 
@@ -838,11 +850,12 @@ When('User creates a tag, a post with tag, publishes it and deletes the tag', as
     tagName = await pageObject.createNewTag(page, caseToUse);
     //Crear Nuevo Page
     await pageObject.createNewPostWithTag(page, caseToUse, tagName);
+    await pageObject.goToPublishedPost(page, caseToUse, tagName);
      //Post validation 1/2
      let pages = await browser.pages()
      page2 = await pages[2]
      await page2.setViewport({ width: 1366, height: 768 });
-     await page2.screenshot({ path: caseFolder + '9-Post-page.jpg' })
+     await page.screenshot({path: `${caseFolder}/${genVar.port}-i8.png`})
      await delay(500)
      
      console.log("Case 12")
@@ -860,7 +873,7 @@ When('User creates a tag, a post with tag, publishes it and deletes the tag', as
 Then('validate post with no tag', async function () {
     await page2.bringToFront()
     await page2.reload()
-    await page2.screenshot({ path: caseFolder + '12-Post-page-updated.jpg' })
+    await page.screenshot({path: `${caseFolder}/${genVar.port}-i100.png`})
     console.log("Was the tag removed?")
     const [toTagsmain2] = await page2.$x("//a[contains(., '"+tagName+"')]");
     if (toTagsmain2) {
@@ -872,8 +885,286 @@ Then('validate post with no tag', async function () {
     return;
 });
 
-function delay(time) {
-    return new Promise(function (resolve) {
-        setTimeout(resolve, time)
-    });
-}
+//case 13
+When('User creates a tag, a post with tag, publishes it and modifies the tag', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a tags
+    await pageObject.goToTags(page, caseToUse);
+    //Crear Nuevo tag
+    tagName = await pageObject.createNewTag(page, caseToUse);
+    //Crear Nuevo Page
+    await pageObject.createNewPostWithTag(page, caseToUse, tagName);
+    await pageObject.goToPublishedPost(page, caseToUse, tagName);
+     //Post validation 1/2
+     let pages = await browser.pages()
+     page2 = await pages[2]
+     await page2.setViewport({ width: 1366, height: 768 });
+     await page.screenshot({path: `${caseFolder}/${genVar.port}-i8.png`})
+     await delay(500)
+     
+     console.log("Case 12")
+     console.log("Was the post created with the Tag: "+ tagName+"?")
+     const [toTagsmain] = await page2.$x("//a[contains(., '"+tagName+"')]");
+     if (toTagsmain) {
+         console.log("Yes, it was")
+     }else{
+         console.log("No, it was not")
+     }
+    // screenshot va en 7
+    tagName = await pageObject.modifyTag(page, caseToUse, tagName);
+});
+
+Then('validate post with modified tag', async function () {
+    await page2.bringToFront()
+    await page2.reload()
+    console.log("Was the tag updated?")
+    const [toTagsmain2] = await page2.$x("//a[contains(., '"+tagName+"')]");
+    await page.screenshot({path: `${caseFolder}/${genVar.port}-i100.png`})
+    if (toTagsmain2) {
+        console.log("Yes, it was")
+    }else{
+        console.log("No, it was not")
+    }
+    await browser.close()
+    return;
+});
+
+// case 14
+When('User creates a tag, a post with tag,and filter posts with tag', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a tags
+    await pageObject.goToTags(page, caseToUse);
+    //Crear Nuevo tag
+    tagName = await pageObject.createNewTag(page, caseToUse);
+    //Crear Nuevo Page
+    publication = await pageObject.createNewPostWithTag(page, caseToUse, tagName);
+});
+
+Then('validate post with tag on list', async function () {
+    await page.goto(genVar.url+'posts?tag='+tagName.toLowerCase())
+    await delay(1000)
+    console.log("Case 14")
+    console.log("Is the post in the tag filtered list?")
+    const [toTagsmain2] = await page.$x("//h3[contains(., '"+publication.titulo+"')]");
+    await page.screenshot({path: `${caseFolder}/${genVar.port}-i100.png`})
+    if (toTagsmain2) {
+        console.log("Yes, it is")
+    }else{
+        console.log("No, it is not")
+    }
+    await browser.close()
+    return;
+});
+
+// case 15
+When('User creates a member and modifies the member', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    await pageObject.goToMembers(page, caseToUse);
+    //Crear Nuevo usuario
+    userName = await pageObject.newMember(page, caseToUse);
+    //User validation 1/2
+    const [toMembers2] = await page.$x("//a[contains(., 'Members')]");
+    if (toMembers2) {
+        await toMembers2.click();
+    }
+
+    await delay(1000)
+    console.log("Case 15 1/2")
+    console.log("Is the user in list?")
+    const [UserInlist] = await page.$x("//h3[contains(., '"+userName+"')]");
+    await page.screenshot({ path: caseFolder + '7-New-user-in-list.jpg' })
+    if (UserInlist) {
+        console.log("Yes, it is")
+        UserInlist.click()
+    }else{
+        console.log("No, it is not")
+    }
+
+    await pageObject.userUpdate(page, caseToUse);
+});
+
+Then('validate member was updated', async function () {
+    const [toMembers3] = await page.$x("//a[contains(., 'Members')]");
+    if (toMembers3) {
+        await toMembers3.click();
+    }
+
+    await delay(1000)
+    console.log("Case 15 2/2")
+    console.log("Is the user in list updated?")
+    const [UserInlist2] = await page.$x("//h3[contains(., '"+userName+"')]");
+    await page.screenshot({ path: caseFolder + '9-New-user-in-list-updated.jpg' })
+    if (UserInlist2) {
+        console.log("Yes, it is updated")
+    }else{
+        console.log("No, it is not")
+    }
+    await browser.close()
+    return;
+});
+
+// case 16
+When('User modifies principal member', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    await pageObject.toMainUser(page, caseToUse);
+    //Crear Nuevo usuario
+    userName = await pageObject.updateMainUser(page, caseToUse);
+});
+
+Then('validate principal member was updated', async function () {
+    await page.waitForSelector('.gh-post-list-title')
+    let element = await page.$('.gh-post-list-title')
+    let value = await page.evaluate(el => el.textContent, element)
+    console.log("Case 16")
+    console.log("Is the user name updated?")
+    if(value.includes(userName)){
+        console.log("Yes, it is updated")
+    }else{
+        console.log("No, it is not")
+    }
+    await browser.close()
+    return;
+});
+
+// case 17
+When('User updates password', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    await pageObject.toMainUser(page, caseToUse);
+    //Crear Nuevo usuario
+    await pageObject.updatePassword(page, caseToUse,"temp");
+    await pageObject.logOut(page, caseToUse);
+});
+
+Then('validate can not login', async function () {
+    await page.goto(genVar.url+'signin')
+    await page.screenshot({path: `${caseFolder}/${genVar.port}-i22.png`})
+    await page.type('#ember7', genVar.user)
+    await page.type('#ember9', genVar.password)
+    await page.click('#ember11')
+    await page.screenshot({path: `${caseFolder}/${genVar.port}-i23.png`})
+    await page.waitForSelector('.main-error')
+    let element = await page.$('.main-error')
+    let value = await page.evaluate(el => el.textContent, element)
+    console.log("Case 17")
+    console.log("Login error?")
+    if(value.includes("Your password is incorrect.")){
+        console.log("Yes, the password is incorrect as expected")
+    }else{
+        console.log("No, there seems to be adifferent error")
+    }
+    await browser.close()
+    return;
+});
+
+// case 18
+When('User updates password to old one', async function () {
+    //Autenticar
+    await pageObject.loggin2(page, caseToUse);
+    //Ingresar a usuario
+    await pageObject.toMainUser(page, caseToUse);
+    //Crear Nuevo usuario
+    await pageObject.updatePassword(page, caseToUse,"old");
+    await pageObject.logOut(page, caseToUse);
+});
+
+Then('validate can login with old password', async function () {
+    await page.goto(genVar.url+'signin')
+    await page.screenshot({ path: caseFolder + '6-login3.jpg' })
+    await page.type('#ember7', genVar.user)
+    await page.type('#ember9', genVar.password)
+    await page.click('#ember11')
+    await page.waitForSelector('.gh-nav  ', { timeout: 5000 }).catch(err => {
+        console.error("The login information is probably incorrect, please update the information to continue with the test")
+    })
+    await page.screenshot({ path: caseFolder + '3-home.jpg' })
+    let element = await page.$('.gh-nav')
+    console.log("Case 18")
+    console.log("Correctly logged in?")
+    if(element){
+        console.log("Yes, the correctly logged ing with original password")
+    }else{
+        console.log("No, there was a problem")
+    }
+    await browser.close()
+    return;
+});
+
+// case 19
+When('User creates post and modifies it', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    tituloPost = await pageObject.createNewPost(page, caseToUse);
+    
+    //Post validation
+    let pages = await browser.pages()
+    const page2 = await pages[2]
+    await page2.setViewport({ width: 1366, height: 768 });
+    await page2.screenshot({ path: caseFolder + '9-Post-page.jpg' })
+    await delay(500)
+    
+    console.log("Case 19 1/2")
+    console.log("Was the post created with the title: "+ tituloPost+"?")
+    const [articleTitle] = await page2.$x("//h1[contains(., '"+tituloPost+"')]");
+    if (articleTitle) {
+        console.log("Yes, it was")
+    }else{
+        console.log("No, it was not")
+    }
+    tituloPost = await pageObject.modifyPostTitle(page, caseToUse,tituloPost);
+});
+
+Then('validate modified post', async function () {
+    let pages = await browser.pages()
+    const page2 = await pages[2]
+    await page2.bringToFront()
+    await page2.reload()
+
+    console.log("Case 19 2/2")
+    console.log("Was the post updated with the title: "+ tituloPost+"?")
+    const [articleTitle2] = await page2.$x("//h1[contains(., '"+tituloPost+"')]");
+    if (articleTitle2) {
+        console.log("Yes, it was")
+    }else{
+        console.log("No, it was not")
+    }
+    await browser.close()
+    return;
+});
+
+// case 20
+When('User updates site name', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    await pageObject.goToSettings(page, caseToUse);
+    siteTitle = await pageObject.modifySiteTitle(page, caseToUse);
+    
+});
+
+Then('validate modified site name', async function () {
+    await page.reload()
+    await page.waitForSelector('.gh-nav-menu-details-sitetitle')
+    let element = await page.$('.gh-nav-menu-details-sitetitle')
+    let obtainedNewTitle = await page.evaluate(el => el.textContent, element)
+
+    console.log("Case 20")
+    console.log("Was the site title updated to: "+ siteTitle+"?")
+    if (obtainedNewTitle == siteTitle) {
+        console.log("Yes, it was")
+    }else{
+        console.log("No, it was not")
+    }
+
+    await browser.close()
+    return;
+});
+

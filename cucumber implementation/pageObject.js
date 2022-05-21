@@ -296,11 +296,14 @@ class PageObject {
         await page.click(pos.publishMenu).catch(() => console.log("error in click on publish menu"))
         await page.click(pos.publisButton).catch(() => console.log("error in click on publish button"))
         await page.click(pos.blackButton).catch(() => console.log("error in click on publish confirmation"))
+        
+
+        return {titulo:tituloPost};
+    }
+    async goToPublishedPost(page,caseToUse, tagName){
         await delay(1000)
         await page.click(pos.viewPost).catch(() => console.log("error in click on view post"))
         await delay(1000)
-
-        return true;
     }
     async removeTag(page,caseToUse, tagName){
         await page.bringToFront()
@@ -315,7 +318,184 @@ class PageObject {
         return true;
     }
 
+    async modifyTag(page,caseToUse, tagName){
+        await page.bringToFront()
 
+        await page.goto(genVar.url+'tags/'+tagName.toLowerCase())
+
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i11.png`})
+        tagName = tagName + "Modified"
+        await page.type('input[name="name"]', "Modified");
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button")) //save button
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i12.png`})
+
+        return tagName;
+    }
+
+    async goToMembers(page,caseToUse){
+        const [toMembers] = await page.$x("//a[contains(., 'Members')]");
+        if (toMembers) {
+            await toMembers.click();
+        }
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i13.png`})
+        await page.waitForSelector('.gh-btn-primary', { timeout: 5000 })
+
+        return true;
+    }
+
+    async newMember(page,caseToUse){
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on New member button")) //new tag button
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i14.png`})
+        let datecode = Date.now()
+        let useremail = datecode+"@TestUser.com";
+        let userName = "UN"+datecode
+        await delay(500)
+        await page.type('input[name="name"]', userName);
+        await page.type('input[name="email"]', useremail);
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button")) //save button
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i15.png`})
+
+        return userName;
+    }
+
+    async userUpdate(page,caseToUse){
+        await delay(500)
+        await page.type('input[name="name"]', "Modified");
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button")) //save button
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i16.png`})
+
+        return true;
+    }
+
+    async toMainUser(page,caseToUse){
+        await page.click('.gh-user-avatar').catch(() => console.log("error in click on user avatar")) 
+        const [toMembers] = await page.$x("//a[contains(., 'Your profile')]");
+        if (toMembers) {
+            await toMembers.click();
+        }
+
+        return true;
+    }
+
+    async updateMainUser(page,caseToUse){
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i17.png`})
+        await page.type('input[id="user-name"]', "Modified");
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button"))
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i18.png`})
+        let slug = await page.evaluate(() => document.getElementById('user-slug').value)
+        let currentFullName = await page.evaluate(() => document.getElementById('user-name').value)
+        
+        await page.goto(genVar.url+'posts?author='+slug)
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i19.png`})
+        
+
+        return currentFullName;
+    }
+
+    async updatePassword(page,caseToUse, pwToSet){
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i20.png`})
+        let currentPW
+        let newPW 
+        if(pwToSet == "temp"){
+            currentPW = genVar.password
+            newPW = genVar.tempPassword
+        }else{
+            currentPW = genVar.tempPassword
+            newPW = genVar.password
+        }
+        await page.type('input[id="user-password-old"]', currentPW);
+        await page.type('input[id="user-password-new"]', newPW);
+        await page.type('input[id="user-new-password-verification"]', newPW);
+        await page.click('.button-change-password').catch(() => console.log("error in click on Change Password"))
+        await delay(500)
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i21.png`})
+        
+
+        return true;
+    }
+
+    async logOut(page,caseToUse){
+        await page.reload()
+        await delay(500)
+        await page.waitForSelector('.gh-user-avatar')
+        await page.click('.gh-user-avatar').catch(() => console.log("error in click on user avatar")) 
+    
+        const [toSingout] = await page.$x("//a[contains(., 'Sign out')]");
+        if (toSingout) {
+            await toSingout.click();
+        }
+    
+        return true;
+    }
+
+    async loggin2(page,caseToUse) {
+        caseFolder = `../resemble-c/V2/${caseToUse}`
+        await new Promise(r => setTimeout(r, 100));
+        await page.type(".email.ember-text-field.gh-input.ember-view", genVar.user)
+        await page.type(".password.ember-text-field.gh-input.ember-view", genVar.tempPassword)
+        await page.click(".login.gh-btn.gh-btn-login.gh-btn-block.gh-btn-icon.js-login-button.ember-view")
+        await new Promise(r => setTimeout(r, 100));
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i2.png`})
+        await new Promise(r => setTimeout(r, 100));
+        return true;
+    }
+
+    async createNewPost(page,caseToUse) {
+        await page.click('.gh-nav-new-post').catch(() => console.log("error in click on new post button"))
+        await page.screenshot({ path: caseFolder + '7-New-post-page.jpg' })
+        let tituloPost = "Mi post de prueba " + Date.now()
+        const textoPost = " Mi texto de prueba"
+        await page.type('.gh-editor-title', tituloPost)
+        await page.type('.koenig-editor__editor', textoPost)
+        await delay(1000)
+        await page.click('.settings-menu-toggle').catch(() => console.log("error in click on menu button"))
+        await page.screenshot({ path: caseFolder + '8-New-post-info.jpg' })
+        await page.click('.gh-publishmenu').catch(() => console.log("error in click on publish menu"))
+        await page.click('.gh-publishmenu-button').catch(() => console.log("error in click on publish button"))
+        await page.click('.gh-btn-black').catch(() => console.log("error in click on publish confirmation"))
+        await delay(1000)
+        await page.click('.post-view-link').catch(() => console.log("error in click on view post"))
+        await delay(1000)
+        return tituloPost;
+    }
+
+    async modifyPostTitle(page,caseToUse,tituloPost) {
+        await page.bringToFront()
+        await page.type('.gh-editor-title', "Modified")
+        tituloPost = tituloPost+"Modified"
+        await page.screenshot({ path: caseFolder + '10-New-post-title-modified.jpg' })
+        await page.click('.gh-publishmenu').catch(() => console.log("error in click on publish menu"))
+        await page.click('.gh-publishmenu-button').catch(() => console.log("error in click on publish button"))
+    
+        return tituloPost;
+    }
+
+    async goToSettings(page,caseToUse,tituloPost) {
+        await page.click('.settings_svg__a').catch(() => console.log("error in click on settings"))
+        await page.screenshot({ path: caseFolder + '4-Settings-page.jpg' })
+        await page.waitForSelector('.gh-setting-group')
+        await page.click('a[href="#/settings/general/"]').catch(() => console.log("error in click on gneral settings button"))
+        await page.waitForSelector('.gh-expandable-header')
+    
+        return true;
+    }
+
+    async modifySiteTitle(page,caseToUse) {
+        const [title] = await page.$x("//h4[contains(., 'Title & description')]");
+        if (title) {
+            const example_parent = (await title.$x('..'))[0];
+            const example_siblings = await example_parent.$x('following-sibling::*');
+            await example_siblings[0].click();
+        }
+        await page.type('.ember-text-field', "Modified")
+        await page.waitForSelector('.gh-nav-menu-details-sitetitle')
+        let currentTitle = await page.$('.gh-nav-menu-details-sitetitle')
+        let oldTitle = await page.evaluate(el => el.textContent, currentTitle)
+        let siteTitle = oldTitle+"Modified"
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on save button"))
+        
+        return siteTitle;
+    }
 }
 
 function delay(time) {
