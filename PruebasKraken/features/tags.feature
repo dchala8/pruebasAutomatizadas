@@ -14,7 +14,7 @@ Scenario: 11 - Como administrador me gustaria cear tag, crear post con el tag cr
   And I click view with selector "<NEW_TAG_BUTTON>"
   And I wait for 2 seconds
   And I take a screenshot of scenario "11" and step number "4"
-  Then I enter text "Kraken Scenario 11" into field with id "name"
+  Then I define tag name as "$name_1"
   And I wait for 2 seconds
   And I take a screenshot of scenario "11" and step number "5"
   And I click view with selector "<SAVE_TAG_BUTTON>"
@@ -26,14 +26,14 @@ Scenario: 11 - Como administrador me gustaria cear tag, crear post con el tag cr
   And I select New post
   And I wait for 3 seconds
   And I take a screenshot of scenario "11" and step number "8"
-  And I write a new post with title "This is a post with tag: Kraken Scenario 11"
+  And I write a new post with random title "$name_2"
   And I wait for 3 seconds
   And I take a screenshot of scenario "11" and step number "9"
   #Asociar tag al post
   And I click view with selector "<POST_SETTINGS_BUTTON>"
   And I wait for 3 seconds
   And I take a screenshot of scenario "11" and step number "10"
-  Then I define tag name "Kraken Scenario 11" into tags field
+  Then I define tag name "$$name_1" into tags field
   And I wait for 3 seconds
   And I take a screenshot of scenario "11" and step number "11"
   #Validar que el post muestre el tag
@@ -46,7 +46,7 @@ Scenario: 11 - Como administrador me gustaria cear tag, crear post con el tag cr
   Then I navigate to view site page "<GHOST_URL>"
   And I wait for 5 seconds
   And I take a screenshot of scenario "11" and step number "14"
-  Then I found post "This is a post with tag: Kraken Scenario 11" with tag "Kraken Scenario 11" related
+  Then I found post "$$name_2" with tag "$$name_1" related
   And I wait for 5 seconds
   And I take a screenshot of scenario "11" and step number "15"
   And I send a signal to user 12 containing "Finished 11"
@@ -62,18 +62,18 @@ Given I wait for a signal containing "Finished 11" for 9999999 seconds
   And I wait for 2 seconds
   And I click view with selector "<NEW_TAG_BUTTON>"
   And I wait for 2 seconds
-  Then I enter text "Kraken Scenario 12" into field with id "name"
+  Then I define tag name as "$name_3"
   And I click view with selector "<SAVE_TAG_BUTTON>"
   And I wait for 2 seconds
   And I select option posts
   And I wait for 3 seconds
   And I select New post
   And I wait for 3 seconds
-  And I write a new post with title "This is a post with tag: Kraken Scenario 12"
+  And I write a new post with random title "$name_4"
   And I wait for 3 seconds
   #Asociar tag al post
   And I click view with selector "<POST_SETTINGS_BUTTON>"
-  Then I define tag name "Kraken Scenario 12" into tags field
+  Then I define tag name "$$name_3" into tags field
   And I wait for 3 seconds
   #Validar que el post muestre el tag
   And I publish my new post
@@ -82,14 +82,14 @@ Given I wait for a signal containing "Finished 11" for 9999999 seconds
   And I wait for 5 seconds
   Then I navigate to view site page "<GHOST_URL>"
   And I wait for 5 seconds
-  Then I found post "This is a post with tag: Kraken Scenario 12" with tag "Kraken Scenario 12" related
+  Then I found post "$$name_4" with tag "$$name_3" related
   #Eliminar el tag creado
   And I wait for 3 seconds
   And I navigate to edit page "<GHOST_URL>"
   And I wait for 5 seconds
   And I click view with selector "<TAG_MENU>"
   And I wait for 3 seconds
-  Then I select a tag with name "Kraken Scenario 12"
+  Then I select a tag with name "$$name_3"
   And I wait for 3 seconds
   And I click view with selector "<DELETE_TAG_BUTTON>"
   And I wait for 2 seconds
@@ -98,7 +98,7 @@ Given I wait for a signal containing "Finished 11" for 9999999 seconds
   #Validar que el post no muestre el tag
   Then I navigate to view site page "<GHOST_URL>"
   And I wait for 5 seconds
-  Then I dont found post "This is a post with tag: Kraken Scenario 12" with tag "Kraken Scenario 12" related
+  Then I dont found post "$$name_4" with tag "$$name_3" related
   And I send a signal to user 13 containing "Finished 12"
 
 @user13 @web
@@ -112,18 +112,18 @@ Given I wait for a signal containing "Finished 12" for 9999999 seconds
   And I wait for 2 seconds
   And I click view with selector "<NEW_TAG_BUTTON>"
   And I wait for 2 seconds
-  Then I enter text "Kraken Scenario 13" into field with id "name"
+  Then I define tag name as "$name_5"
   And I click view with selector "<SAVE_TAG_BUTTON>"
   And I wait for 2 seconds
   And I select option posts
   And I wait for 3 seconds
   And I select New post
   And I wait for 3 seconds
-  And I write a new post with title "This is a post with tag: Kraken Scenario 13"
+  And I write a new post with random title "$name_6"
   And I wait for 3 seconds
   #Asociar tag al post
   And I click view with selector "<POST_SETTINGS_BUTTON>"
-  Then I define tag name "Kraken Scenario 13" into tags field
+  Then I define tag name "$$name_5" into tags field
   And I wait for 3 seconds
   And I publish my new post
   And I wait for 5 seconds
@@ -132,22 +132,22 @@ Given I wait for a signal containing "Finished 12" for 9999999 seconds
   And I wait for 3 seconds
   Then I navigate to view site page "<GHOST_URL>"
   And I wait for 5 seconds
-  Then I found post "This is a post with tag: Kraken Scenario 13" with tag "Kraken Scenario 13" related
+  Then I found post "$$name_6" with tag "$$name_5" related
   #Modificar el tag creado
   And I wait for 3 seconds
   And I navigate to edit page "<GHOST_URL>"
   And I wait for 5 seconds
   And I click view with selector "<TAG_MENU>"
   And I wait for 3 seconds
-  Then I select a tag with name "Kraken Scenario 13"
+  Then I select a tag with name "$$name_5"
   And I wait for 3 seconds
-  Then I enter text "Kraken Scenario 13 nuevo" into field with id "name"
+  Then I define tag name as "$name_7"
   And I click view with selector "<SAVE_TAG_BUTTON>"
   And I wait for 2 seconds
   #Validar que el post no muestre el tag
   Then I navigate to view site page "<GHOST_URL>"
   And I wait for 5 seconds
-  Then I found post "This is a post with tag: Kraken Scenario 13" with tag "Kraken Scenario 13 nuevo" related
+  Then I found post "$$name_6" with tag "$$name_7" related
   And I send a signal to user 14 containing "Finished 13"
 
 @user14 @web
@@ -165,7 +165,7 @@ Given I wait for a signal containing "Finished 13" for 9999999 seconds
   And I click view with selector "<NEW_TAG_BUTTON>"
   And I wait for 2 seconds
   And I take a screenshot of scenario "14" and step number "4"
-  Then I enter text "Kraken Scenario 14" into field with id "name"
+  Then I define tag name as "$name_8"
   And I wait for 2 seconds
   And I take a screenshot of scenario "14" and step number "5"
   And I click view with selector "<SAVE_TAG_BUTTON>"
@@ -177,14 +177,14 @@ Given I wait for a signal containing "Finished 13" for 9999999 seconds
   And I click view with selector "<NEW_PAGE_BUTTON>"
   And I wait for 3 seconds
   And I take a screenshot of scenario "14" and step number "8"
-  And I write a new page with title "Page for scenario 14"
+  And I write a new page with title "$name_9"
   And I wait for 3 seconds
   And I take a screenshot of scenario "14" and step number "9"
   #Asociar tag al post
   And I click view with selector "<POST_SETTINGS_BUTTON>"
   And I wait for 3 seconds
   And I take a screenshot of scenario "14" and step number "10"
-  Then I define tag name "Kraken Scenario 14" into tags field
+  Then I define tag name "$$name_8" into tags field
   And I wait for 2 seconds
   And I take a screenshot of scenario "14" and step number "11"
   And I publish my new page
@@ -194,9 +194,142 @@ Given I wait for a signal containing "Finished 13" for 9999999 seconds
   And I click view with selector "<RETURN_PAGES>"
   And I wait for 3 seconds
   And I take a screenshot of scenario "14" and step number "13"
-  And I filter by tag "Kraken Scenario 14"
+  And I filter by tag "$$name_8"
   And I wait for 3 seconds
   And I take a screenshot of scenario "14" and step number "14"
-  Then I found page "Page for scenario 14"
+  Then I found page "$$name_9"
   And I take a screenshot of scenario "14" and step number "15"
- 
+  And I send a signal to user 15 containing "Finished 14"
+
+@user15 @web
+Scenario: 21 - Como administrador me gustaría crear tag, definir nombre, salvar y verificar que se haya creado
+Given I wait for a signal containing "Finished 14" for 9999999 seconds
+  And I navigate to edit page "<GHOST_URL>"
+  And I wait for 5 seconds
+  When I make login with "<USER>" and "<PASSWORD>"
+  And I wait for 5 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  And I click view with selector "<NEW_TAG_BUTTON>"
+  And I wait for 2 seconds
+  Then I define tag name as "$name_1"
+  And I click view with selector "<SAVE_TAG_BUTTON>"
+  And I wait for 2 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  Then I should see the new tag with name "$$name_1" in tags list
+  And I send a signal to user 16 containing "Finished 15"
+
+@user16 @web
+Scenario: 22 - Como administrador me gustaría crear un nuevo tag, definir nombre, ingresar un color con menos de 6 caracteres e intentar salvar
+Given I wait for a signal containing "Finished 15" for 9999999 seconds
+  And I navigate to edit page "<GHOST_URL>"
+  And I wait for 5 seconds
+  When I make login with "<USER>" and "<PASSWORD>"
+  And I wait for 5 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  And I click view with selector "<NEW_TAG_BUTTON>"
+  And I wait for 2 seconds
+  Then I define tag name as "$name_1"
+  Then I define tag color with "5" characters
+  And I click view with selector "<SAVE_TAG_BUTTON>"
+  And I wait for 2 seconds
+  Then I should see the retry save button
+  And I send a signal to user 17 containing "Finished 16"
+
+@user17 @web
+Scenario: 23 - Como administrador me gustaría crear un nuevo tag, definir nombre, ingresar un color con más de 6 caracteres e intentar salvar
+Given I wait for a signal containing "Finished 16" for 9999999 seconds
+  And I navigate to edit page "<GHOST_URL>"
+  And I wait for 5 seconds
+  When I make login with "<USER>" and "<PASSWORD>"
+  And I wait for 5 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  And I click view with selector "<NEW_TAG_BUTTON>"
+  And I wait for 2 seconds
+  Then I define tag name as "$name_1"
+  Then I define tag color with "7" characters
+  And I click view with selector "<SAVE_TAG_BUTTON>"
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  Then I should see the new tag with name "$$name_1" in tags list
+  And I send a signal to user 18 containing "Finished 17"
+
+@user18 @web
+Scenario: 24 - Como administrador me gustaría crear un nuevo tag, definir nombre, ingresar un color con 6 caracteres e intentar salvar
+Given I wait for a signal containing "Finished 17" for 9999999 seconds
+  And I navigate to edit page "<GHOST_URL>"
+  And I wait for 5 seconds
+  When I make login with "<USER>" and "<PASSWORD>"
+  And I wait for 5 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  And I click view with selector "<NEW_TAG_BUTTON>"
+  And I wait for 2 seconds
+  Then I define tag name as "$name_1"
+  Then I define tag color with "6" characters
+  And I click view with selector "<SAVE_TAG_BUTTON>"
+  And I wait for 2 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  Then I should see the new tag with name "$$name_1" in tags list
+  And I send a signal to user 19 containing "Finished 18"
+
+@user19 @web
+Scenario: 25 - Como administrador me gustaría crear un nuevo tag, definir nombre, ingresar una descripción con mas de 500 caracteres e intentar salvar
+Given I wait for a signal containing "Finished 18" for 9999999 seconds
+  And I navigate to edit page "<GHOST_URL>"
+  And I wait for 5 seconds
+  When I make login with "<USER>" and "<PASSWORD>"
+  And I wait for 5 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  And I click view with selector "<NEW_TAG_BUTTON>"
+  And I wait for 2 seconds
+  Then I define tag name as "$name_1"
+  Then I define description with "501" characters
+  And I click view with selector "<SAVE_TAG_BUTTON>"
+  And I wait for 2 seconds
+  Then I should see the retry save button
+  And I send a signal to user 20 containing "Finished 19"
+
+@user20 @web
+Scenario: 26 - Como administrador me gustaría crear un nuevo tag, definir nombre, ingresar una descripción con menos de 500 caracteres e intentar salvar
+Given I wait for a signal containing "Finished 19" for 9999999 seconds
+  And I navigate to edit page "<GHOST_URL>"
+  And I wait for 5 seconds
+  When I make login with "<USER>" and "<PASSWORD>"
+  And I wait for 5 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  And I click view with selector "<NEW_TAG_BUTTON>"
+  And I wait for 2 seconds
+  Then I define tag name as "$name_1"
+  Then I define description with "490" characters
+  And I click view with selector "<SAVE_TAG_BUTTON>"
+  And I wait for 2 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  Then I should see the new tag with name "$$name_1" in tags list
+  And I send a signal to user 21 containing "Finished 20"
+
+@user21 @web
+Scenario: 27 - Como administrador me gustaría crear un nuevo tag, definir nombre, ingresar una descripción con 500 caracteres, salvar y verificar que se haya creado
+Given I wait for a signal containing "Finished 20" for 9999999 seconds
+  And I navigate to edit page "<GHOST_URL>"
+  And I wait for 5 seconds
+  When I make login with "<USER>" and "<PASSWORD>"
+  And I wait for 5 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  And I click view with selector "<NEW_TAG_BUTTON>"
+  And I wait for 2 seconds
+  Then I define tag name as "$name_1"
+  Then I define description with "500" characters
+  And I click view with selector "<SAVE_TAG_BUTTON>"
+  And I wait for 2 seconds
+  And I click view with selector "<TAG_MENU>"
+  And I wait for 2 seconds
+  Then I should see the new tag with name "$$name_1" in tags list

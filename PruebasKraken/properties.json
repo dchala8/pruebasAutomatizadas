@@ -1,5 +1,5 @@
 {
-    "GHOST_URL": "http://localhost:2368",
+    "GHOST_URL": "http://localhost:2369",
     "USER": "je.suarezg1@uniandes.edu.co",
     "PASSWORD": "Colombia22",
     "USER_NAME": "Jorge E Suarez González",
@@ -25,5 +25,6 @@
     "PROFILE_OPTION": "//a[contains(@href,'#/settings/staff')]",
     "CHANGE_PASSWORD_BUTTON": "//button/span[text()='Change Password']",
     "SIGNOUT_OPTION": "//a[contains(@href,'#/signout')]",
-    "SAVE_SETTINGS_BUTTON": "//button/span[text()='Save settings']"
+    "SAVE_SETTINGS_BUTTON": "//button/span[text()='Save settings']",
+    "SAVE_BUTTON": "//button/span[text()='Save']"
 }
