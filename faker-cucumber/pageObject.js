@@ -412,15 +412,15 @@ class PageObject {
             confNewPW = newPW
         }else if(pwToSet == "empConf"){
             currentPW = genVar.password
-            newPW = genVar.tempPassword
+            newPW = faker.internet.password()
             confNewPW = ""
         }else if(pwToSet == "diffConf"){
             currentPW = genVar.password
-            newPW = genVar.tempPassword
+            newPW = faker.internet.password()
             confNewPW = faker.internet.password()
         }else if(pwToSet == "noCurretP"){
             currentPW = ""
-            newPW = genVar.tempPassword
+            newPW = faker.internet.password()
             confNewPW = newPW
         }
         await page.type('input[id="user-password-old"]', currentPW);
@@ -530,6 +530,31 @@ class PageObject {
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i18.png`})
         return true;
     }
+
+    async goToDesign(page,caseToUse){
+        await page.goto(`http://localhost:${genVar.port}/ghost/#/settings/design`);
+        return true;
+    }
+    
+    async openDesignElement(page,caseToUse, element){
+        await delay(200)
+        const [toMembers] = await page.$x(`//button[contains(., ${element})]`);
+        if (toMembers) {
+            await toMembers.click();
+        }
+        return true;
+    }
+    
+    async updateDesignElementById(page,caseToUse, elementID, value){
+        await delay(200)
+        await selectText(page,`#${elementID}`)
+        await page.type(`#${elementID}`, value);
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button")) //save button
+        await delay(200)
+        return true;
+    }
+
+    
 }
 
 function delay(time) {

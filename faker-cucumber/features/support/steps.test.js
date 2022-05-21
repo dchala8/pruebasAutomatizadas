@@ -19,6 +19,7 @@ let userName
 let tituloPost
 let siteTitle
 let personalURL
+let designElementValue
 
 function delay(time) {
     return new Promise(function (resolve) {
@@ -1302,4 +1303,42 @@ When('User updates with out original password', async function () {
     //Crear Nuevo usuario
     await pageObject.updatePassword(page, caseToUse,"noCurretP");
     await pageObject.logOut(page, caseToUse);
+});
+
+
+// case 47
+When('User updates site description short', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    
+    await pageObject.goToDesign(page, caseToUse);
+
+    await delay(500)
+    await pageObject.openDesignElement(page, caseToUse, "Brand");
+
+    designElementValue = faker.company.catchPhrase()
+    
+    await pageObject.updateDesignElementById(page, caseToUse, "site-description", designElementValue);
+    
+});
+
+Then('validate updated description', async function () {
+    await page.goto(`http://localhost:${genVar.port}`);
+    await page.waitForSelector('.site-header-content', { timeout: 5000 }).catch(err => {
+        console.error("The login information is probably incorrect, please update the information to continue with the test")
+    })
+    let headerContent = await page.$('div.site-header-content')
+    let descriptionP = await headerContent.$('p')
+    descriptionText = await page.evaluate(el => el.textContent, descriptionP)
+    console.log("Case 47")
+    console.log("Description correctly updated")
+    console.log(designElementValue)
+    console.log(descriptionText)
+    if(descriptionText == designElementValue){
+        console.log("Yes, description was updated")
+    }else{
+        console.log("No, there was a problem")
+    }
+    await browser.close()
+    return;
 });
