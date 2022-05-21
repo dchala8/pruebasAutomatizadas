@@ -18,6 +18,7 @@ let publication
 let userName
 let tituloPost
 let siteTitle
+let personalURL
 
 function delay(time) {
     return new Promise(function (resolve) {
@@ -1170,6 +1171,37 @@ Then('validate modified site name', async function () {
         console.log("Yes, it was")
     }else{
         console.log("No, it was not")
+    }
+
+    await browser.close()
+    return;
+});
+
+// case 41
+When('User sets incorrect profile url', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    personalURL = faker.lorem.words(5)
+    await pageObject.toMainUser(page, caseToUse, personalURL);
+    //Ingresar a usuario
+    await pageObject.updateURL(page, caseToUse, personalURL);
+    siteTitle = await pageObject.modifySiteTitle(page, caseToUse);
+    
+});
+
+Then('validate url was not updated', async function () {
+    await page.reload()
+    await page.waitForSelector('#user-website')
+    let url = await page.evaluate(() => document.getElementById('user-website').value)
+    await page.waitForSelector('.gh-nav-menu-details-sitetitle')
+    
+
+    console.log("Case 41")
+    console.log("Was the personal url prevented to be updated to : "+ personalURL+"?")
+    if (personalURL != url) {
+        console.log("Yes, it was")
+    }else{
+        console.log("No, it was not, error found")
     }
 
     await browser.close()
