@@ -14,6 +14,7 @@ let browser, page, page2
 let caseFolder
 let tagName
 let publication
+let userName
 
 function delay(time) {
     return new Promise(function (resolve) {
@@ -948,6 +949,55 @@ Then('validate post with tag on list', async function () {
     await page.screenshot({path: `${caseFolder}/${genVar.port}-i100.png`})
     if (toTagsmain2) {
         console.log("Yes, it is")
+    }else{
+        console.log("No, it is not")
+    }
+    await browser.close()
+    return;
+});
+
+// case 15
+When('User creates a member and modifies the member', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    await pageObject.goToMembers(page, caseToUse);
+    //Crear Nuevo usuario
+    userName = await pageObject.newMember(page, caseToUse);
+    //User validation 1/2
+    const [toMembers2] = await page.$x("//a[contains(., 'Members')]");
+    if (toMembers2) {
+        await toMembers2.click();
+    }
+
+    await delay(1000)
+    console.log("Case 15 1/2")
+    console.log("Is the user in list?")
+    const [UserInlist] = await page.$x("//h3[contains(., '"+userName+"')]");
+    await page.screenshot({ path: caseFolder + '7-New-user-in-list.jpg' })
+    if (UserInlist) {
+        console.log("Yes, it is")
+        UserInlist.click()
+    }else{
+        console.log("No, it is not")
+    }
+
+    await pageObject.userUpdate(page, caseToUse);
+});
+
+Then('validate member was updated', async function () {
+    const [toMembers3] = await page.$x("//a[contains(., 'Members')]");
+    if (toMembers3) {
+        await toMembers3.click();
+    }
+
+    await delay(1000)
+    console.log("Case 15 2/2")
+    console.log("Is the user in list updated?")
+    const [UserInlist2] = await page.$x("//h3[contains(., '"+userName+"')]");
+    await page.screenshot({ path: caseFolder + '9-New-user-in-list-updated.jpg' })
+    if (UserInlist2) {
+        console.log("Yes, it is updated")
     }else{
         console.log("No, it is not")
     }

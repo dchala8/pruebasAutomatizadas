@@ -332,6 +332,43 @@ class PageObject {
         return tagName;
     }
 
+    async goToMembers(page,caseToUse){
+        const [toMembers] = await page.$x("//a[contains(., 'Members')]");
+        if (toMembers) {
+            await toMembers.click();
+        }
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i13.png`})
+        await page.waitForSelector('.gh-btn-primary', { timeout: 5000 })
+
+        return true;
+    }
+
+    async newMember(page,caseToUse){
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on New member button")) //new tag button
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i14.png`})
+        let datecode = Date.now()
+        let useremail = datecode+"@TestUser.com";
+        let userName = "UN"+datecode
+        await delay(500)
+        await page.type('input[name="name"]', userName);
+        await page.type('input[name="email"]', useremail);
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button")) //save button
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i15.png`})
+
+        return userName;
+    }
+
+    async userUpdate(page,caseToUse){
+        await delay(500)
+        await page.type('input[name="name"]', "Modified");
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button")) //save button
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i16.png`})
+
+        return true;
+    }
+
+
+
 
 }
 
