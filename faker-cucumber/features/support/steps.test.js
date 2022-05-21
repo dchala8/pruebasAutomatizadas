@@ -20,6 +20,9 @@ let tituloPost
 let siteTitle
 let personalURL
 let designElementValue
+let siteLanguage
+let siteCode
+let codeArea
 
 function delay(time) {
     return new Promise(function (resolve) {
@@ -1589,5 +1592,149 @@ When('User incorrectly updates header button background as empty', async functio
     await pageObject.openDesignElement(page, caseToUse, "Site-wide");
     designElementValue = ' '
     await pageObject.updateDesignElementByName(page, caseToUse, "headerButtonBackground", designElementValue);
+    
+});
+
+// case 56
+When('User updates publication language correctly', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    let languages = genVar.validLanguages
+    siteLanguage = languages[Math.floor(Math.random()*languages.length)];
+    await pageObject.goToSettings(page, caseToUse);
+    await pageObject.modifySiteLanguage(page, caseToUse, siteLanguage);
+    
+});
+
+Then('validate publication language updated', async function () {
+    await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
+    await delay(500)
+    //open publication language
+    const [pubLan] = await page.$x("//h4[contains(., 'Publication Language')]");
+    if (pubLan) {
+        const example_parent = (await pubLan.$x('..'))[0];
+        const example_siblings = await example_parent.$x('following-sibling::*');
+        await example_siblings[0].click();
+    }
+    await delay(200)
+    //select input and its value
+    let fieldHandle = await page.$('.ember-text-field')
+    let value = await page.evaluate(x => x.value, fieldHandle)
+
+    console.log("Case 56")
+    console.log("Language updated?")
+    if(value == siteLanguage){
+        console.log("Yes, language was updated")
+    }else{
+        console.log("There was a problem, the language was not updated")
+    }
+    await browser.close()
+    return;
+});
+
+// case 57
+When('User updates publication language INcorrectly', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    siteLanguage = faker.lorem.words(2)
+    await pageObject.goToSettings(page, caseToUse);
+    await pageObject.modifySiteLanguage(page, caseToUse, siteLanguage);
+    
+});
+
+Then('validate publication language was NOT updated', async function () {
+    await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
+    await delay(500)
+    //open publication language
+    const [pubLan] = await page.$x("//h4[contains(., 'Publication Language')]");
+    if (pubLan) {
+        const example_parent = (await pubLan.$x('..'))[0];
+        const example_siblings = await example_parent.$x('following-sibling::*');
+        await example_siblings[0].click();
+    }
+    await delay(200)
+    //select input and its value
+    let fieldHandle = await page.$('.ember-text-field')
+    let value = await page.evaluate(x => x.value, fieldHandle)
+
+    console.log("Case 58")
+    console.log("Language updated?")
+    if(value == siteLanguage){
+        console.log("There is a problem, the language was updated")
+    }else{
+        console.log("All good, language was not updated")
+    }
+    await browser.close()
+    return;
+});
+
+// case 58
+When('User updates publication language as empty', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    siteLanguage = " "
+    await pageObject.goToSettings(page, caseToUse);
+    await pageObject.modifySiteLanguage(page, caseToUse, siteLanguage);
+    
+});
+
+// case 61
+When('User updates header code with incorrect information', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    
+    await pageObject.goToNavigation(page, caseToUse);
+
+    await delay(500)
+    codeArea ='header'
+    siteCode = faker.lorem.sentences(1)
+    await pageObject.updateCode(page, caseToUse, siteCode,codeArea);
+    
+});
+
+
+Then('validate code was not updated', async function () {
+    await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
+    await delay(500)
+    let codeText = await page.evaluate((codeArea) => {
+        let elements = document.getElementsByClassName('CodeMirror-sizer');
+        let strCode
+        if(codeArea =='header'){
+            strCode = elements[0].textContent
+        }
+        else
+            strCode = elements[1].textContent
+        return strCode;
+    }, codeArea);
+
+    console.log("Case 61")
+    console.log("Header correctly prevented to be updated?")
+    codeText = codeText.substring(12)
+    console.log(siteCode)
+    console.log(codeText)
+    // xxxxxxxxxx 1Inventore ratione iste ut minus sed est.
+    if(siteCode != codeText){
+        console.log("Yes, it was prevented")
+    }else{
+        console.log("No, it was updated")
+    }
+    // await browser.close()
+    return;
+});
+
+// case 62
+When('User updates footer code with incorrect information', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    
+    await pageObject.goToNavigation(page, caseToUse);
+
+    await delay(500)
+    codeArea ='footer'
+    siteCode = faker.lorem.sentences(1)
+    await pageObject.updateCode(page, caseToUse, siteCode,codeArea);
     
 });

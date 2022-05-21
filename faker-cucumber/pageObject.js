@@ -570,6 +570,89 @@ class PageObject {
         await delay(200)
         return true;
     }
+
+    async modifySiteLanguage(page,caseToUse, language) {
+        const [pubLan] = await page.$x("//h4[contains(., 'Publication Language')]");
+        if (pubLan) {
+            const example_parent = (await pubLan.$x('..'))[0];
+            const example_siblings = await example_parent.$x('following-sibling::*');
+            await example_siblings[0].click();
+        }
+        await delay(100)
+        await selectText(page, '.ember-text-field')
+        let siteTitle = language
+        await page.type('.ember-text-field', siteTitle)
+        await delay(100)
+        await page.waitForSelector('.gh-nav-menu-details-sitetitle')
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on save button"))
+        
+        return true;
+    }
+
+    async goToNavigation(page,caseToUse){
+        await page.goto(`http://localhost:${genVar.port}/ghost/#/settings/code-injection`);
+        return true;
+    }
+    
+    async updateCode(page,caseToUse, newCode, area){
+        // let info= [newCode, area]
+        // let codeBoxes = await page.evaluate((info) => {
+        //     let data = [];
+        //     elements = document.getElementsByClassName('CodeMirror-sizer');
+        //     if(info[1]=='header')
+        //         elements[0].textContent = info[0]
+        //         else
+        //         elements[0].textContent = info[0]
+        //     return elements;
+        // }, info);
+        // console.log("codeBoxes")
+        // console.log(codeBoxes[0])
+        // await delay(3000)
+        // await codeBoxes[0].click()
+        // await codeBoxes[0].type(newCode)
+        // await delay(3000)
+        // await codeBoxes[1].click()
+        // await codeBoxes[1].type(newCode)
+
+
+        // let info= [newCode, area]
+        let codeLength = await page.evaluate((area) => {
+            let elements = document.getElementsByClassName('CodeMirror-sizer');
+            let strLenght
+            if(area=='header'){
+                strLenght = elements[0].textContent.length
+            }
+            else
+                strLenght = elements[1].textContent.length
+            return strLenght;
+        }, area);
+
+
+        let newca = await page.$$('.CodeMirror-sizer')
+        let elem
+        area=='header'? elem = 0:elem=1
+        await newca[elem].click({ clickCount: 3 })
+        await page.keyboard.press('End');
+        for (let i = 0; i < codeLength; i++) {
+            await page.keyboard.press('Backspace');
+        }
+        await delay(100)
+
+
+        await delay(2000)
+        await newca[elem].type(newCode)
+        await delay(500)
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on save button"))
+        await delay(2000)
+
+
+        // await selectText(page,".CodeMirror-sizer")
+        // const pubLan = await page.$(".CodeMirror-sizer");
+        // await pubLan.click()
+        // await pubLan.type(newCode)
+
+        return true;
+    }
     
 }
 
