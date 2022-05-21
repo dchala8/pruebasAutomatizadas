@@ -1388,12 +1388,50 @@ Then('validate description not updated', async function () {
     let headerContent = await page.$('div.site-header-content')
     let descriptionP = await headerContent.$('p')
     descriptionText = await page.evaluate(el => el.textContent, descriptionP)
-    console.log("Case 47")
+    console.log("Case 49")
     console.log("Description correctly updated?")
     if(descriptionText == designElementValue){
         console.log("This is a problem, should not let update")
     }else{
         console.log("All ok, description was not updated")
+    }
+    await browser.close()
+    return;
+});
+
+// case 50
+When('User updates accent color', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    
+    await pageObject.goToDesign(page, caseToUse);
+
+    await delay(500)
+    await pageObject.openDesignElement(page, caseToUse, "Brand");
+    let hexNum = faker.datatype.hexadecimal(6)
+    designElementValue = hexNum.substring(2,8)
+    
+    await pageObject.updateDesignElementById(page, caseToUse, "accent-color", designElementValue);
+    
+});
+
+Then('validate accent color updated', async function () {
+    await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
+    await pageObject.openDesignElement(page, caseToUse, "Brand");
+    await delay(500)
+    await page.waitForSelector('.input-color')
+
+    const attr = await page.$eval(
+        'input[id="accent-color"]', el => getComputedStyle(el).getPropertyValue('--accent-color')
+    )
+    let value = attr.substring(2,8)
+
+    console.log("Case 50")
+    console.log("Accent color correctly updated?")
+    if(value == designElementValue){
+        console.log("Yes, accent color was updated")
+    }else{
+        console.log("No, there was a problem")
     }
     await browser.close()
     return;
