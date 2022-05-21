@@ -1,6 +1,7 @@
 const { Page } = require('puppeteer');
 const { genVar } = require('./generalVariables.js');
 const pos = require('./pageObjectSupport.js');
+const { faker } = require('@faker-js/faker');
 
 
 let caseFolder = ''
@@ -269,23 +270,22 @@ class PageObject {
         return true;
     }
 
-    async createNewTag(page,caseToUse){
+    async createNewTag(page,caseToUse, tagName){
         await page.waitForSelector(pos.primaryButton, { timeout: 5000 })
         await page.click(pos.primaryButton).catch(() => console.log("error in click on New tag button")) //new tag button
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i5.png`})
-        const tagName = "TestTag"+ Date.now();
         await delay(500)
         await page.type(pos.inputName, tagName);
         await page.click(pos.primaryButton).catch(() => console.log("error in click on Save button")) //save button
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i6.png`})
-        return tagName;
+        return true;
     }
 
     async createNewPostWithTag(page,caseToUse, tagName){
         await page.click(pos.newPost).catch(() => console.log("error in click on new post button"))
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i7.png`})        
-        const tituloPost = "Mi post de prueba " + Date.now()
-        const textoPost = " Mi texto de prueba"
+        const tituloPost = faker.lorem.words(5)
+        const textoPost = faker.lorem.sentences(5, '\n')
         await page.type(pos.postTitleEdit, tituloPost)
         await page.type(pos.postContentEdit, textoPost)
         await delay(1000)
@@ -324,8 +324,9 @@ class PageObject {
         await page.goto(genVar.url+'tags/'+tagName.toLowerCase())
 
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i11.png`})
-        tagName = tagName + "Modified"
-        await page.type('input[name="name"]', "Modified");
+        tagName = faker.lorem.slug()
+        await selectText(page,'input[name="name"]')
+        await page.type('input[name="name"]', tagName);
         await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button")) //save button
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i12.png`})
 
@@ -343,28 +344,28 @@ class PageObject {
         return true;
     }
 
-    async newMember(page,caseToUse){
+    async newMember(page,caseToUse, userName){
         await page.click('.gh-btn-primary').catch(() => console.log("error in click on New member button")) //new tag button
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i14.png`})
-        let datecode = Date.now()
-        let useremail = datecode+"@TestUser.com";
-        let userName = "UN"+datecode
+        let useremail = faker.internet.email()
         await delay(500)
         await page.type('input[name="name"]', userName);
         await page.type('input[name="email"]', useremail);
         await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button")) //save button
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i15.png`})
 
-        return userName;
+        return true;
     }
 
     async userUpdate(page,caseToUse){
         await delay(500)
-        await page.type('input[name="name"]', "Modified");
+        await selectText(page, 'input[name="name"]')
+        let newName = faker.name.findName()
+        await page.type('input[name="name"]', newName);
         await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button")) //save button
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i16.png`})
 
-        return true;
+        return newName;
     }
 
     async toMainUser(page,caseToUse){
@@ -377,19 +378,19 @@ class PageObject {
         return true;
     }
 
-    async updateMainUser(page,caseToUse){
+    async updateMainUser(page,caseToUse, userName){
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i17.png`})
-        await page.type('input[id="user-name"]', "Modified");
+        await selectText(page, 'input[id="user-name"]')
+        await page.type('input[id="user-name"]', userName);
         await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button"))
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i18.png`})
         let slug = await page.evaluate(() => document.getElementById('user-slug').value)
-        let currentFullName = await page.evaluate(() => document.getElementById('user-name').value)
         
         await page.goto(genVar.url+'posts?author='+slug)
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i19.png`})
         
 
-        return currentFullName;
+        return true;
     }
 
     async updatePassword(page,caseToUse, pwToSet){
@@ -443,8 +444,8 @@ class PageObject {
     async createNewPost(page,caseToUse) {
         await page.click('.gh-nav-new-post').catch(() => console.log("error in click on new post button"))
         await page.screenshot({ path: caseFolder + '7-New-post-page.jpg' })
-        let tituloPost = "Mi post de prueba " + Date.now()
-        const textoPost = " Mi texto de prueba"
+        const tituloPost = faker.lorem.words(5)
+        const textoPost = faker.lorem.sentences(5, '\n')
         await page.type('.gh-editor-title', tituloPost)
         await page.type('.koenig-editor__editor', textoPost)
         await delay(1000)
@@ -459,10 +460,12 @@ class PageObject {
         return tituloPost;
     }
 
-    async modifyPostTitle(page,caseToUse,tituloPost) {
+    async modifyPostTitle(page,caseToUse) {
         await page.bringToFront()
-        await page.type('.gh-editor-title', "Modified")
-        tituloPost = tituloPost+"Modified"
+        await page.evaluate( () => document.getElementsByClassName("gh-editor-title").value = "")
+        await selectText(page, '.gh-editor-title')
+        let tituloPost = faker.lorem.words(5)
+        await page.type('.gh-editor-title', tituloPost)
         await page.screenshot({ path: caseFolder + '10-New-post-title-modified.jpg' })
         await page.click('.gh-publishmenu').catch(() => console.log("error in click on publish menu"))
         await page.click('.gh-publishmenu-button').catch(() => console.log("error in click on publish button"))
@@ -470,7 +473,7 @@ class PageObject {
         return tituloPost;
     }
 
-    async goToSettings(page,caseToUse,tituloPost) {
+    async goToSettings(page,caseToUse) {
         await page.click('.settings_svg__a').catch(() => console.log("error in click on settings"))
         await page.screenshot({ path: caseFolder + '4-Settings-page.jpg' })
         await page.waitForSelector('.gh-setting-group')
@@ -487,11 +490,13 @@ class PageObject {
             const example_siblings = await example_parent.$x('following-sibling::*');
             await example_siblings[0].click();
         }
-        await page.type('.ember-text-field', "Modified")
+        await delay(100)
+        await selectText(page, '.ember-text-field')
+        await delay(100)
+        let siteTitle = faker.lorem.words(5)
+        await page.type('.ember-text-field', siteTitle)
+        await delay(100)
         await page.waitForSelector('.gh-nav-menu-details-sitetitle')
-        let currentTitle = await page.$('.gh-nav-menu-details-sitetitle')
-        let oldTitle = await page.evaluate(el => el.textContent, currentTitle)
-        let siteTitle = oldTitle+"Modified"
         await page.click('.gh-btn-primary').catch(() => console.log("error in click on save button"))
         
         return siteTitle;
@@ -502,5 +507,12 @@ function delay(time) {
     return new Promise(function (resolve) {
         setTimeout(resolve, time)
     });
+}
+
+async function selectText(page, selector) {
+    // return new Promise(function (resolve) {
+        const input = await page.$(selector);
+        await input.click({ clickCount: 3 })
+    // });
 }
 module.exports = PageObject;

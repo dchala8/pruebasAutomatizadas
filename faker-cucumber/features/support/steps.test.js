@@ -4,6 +4,7 @@ const puppeteer = require("puppeteer")
 var { setDefaultTimeout } = require('cucumber');
 const { genVar } = require("../../generalVariables.js");
 var fs = require('fs');
+const { faker } = require('@faker-js/faker');
 
 let caseToUse = 'case1';
 const pageObject = new PageObject();
@@ -813,7 +814,8 @@ When('User creates a tag, a post with tag and publishes it', async function () {
     //Ingresar a tags
     await pageObject.goToTags(page, caseToUse);
     //Crear Nuevo tag
-    tagName = await pageObject.createNewTag(page, caseToUse);
+    tagName = faker.lorem.slug()
+    await pageObject.createNewTag(page, caseToUse, tagName);
     //Crear Nuevo Page
     await pageObject.createNewPostWithTag(page, caseToUse, tagName);
     await pageObject.goToPublishedPost(page, caseToUse, tagName);
@@ -847,25 +849,27 @@ When('User creates a tag, a post with tag, publishes it and deletes the tag', as
     //Ingresar a tags
     await pageObject.goToTags(page, caseToUse);
     //Crear Nuevo tag
-    tagName = await pageObject.createNewTag(page, caseToUse);
+    tagName = faker.lorem.slug()
+    await pageObject.createNewTag(page, caseToUse,tagName);
     //Crear Nuevo Page
     await pageObject.createNewPostWithTag(page, caseToUse, tagName);
     await pageObject.goToPublishedPost(page, caseToUse, tagName);
-     //Post validation 1/2
-     let pages = await browser.pages()
-     page2 = await pages[2]
-     await page2.setViewport({ width: 1366, height: 768 });
-     await page.screenshot({path: `${caseFolder}/${genVar.port}-i8.png`})
-     await delay(500)
-     
-     console.log("Case 12")
-     console.log("Was the post created with the Tag: "+ tagName+"?")
-     const [toTagsmain] = await page2.$x("//a[contains(., '"+tagName+"')]");
-     if (toTagsmain) {
-         console.log("Yes, it was")
-     }else{
-         console.log("No, it was not")
-     }
+
+    //Post validation 1/2
+    let pages = await browser.pages()
+    page2 = await pages[2]
+    await page2.setViewport({ width: 1366, height: 768 });
+    await page.screenshot({path: `${caseFolder}/${genVar.port}-i8.png`})
+    await delay(500)
+    
+    console.log("Case 12")
+    console.log("Was the post created with the Tag: "+ tagName+"?")
+    const [toTagsmain] = await page2.$x("//a[contains(., '"+tagName+"')]");
+    if (toTagsmain) {
+        console.log("Yes, it was")
+    }else{
+        console.log("No, it was not")
+    }
     // screenshot va en 7
     await pageObject.removeTag(page, caseToUse, tagName);
 });
@@ -892,25 +896,26 @@ When('User creates a tag, a post with tag, publishes it and modifies the tag', a
     //Ingresar a tags
     await pageObject.goToTags(page, caseToUse);
     //Crear Nuevo tag
-    tagName = await pageObject.createNewTag(page, caseToUse);
+    tagName = faker.lorem.slug()
+    await pageObject.createNewTag(page, caseToUse, tagName);
     //Crear Nuevo Page
     await pageObject.createNewPostWithTag(page, caseToUse, tagName);
     await pageObject.goToPublishedPost(page, caseToUse, tagName);
-     //Post validation 1/2
-     let pages = await browser.pages()
-     page2 = await pages[2]
-     await page2.setViewport({ width: 1366, height: 768 });
-     await page.screenshot({path: `${caseFolder}/${genVar.port}-i8.png`})
-     await delay(500)
-     
-     console.log("Case 12")
-     console.log("Was the post created with the Tag: "+ tagName+"?")
-     const [toTagsmain] = await page2.$x("//a[contains(., '"+tagName+"')]");
-     if (toTagsmain) {
-         console.log("Yes, it was")
-     }else{
-         console.log("No, it was not")
-     }
+    //Post validation 1/2
+    let pages = await browser.pages()
+    page2 = await pages[2]
+    await page2.setViewport({ width: 1366, height: 768 });
+    await page.screenshot({path: `${caseFolder}/${genVar.port}-i8.png`})
+    await delay(500)
+    
+    console.log("Case 12")
+    console.log("Was the post created with the Tag: "+ tagName+"?")
+    const [toTagsmain] = await page2.$x("//a[contains(., '"+tagName+"')]");
+    if (toTagsmain) {
+        console.log("Yes, it was")
+    }else{
+        console.log("No, it was not")
+    }
     // screenshot va en 7
     tagName = await pageObject.modifyTag(page, caseToUse, tagName);
 });
@@ -937,7 +942,8 @@ When('User creates a tag, a post with tag,and filter posts with tag', async func
     //Ingresar a tags
     await pageObject.goToTags(page, caseToUse);
     //Crear Nuevo tag
-    tagName = await pageObject.createNewTag(page, caseToUse);
+    tagName = faker.lorem.slug()
+    await pageObject.createNewTag(page, caseToUse, tagName);
     //Crear Nuevo Page
     publication = await pageObject.createNewPostWithTag(page, caseToUse, tagName);
 });
@@ -965,7 +971,8 @@ When('User creates a member and modifies the member', async function () {
     //Ingresar a usuario
     await pageObject.goToMembers(page, caseToUse);
     //Crear Nuevo usuario
-    userName = await pageObject.newMember(page, caseToUse);
+    userName = faker.name.findName()
+    await pageObject.newMember(page, caseToUse, userName);
     //User validation 1/2
     const [toMembers2] = await page.$x("//a[contains(., 'Members')]");
     if (toMembers2) {
@@ -984,7 +991,7 @@ When('User creates a member and modifies the member', async function () {
         console.log("No, it is not")
     }
 
-    await pageObject.userUpdate(page, caseToUse);
+    userName = await pageObject.userUpdate(page, caseToUse);
 });
 
 Then('validate member was updated', async function () {
@@ -1014,7 +1021,8 @@ When('User modifies principal member', async function () {
     //Ingresar a usuario
     await pageObject.toMainUser(page, caseToUse);
     //Crear Nuevo usuario
-    userName = await pageObject.updateMainUser(page, caseToUse);
+    userName = faker.name.findName()
+    await pageObject.updateMainUser(page, caseToUse, userName);
 });
 
 Then('validate principal member was updated', async function () {
@@ -1101,7 +1109,7 @@ Then('validate can login with old password', async function () {
 When('User creates post and modifies it', async function () {
     //Autenticar
     await pageObject.loggin(page, caseToUse);
-    //Ingresar a usuario
+
     tituloPost = await pageObject.createNewPost(page, caseToUse);
     
     //Post validation
@@ -1119,7 +1127,7 @@ When('User creates post and modifies it', async function () {
     }else{
         console.log("No, it was not")
     }
-    tituloPost = await pageObject.modifyPostTitle(page, caseToUse,tituloPost);
+    tituloPost = await pageObject.modifyPostTitle(page, caseToUse);
 });
 
 Then('validate modified post', async function () {
