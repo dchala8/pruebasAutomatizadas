@@ -1005,3 +1005,28 @@ Then('validate member was updated', async function () {
     return;
 });
 
+// case 16
+When('User modifies principal member', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    await pageObject.toMainUser(page, caseToUse);
+    //Crear Nuevo usuario
+    userName = await pageObject.updateMainUser(page, caseToUse);
+});
+
+Then('validate principal member was updated', async function () {
+    await page.waitForSelector('.gh-post-list-title')
+    let element = await page.$('.gh-post-list-title')
+    let value = await page.evaluate(el => el.textContent, element)
+    console.log("Case 16")
+    console.log("Is the user name updated?")
+    if(value.includes(userName)){
+        console.log("Yes, it is updated")
+    }else{
+        console.log("No, it is not")
+    }
+    await browser.close()
+    return;
+});
+

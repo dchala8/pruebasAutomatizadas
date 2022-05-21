@@ -367,6 +367,31 @@ class PageObject {
         return true;
     }
 
+    async toMainUser(page,caseToUse){
+        await page.click('.gh-user-avatar').catch(() => console.log("error in click on user avatar")) 
+        const [toMembers] = await page.$x("//a[contains(., 'Your profile')]");
+        if (toMembers) {
+            await toMembers.click();
+        }
+
+        return true;
+    }
+
+    async updateMainUser(page,caseToUse){
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i17.png`})
+        await page.type('input[id="user-name"]', "Modified");
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button"))
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i18.png`})
+        let slug = await page.evaluate(() => document.getElementById('user-slug').value)
+        let currentFullName = await page.evaluate(() => document.getElementById('user-name').value)
+        
+        await page.goto(genVar.url+'posts?author='+slug)
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i19.png`})
+        
+
+        return currentFullName;
+    }
+
 
 
 
