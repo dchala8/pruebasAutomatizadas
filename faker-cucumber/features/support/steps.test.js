@@ -1358,3 +1358,43 @@ When('User updates site description empty', async function () {
     await pageObject.updateDesignElementById(page, caseToUse, "site-description", designElementValue);
     
 });
+
+// case 49
+When('User updates site description over 200 char', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    
+    await pageObject.goToDesign(page, caseToUse);
+
+    await delay(500)
+    await pageObject.openDesignElement(page, caseToUse, "Brand");
+
+    let i = 25
+    let words
+    do {
+        words = faker.lorem.words(i)
+        i++
+    } while (words.length < 200);
+    designElementValue = words.substring(0, 200);
+    await pageObject.updateDesignElementById(page, caseToUse, "site-description", designElementValue);
+    
+});
+
+Then('validate description not updated', async function () {
+    await page.goto(`http://localhost:${genVar.port}`);
+    await page.waitForSelector('.site-header-content', { timeout: 5000 }).catch(err => {
+        console.error("The login information is probably incorrect, please update the information to continue with the test")
+    })
+    let headerContent = await page.$('div.site-header-content')
+    let descriptionP = await headerContent.$('p')
+    descriptionText = await page.evaluate(el => el.textContent, descriptionP)
+    console.log("Case 47")
+    console.log("Description correctly updated?")
+    if(descriptionText == designElementValue){
+        console.log("This is a problem, should not let update")
+    }else{
+        console.log("All ok, description was not updated")
+    }
+    await browser.close()
+    return;
+});
