@@ -1030,3 +1030,35 @@ Then('validate principal member was updated', async function () {
     return;
 });
 
+// case 17
+When('User updates password', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    await pageObject.toMainUser(page, caseToUse);
+    //Crear Nuevo usuario
+    await pageObject.updatePassword(page, caseToUse);
+    await pageObject.logOut(page, caseToUse);
+});
+
+Then('validate can not login', async function () {
+    await page.goto(genVar.url+'signin')
+    await page.screenshot({ path: caseFolder + '6-login3.jpg' })
+    await page.type('#ember7', genVar.user)
+    await page.type('#ember9', genVar.password)
+    await page.click('#ember11')
+    await page.screenshot({ path: caseFolder + '7-login-fail.jpg' })
+    await page.waitForSelector('.main-error')
+    let element = await page.$('.main-error')
+    let value = await page.evaluate(el => el.textContent, element)
+    console.log("Case 17")
+    console.log("Login error?")
+    if(value.includes("Your password is incorrect.")){
+        console.log("Yes, the password is incorrect as expected")
+    }else{
+        console.log("No, there seems to be adifferent error")
+    }
+    await browser.close()
+    return;
+});
+

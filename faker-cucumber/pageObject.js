@@ -392,6 +392,32 @@ class PageObject {
         return currentFullName;
     }
 
+    async updatePassword(page,caseToUse){
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i20.png`})
+        await page.type('input[id="user-password-old"]', genVar.password);
+        await page.type('input[id="user-password-new"]', genVar.tempPassword);
+        await page.type('input[id="user-new-password-verification"]', genVar.tempPassword);
+        await page.click('.button-change-password').catch(() => console.log("error in click on Change Password"))
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i21.png`})
+        
+
+        return true;
+    }
+
+    async logOut(page,caseToUse){
+        await page.reload()
+        delay(500)
+        await page.waitForSelector('.gh-user-avatar')
+        await page.click('.gh-user-avatar').catch(() => console.log("error in click on user avatar")) 
+    
+        const [toSingout] = await page.$x("//a[contains(., 'Sign out')]");
+        if (toSingout) {
+            await toSingout.click();
+        }
+    
+        return true;
+    }
+
 
 
 
