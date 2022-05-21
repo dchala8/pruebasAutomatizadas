@@ -410,10 +410,18 @@ class PageObject {
             currentPW = genVar.password
             newPW = ""
             confNewPW = newPW
-        }else if(pwToSet == "diff"){
+        }else if(pwToSet == "empConf"){
             currentPW = genVar.password
             newPW = genVar.tempPassword
             confNewPW = ""
+        }else if(pwToSet == "diffConf"){
+            currentPW = genVar.password
+            newPW = genVar.tempPassword
+            confNewPW = faker.internet.password()
+        }else if(pwToSet == "noCurretP"){
+            currentPW = ""
+            newPW = genVar.tempPassword
+            confNewPW = newPW
         }
         await page.type('input[id="user-password-old"]', currentPW);
         await page.type('input[id="user-password-new"]', newPW);

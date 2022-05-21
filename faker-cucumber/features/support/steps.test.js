@@ -1278,6 +1278,28 @@ When('User updates with empty confirmation password', async function () {
     //Ingresar a usuario
     await pageObject.toMainUser(page, caseToUse);
     //Crear Nuevo usuario
-    await pageObject.updatePassword(page, caseToUse,"diff");
+    await pageObject.updatePassword(page, caseToUse,"empConf");
+    await pageObject.logOut(page, caseToUse);
+});
+
+// case 45
+When('User updates with different confirmation password', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    await pageObject.toMainUser(page, caseToUse);
+    //Crear Nuevo usuario
+    await pageObject.updatePassword(page, caseToUse,"diffConf");
+    await pageObject.logOut(page, caseToUse);
+});
+
+// case 46
+When('User updates with out original password', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    await pageObject.toMainUser(page, caseToUse);
+    //Crear Nuevo usuario
+    await pageObject.updatePassword(page, caseToUse,"noCurretP");
     await pageObject.logOut(page, caseToUse);
 });
