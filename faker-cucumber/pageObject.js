@@ -536,12 +536,16 @@ class PageObject {
         return true;
     }
     
-    async openDesignElement(page,caseToUse, element){
-        await delay(200)
-        const [toMembers] = await page.$x(`//button[contains(., ${element})]`);
-        if (toMembers) {
-            await toMembers.click();
-        }
+    async openDesignElement(page,caseToUse, elementStr){
+        await delay(500)
+
+        await page.evaluate((elementStr) => {
+            let elements = document.getElementsByClassName('gh-nav-design-tab ');
+            for (var element of elements)
+                if(element.textContent.includes(elementStr)) element.click()
+
+        }, elementStr);
+
         return true;
     }
     
@@ -549,12 +553,23 @@ class PageObject {
         await delay(200)
         await selectText(page,`#${elementID}`)
         await page.type(`#${elementID}`, value);
-        await delay(2000)
         await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button")) //save button
         await delay(200)
         return true;
     }
 
+    name="headerButtonBackground"
+
+    async updateDesignElementByName(page,caseToUse, elementName, value){
+        await delay(200)
+        await page.waitForSelector(`input[name="${elementName}"]`)
+        await selectText(page,`input[name="${elementName}"]`)
+        await page.type(`input[name="${elementName}"]`, value);
+        await delay(200)
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button")) //save button
+        await delay(200)
+        return true;
+    }
     
 }
 

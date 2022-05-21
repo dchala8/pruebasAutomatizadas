@@ -1419,7 +1419,9 @@ Then('validate accent color updated', async function () {
     await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
     await pageObject.openDesignElement(page, caseToUse, "Brand");
     await delay(500)
-    await page.waitForSelector('.input-color')
+    await page.waitForSelector('.input-color', { timeout: 5000 }).catch(err => {
+        console.error("problem with selector input/color")
+    })
 
     const attr = await page.$eval(
         'input[id="accent-color"]', el => getComputedStyle(el).getPropertyValue('--accent-color')
@@ -1457,7 +1459,9 @@ Then('validate accent color is not updated', async function () {
     await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
     await pageObject.openDesignElement(page, caseToUse, "Brand");
     await delay(500)
-    await page.waitForSelector('.input-color')
+    await page.waitForSelector('.input-color', { timeout: 5000 }).catch(err => {
+        console.error("problem with selector input-color")
+    })
 
     const attr = await page.$eval(
         'input[id="accent-color"]', el => getComputedStyle(el).getPropertyValue('--accent-color')
@@ -1465,7 +1469,7 @@ Then('validate accent color is not updated', async function () {
     let value = attr.substring(2,8)
 
     // console.log("Case 51 52")
-    console.log("Accent color correctly updated?")
+    console.log("Accent color not updated?")
     if(value == designElementValue){
         console.log("there was a problem, accent color was updated")
     }else{
@@ -1488,5 +1492,102 @@ When('User updates accent color as empty', async function () {
     designElementValue = " "
     
     await pageObject.updateDesignElementById(page, caseToUse, "accent-color", designElementValue);
+    
+});
+
+// case 53
+When('User updates header button background', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    
+    await pageObject.goToDesign(page, caseToUse);
+
+    await delay(500)
+    await pageObject.openDesignElement(page, caseToUse, "Site-wide");
+    let hexNum = faker.datatype.hexadecimal(6)
+    designElementValue = hexNum.substring(2,8)
+    console.log(designElementValue)
+    await pageObject.updateDesignElementByName(page, caseToUse, "headerButtonBackground", designElementValue);
+    
+});
+
+Then('validate header button background updated', async function () {
+    // await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
+    await page.goto(`http://localhost:${genVar.port}`);
+    await delay(500)
+    await page.waitForSelector('.gh-head-button', { timeout: 5000 }).catch(err => {
+        console.error("problem with selector input-color")
+    })
+
+    const attr = await page.$eval(
+        '.gh-head-button', el => getComputedStyle(el).getPropertyValue('--button-bg-color')
+    )
+    console.log(attr)
+    delay(2000)
+    let value = attr.substring(2,8)
+
+    console.log("Case 53")
+    console.log("Accent color correctly updated?")
+    if(value == designElementValue){
+        console.log("Yes, accent color was updated")
+    }else{
+        console.log("No, there was a problem")
+    }
+    await browser.close()
+    return;
+});
+
+// case 54
+When('User incorrectly updates header button background', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    
+    await pageObject.goToDesign(page, caseToUse);
+
+    await delay(500)
+    await pageObject.openDesignElement(page, caseToUse, "Site-wide");
+    let hexNum = faker.datatype.string(5)+'z'
+    designElementValue = hexNum.substring(2,8)
+    await pageObject.updateDesignElementByName(page, caseToUse, "headerButtonBackground", designElementValue);
+    
+});
+
+Then('validate header button background NOT updated', async function () {
+    // await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
+    await page.goto(`http://localhost:${genVar.port}`);
+    await delay(500)
+    await page.waitForSelector('.gh-head-button', { timeout: 5000 }).catch(err => {
+        console.error("problem with selector input-color")
+    })
+
+    const attr = await page.$eval(
+        '.gh-head-button', el => getComputedStyle(el).getPropertyValue('--button-bg-color')
+    )
+    console.log(attr)
+    delay(2000)
+    let value = attr.substring(2,8)
+
+    console.log("Case 54")
+    console.log("Accent color NOT updated?")
+    if(value != designElementValue){
+        console.log("Correct, accent color was NOT updated")
+    }else{
+        console.log("There was a problem, the color was updated")
+    }
+    await browser.close()
+    return;
+});
+
+// case 55
+When('User incorrectly updates header button background as empty', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    
+    await pageObject.goToDesign(page, caseToUse);
+
+    await delay(500)
+    await pageObject.openDesignElement(page, caseToUse, "Site-wide");
+    designElementValue = ' '
+    await pageObject.updateDesignElementByName(page, caseToUse, "headerButtonBackground", designElementValue);
     
 });
