@@ -1331,7 +1331,7 @@ Then('validate updated description', async function () {
     let descriptionP = await headerContent.$('p')
     descriptionText = await page.evaluate(el => el.textContent, descriptionP)
     console.log("Case 47")
-    console.log("Description correctly updated")
+    console.log("Description correctly updated?")
     console.log(designElementValue)
     console.log(descriptionText)
     if(descriptionText == designElementValue){
@@ -1341,4 +1341,20 @@ Then('validate updated description', async function () {
     }
     await browser.close()
     return;
+});
+
+// case 48
+When('User updates site description empty', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    
+    await pageObject.goToDesign(page, caseToUse);
+
+    await delay(500)
+    await pageObject.openDesignElement(page, caseToUse, "Brand");
+
+    designElementValue = ""
+    
+    await pageObject.updateDesignElementById(page, caseToUse, "site-description", designElementValue);
+    
 });
