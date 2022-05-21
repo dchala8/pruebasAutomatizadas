@@ -59,6 +59,7 @@ var fs = require('fs');
         console.log("No, it was not")
     }
     
+    // Post modification
     await page.bringToFront()
     await page.type('.gh-editor-title', "Modified")
     tituloPost = tituloPost+"Modified"
@@ -66,6 +67,7 @@ var fs = require('fs');
     await page.click('.gh-publishmenu').catch(() => console.log("error in click on publish menu"))
     await page.click('.gh-publishmenu-button').catch(() => console.log("error in click on publish button"))
     
+    //post validation 2
     await page2.bringToFront()
     await page2.reload()
 

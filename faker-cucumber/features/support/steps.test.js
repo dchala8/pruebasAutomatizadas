@@ -15,6 +15,7 @@ let caseFolder
 let tagName
 let publication
 let userName
+let tituloPost
 
 function delay(time) {
     return new Promise(function (resolve) {
@@ -1090,6 +1091,49 @@ Then('validate can login with old password', async function () {
         console.log("Yes, the correctly logged ing with original password")
     }else{
         console.log("No, there was a problem")
+    }
+    await browser.close()
+    return;
+});
+
+// case 19
+When('User creates post and modifies it', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    tituloPost = await pageObject.createNewPost(page, caseToUse);
+    
+    //Post validation
+    let pages = await browser.pages()
+    const page2 = await pages[2]
+    await page2.setViewport({ width: 1366, height: 768 });
+    await page2.screenshot({ path: caseFolder + '9-Post-page.jpg' })
+    await delay(500)
+    
+    console.log("Case 19 1/2")
+    console.log("Was the post created with the title: "+ tituloPost+"?")
+    const [articleTitle] = await page2.$x("//h1[contains(., '"+tituloPost+"')]");
+    if (articleTitle) {
+        console.log("Yes, it was")
+    }else{
+        console.log("No, it was not")
+    }
+    tituloPost = await pageObject.modifyPostTitle(page, caseToUse,tituloPost);
+});
+
+Then('validate modified post', async function () {
+    let pages = await browser.pages()
+    const page2 = await pages[2]
+    await page2.bringToFront()
+    await page2.reload()
+
+    console.log("Case 19 2/2")
+    console.log("Was the post updated with the title: "+ tituloPost+"?")
+    const [articleTitle2] = await page2.$x("//h1[contains(., '"+tituloPost+"')]");
+    if (articleTitle2) {
+        console.log("Yes, it was")
+    }else{
+        console.log("No, it was not")
     }
     await browser.close()
     return;

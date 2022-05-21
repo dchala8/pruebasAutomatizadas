@@ -407,7 +407,7 @@ class PageObject {
         await page.type('input[id="user-password-new"]', newPW);
         await page.type('input[id="user-new-password-verification"]', newPW);
         await page.click('.button-change-password').catch(() => console.log("error in click on Change Password"))
-        delay(50000)
+        await delay(500)
         await new Promise(r => setTimeout(r, 10000));
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i21.png`})
         
@@ -417,7 +417,7 @@ class PageObject {
 
     async logOut(page,caseToUse){
         await page.reload()
-        delay(500)
+        await delay(500)
         await page.waitForSelector('.gh-user-avatar')
         await page.click('.gh-user-avatar').catch(() => console.log("error in click on user avatar")) 
     
@@ -441,7 +441,35 @@ class PageObject {
         return true;
     }
 
+    async createNewPost(page,caseToUse) {
+        await page.click('.gh-nav-new-post').catch(() => console.log("error in click on new post button"))
+        await page.screenshot({ path: caseFolder + '7-New-post-page.jpg' })
+        let tituloPost = "Mi post de prueba " + Date.now()
+        const textoPost = " Mi texto de prueba"
+        await page.type('.gh-editor-title', tituloPost)
+        await page.type('.koenig-editor__editor', textoPost)
+        await delay(1000)
+        await page.click('.settings-menu-toggle').catch(() => console.log("error in click on menu button"))
+        await page.screenshot({ path: caseFolder + '8-New-post-info.jpg' })
+        await page.click('.gh-publishmenu').catch(() => console.log("error in click on publish menu"))
+        await page.click('.gh-publishmenu-button').catch(() => console.log("error in click on publish button"))
+        await page.click('.gh-btn-black').catch(() => console.log("error in click on publish confirmation"))
+        await delay(1000)
+        await page.click('.post-view-link').catch(() => console.log("error in click on view post"))
+        await delay(1000)
+        return tituloPost;
+    }
 
+    async modifyPostTitle(page,caseToUse,tituloPost) {
+        await page.bringToFront()
+        await page.type('.gh-editor-title', "Modified")
+        tituloPost = tituloPost+"Modified"
+        await page.screenshot({ path: caseFolder + '10-New-post-title-modified.jpg' })
+        await page.click('.gh-publishmenu').catch(() => console.log("error in click on publish menu"))
+        await page.click('.gh-publishmenu-button').catch(() => console.log("error in click on publish button"))
+    
+        return tituloPost;
+    }
 }
 
 function delay(time) {
