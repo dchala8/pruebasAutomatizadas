@@ -1464,7 +1464,7 @@ Then('validate accent color is not updated', async function () {
     )
     let value = attr.substring(2,8)
 
-    console.log("Case 50")
+    // console.log("Case 51 52")
     console.log("Accent color correctly updated?")
     if(value == designElementValue){
         console.log("there was a problem, accent color was updated")
@@ -1473,4 +1473,20 @@ Then('validate accent color is not updated', async function () {
     }
     await browser.close()
     return;
+});
+
+// case 52
+When('User updates accent color as empty', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    
+    await pageObject.goToDesign(page, caseToUse);
+
+    await delay(500)
+    await pageObject.openDesignElement(page, caseToUse, "Brand");
+   
+    designElementValue = " "
+    
+    await pageObject.updateDesignElementById(page, caseToUse, "accent-color", designElementValue);
+    
 });

@@ -549,6 +549,7 @@ class PageObject {
         await delay(200)
         await selectText(page,`#${elementID}`)
         await page.type(`#${elementID}`, value);
+        await delay(2000)
         await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button")) //save button
         await delay(200)
         return true;
