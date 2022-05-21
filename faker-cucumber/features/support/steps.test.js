@@ -1436,3 +1436,41 @@ Then('validate accent color updated', async function () {
     await browser.close()
     return;
 });
+
+// case 51
+When('User updates accent color incorrectly', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    
+    await pageObject.goToDesign(page, caseToUse);
+
+    await delay(500)
+    await pageObject.openDesignElement(page, caseToUse, "Brand");
+    let hexNum = faker.datatype.string(5)+'z'
+    designElementValue = hexNum.substring(2,8)
+    
+    await pageObject.updateDesignElementById(page, caseToUse, "accent-color", designElementValue);
+    
+});
+
+Then('validate accent color is not updated', async function () {
+    await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
+    await pageObject.openDesignElement(page, caseToUse, "Brand");
+    await delay(500)
+    await page.waitForSelector('.input-color')
+
+    const attr = await page.$eval(
+        'input[id="accent-color"]', el => getComputedStyle(el).getPropertyValue('--accent-color')
+    )
+    let value = attr.substring(2,8)
+
+    console.log("Case 50")
+    console.log("Accent color correctly updated?")
+    if(value == designElementValue){
+        console.log("there was a problem, accent color was updated")
+    }else{
+        console.log("Correct, accent color NOT updated")
+    }
+    await browser.close()
+    return;
+});
