@@ -1043,11 +1043,11 @@ When('User updates password', async function () {
 
 Then('validate can not login', async function () {
     await page.goto(genVar.url+'signin')
-    await page.screenshot({ path: caseFolder + '6-login3.jpg' })
+    await page.screenshot({path: `${caseFolder}/${genVar.port}-i22.png`})
     await page.type('#ember7', genVar.user)
     await page.type('#ember9', genVar.password)
     await page.click('#ember11')
-    await page.screenshot({ path: caseFolder + '7-login-fail.jpg' })
+    await page.screenshot({path: `${caseFolder}/${genVar.port}-i23.png`})
     await page.waitForSelector('.main-error')
     let element = await page.$('.main-error')
     let value = await page.evaluate(el => el.textContent, element)
