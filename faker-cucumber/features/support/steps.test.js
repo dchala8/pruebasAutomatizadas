@@ -1261,10 +1261,9 @@ Then('validate password is not updated', async function () {
     })
     await page.screenshot({ path: caseFolder + '3-home.jpg' })
     let element = await page.$('.gh-nav')
-    console.log("Case 43")
     console.log("Correctly logged in?")
     if(element){
-        console.log("Yes, the correctly logged in with original password")
+        console.log("Yes, the correctly logged in with original password, no incorrect update")
     }else{
         console.log("No, there was a problem")
     }
@@ -1272,3 +1271,13 @@ Then('validate password is not updated', async function () {
     return;
 });
 
+// case 44
+When('User updates with empty confirmation password', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    await pageObject.toMainUser(page, caseToUse);
+    //Crear Nuevo usuario
+    await pageObject.updatePassword(page, caseToUse,"diff");
+    await pageObject.logOut(page, caseToUse);
+});

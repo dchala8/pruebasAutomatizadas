@@ -397,19 +397,27 @@ class PageObject {
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i20.png`})
         let currentPW
         let newPW 
+        let confNewPW
         if(pwToSet == "temp"){
             currentPW = genVar.password
             newPW = genVar.tempPassword
+            confNewPW = newPW
         }else if(pwToSet == "old"){
             currentPW = genVar.tempPassword
             newPW = genVar.password
+            confNewPW = newPW
         }else if(pwToSet == "emp"){
-            currentPW = genVar.tempPassword
+            currentPW = genVar.password
             newPW = ""
+            confNewPW = newPW
+        }else if(pwToSet == "diff"){
+            currentPW = genVar.password
+            newPW = genVar.tempPassword
+            confNewPW = ""
         }
         await page.type('input[id="user-password-old"]', currentPW);
         await page.type('input[id="user-password-new"]', newPW);
-        await page.type('input[id="user-new-password-verification"]', newPW);
+        await page.type('input[id="user-new-password-verification"]', confNewPW);
         await page.click('.button-change-password').catch(() => console.log("error in click on Change Password"))
         await delay(500)
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i21.png`})
