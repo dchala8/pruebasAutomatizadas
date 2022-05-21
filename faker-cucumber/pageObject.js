@@ -503,9 +503,8 @@ class PageObject {
     }
 
     async updateURL(page,caseToUse, url){
-        console.log("imhere")
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i17.png`})
-        // await selectText(page, 'input[id="user-website"]')
+        await selectText(page, 'input[id="user-website"]')
         await delay(500)
         await page.type('input[id="user-website"]', url);
         await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button"))
