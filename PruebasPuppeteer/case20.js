@@ -48,6 +48,7 @@ var fs = require('fs');
     let nuevoTituloSite = oldTitle+"Modified"
     await page.click('.gh-btn-primary').catch(() => console.log("error in click on save button"))
     
+    //Validate update
     await page.reload()
     await page.waitForSelector('.gh-nav-menu-details-sitetitle')
     let element = await page.$('.gh-nav-menu-details-sitetitle')

@@ -470,6 +470,33 @@ class PageObject {
     
         return tituloPost;
     }
+
+    async goToSettings(page,caseToUse,tituloPost) {
+        await page.click('.settings_svg__a').catch(() => console.log("error in click on settings"))
+        await page.screenshot({ path: caseFolder + '4-Settings-page.jpg' })
+        await page.waitForSelector('.gh-setting-group')
+        await page.click('a[href="#/settings/general/"]').catch(() => console.log("error in click on gneral settings button"))
+        await page.waitForSelector('.gh-expandable-header')
+    
+        return true;
+    }
+
+    async modifySiteTitle(page,caseToUse) {
+        const [title] = await page.$x("//h4[contains(., 'Title & description')]");
+        if (title) {
+            const example_parent = (await title.$x('..'))[0];
+            const example_siblings = await example_parent.$x('following-sibling::*');
+            await example_siblings[0].click();
+        }
+        await page.type('.ember-text-field', "Modified")
+        await page.waitForSelector('.gh-nav-menu-details-sitetitle')
+        let currentTitle = await page.$('.gh-nav-menu-details-sitetitle')
+        let oldTitle = await page.evaluate(el => el.textContent, currentTitle)
+        let siteTitle = oldTitle+"Modified"
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on save button"))
+        
+        return siteTitle;
+    }
 }
 
 function delay(time) {

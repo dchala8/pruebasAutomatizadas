@@ -16,6 +16,7 @@ let tagName
 let publication
 let userName
 let tituloPost
+let siteTitle
 
 function delay(time) {
     return new Promise(function (resolve) {
@@ -1135,6 +1136,34 @@ Then('validate modified post', async function () {
     }else{
         console.log("No, it was not")
     }
+    await browser.close()
+    return;
+});
+
+// case 20
+When('User updates site name', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    await pageObject.goToSettings(page, caseToUse);
+    siteTitle = await pageObject.modifySiteTitle(page, caseToUse);
+    
+});
+
+Then('validate modified site name', async function () {
+    await page.reload()
+    await page.waitForSelector('.gh-nav-menu-details-sitetitle')
+    let element = await page.$('.gh-nav-menu-details-sitetitle')
+    let obtainedNewTitle = await page.evaluate(el => el.textContent, element)
+
+    console.log("Case 20")
+    console.log("Was the site title updated to: "+ siteTitle+"?")
+    if (obtainedNewTitle == siteTitle) {
+        console.log("Yes, it was")
+    }else{
+        console.log("No, it was not")
+    }
+
     await browser.close()
     return;
 });
