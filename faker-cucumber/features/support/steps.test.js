@@ -1098,7 +1098,7 @@ Then('validate can login with old password', async function () {
     console.log("Case 18")
     console.log("Correctly logged in?")
     if(element){
-        console.log("Yes, the correctly logged ing with original password")
+        console.log("Yes, the correctly logged in with original password")
     }else{
         console.log("No, there was a problem")
     }
@@ -1235,6 +1235,39 @@ Then('validate url updated', async function () {
         console.log("No, it was not, error found")
     }
 
+    await browser.close()
+    return;
+});
+
+// case 43
+When('User updates with empty password', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    await pageObject.toMainUser(page, caseToUse);
+    //Crear Nuevo usuario
+    await pageObject.updatePassword(page, caseToUse,"emp");
+    await pageObject.logOut(page, caseToUse);
+});
+
+Then('validate password is not updated', async function () {
+    await page.goto(genVar.url+'signin')
+    await page.screenshot({ path: caseFolder + '6-login3.jpg' })
+    await page.type('#ember7', genVar.user)
+    await page.type('#ember9', genVar.password)
+    await page.click('#ember11')
+    await page.waitForSelector('.gh-nav  ', { timeout: 5000 }).catch(err => {
+        console.error("The login information is probably incorrect, please update the information to continue with the test")
+    })
+    await page.screenshot({ path: caseFolder + '3-home.jpg' })
+    let element = await page.$('.gh-nav')
+    console.log("Case 43")
+    console.log("Correctly logged in?")
+    if(element){
+        console.log("Yes, the correctly logged in with original password")
+    }else{
+        console.log("No, there was a problem")
+    }
     await browser.close()
     return;
 });

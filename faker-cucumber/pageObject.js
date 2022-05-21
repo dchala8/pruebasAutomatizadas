@@ -400,9 +400,12 @@ class PageObject {
         if(pwToSet == "temp"){
             currentPW = genVar.password
             newPW = genVar.tempPassword
-        }else{
+        }else if(pwToSet == "old"){
             currentPW = genVar.tempPassword
             newPW = genVar.password
+        }else if(pwToSet == "emp"){
+            currentPW = genVar.tempPassword
+            newPW = ""
         }
         await page.type('input[id="user-password-old"]', currentPW);
         await page.type('input[id="user-password-new"]', newPW);
