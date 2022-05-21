@@ -408,7 +408,6 @@ class PageObject {
         await page.type('input[id="user-new-password-verification"]', newPW);
         await page.click('.button-change-password').catch(() => console.log("error in click on Change Password"))
         await delay(500)
-        await new Promise(r => setTimeout(r, 10000));
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i21.png`})
         
 
