@@ -392,12 +392,23 @@ class PageObject {
         return currentFullName;
     }
 
-    async updatePassword(page,caseToUse){
+    async updatePassword(page,caseToUse, pwToSet){
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i20.png`})
-        await page.type('input[id="user-password-old"]', genVar.password);
-        await page.type('input[id="user-password-new"]', genVar.tempPassword);
-        await page.type('input[id="user-new-password-verification"]', genVar.tempPassword);
+        let currentPW
+        let newPW 
+        if(pwToSet == "temp"){
+            currentPW = genVar.password
+            newPW = genVar.tempPassword
+        }else{
+            currentPW = genVar.tempPassword
+            newPW = genVar.password
+        }
+        await page.type('input[id="user-password-old"]', currentPW);
+        await page.type('input[id="user-password-new"]', newPW);
+        await page.type('input[id="user-new-password-verification"]', newPW);
         await page.click('.button-change-password').catch(() => console.log("error in click on Change Password"))
+        delay(50000)
+        await new Promise(r => setTimeout(r, 10000));
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i21.png`})
         
 
@@ -418,7 +429,17 @@ class PageObject {
         return true;
     }
 
-
+    async loggin2(page,caseToUse) {
+        caseFolder = `../resemble-c/V2/${caseToUse}`
+        await new Promise(r => setTimeout(r, 100));
+        await page.type(".email.ember-text-field.gh-input.ember-view", genVar.user)
+        await page.type(".password.ember-text-field.gh-input.ember-view", genVar.tempPassword)
+        await page.click(".login.gh-btn.gh-btn-login.gh-btn-block.gh-btn-icon.js-login-button.ember-view")
+        await new Promise(r => setTimeout(r, 100));
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i2.png`})
+        await new Promise(r => setTimeout(r, 100));
+        return true;
+    }
 
 
 }

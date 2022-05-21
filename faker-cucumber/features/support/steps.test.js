@@ -1037,7 +1037,7 @@ When('User updates password', async function () {
     //Ingresar a usuario
     await pageObject.toMainUser(page, caseToUse);
     //Crear Nuevo usuario
-    await pageObject.updatePassword(page, caseToUse);
+    await pageObject.updatePassword(page, caseToUse,"temp");
     await pageObject.logOut(page, caseToUse);
 });
 
@@ -1057,6 +1057,39 @@ Then('validate can not login', async function () {
         console.log("Yes, the password is incorrect as expected")
     }else{
         console.log("No, there seems to be adifferent error")
+    }
+    await browser.close()
+    return;
+});
+
+// case 18
+When('User updates password to old one', async function () {
+    //Autenticar
+    await pageObject.loggin2(page, caseToUse);
+    //Ingresar a usuario
+    await pageObject.toMainUser(page, caseToUse);
+    //Crear Nuevo usuario
+    await pageObject.updatePassword(page, caseToUse,"old");
+    await pageObject.logOut(page, caseToUse);
+});
+
+Then('validate can login with old password', async function () {
+    await page.goto(genVar.url+'signin')
+    await page.screenshot({ path: caseFolder + '6-login3.jpg' })
+    await page.type('#ember7', genVar.user)
+    await page.type('#ember9', genVar.password)
+    await page.click('#ember11')
+    await page.waitForSelector('.gh-nav  ', { timeout: 5000 }).catch(err => {
+        console.error("The login information is probably incorrect, please update the information to continue with the test")
+    })
+    await page.screenshot({ path: caseFolder + '3-home.jpg' })
+    let element = await page.$('.gh-nav')
+    console.log("Case 18")
+    console.log("Correctly logged in?")
+    if(element){
+        console.log("Yes, the correctly logged ing with original password")
+    }else{
+        console.log("No, there was a problem")
     }
     await browser.close()
     return;
