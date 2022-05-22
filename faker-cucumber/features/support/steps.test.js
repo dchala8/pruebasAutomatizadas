@@ -23,6 +23,8 @@ let designElementValue
 let siteLanguage
 let siteCode
 let codeArea
+let tituloPage
+let userEmail
 
 function delay(time) {
     return new Promise(function (resolve) {
@@ -79,23 +81,23 @@ When('User creates a new post', async function () {
     //Ingresar a Posts
     await pageObject.goToPost(page, caseToUse);
     //Ingresar a Crear posts
-    await pageObject.goToCreatePost(page, caseToUse);
+    await pageObject.goToCreatePost(page);
     //Crear Nuevo Post
-    await pageObject.createPost(page, caseToUse, caseToUse, caseToUse);
+    this.tituloPost = await faker.name.findName();
+    await pageObject.createPost(page, this.tituloPost, this.tituloPost);
 });
 
 
 Then('validate if post was created', async function () {
     //Validar que si se creo el nuevo post
-    const grabItems = await page.evaluate(() => {
+    const grabItems = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
-
         elements.forEach((publication) => {
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes('case1')) {
+            if (title.innerHTML.includes(selector)) {
                 const lastElement = actualPublication[3]
                 const span = lastElement.querySelector(".flex.items-center span")
                 if (span.innerText.includes("PUBLISHED")) {
@@ -105,7 +107,7 @@ Then('validate if post was created', async function () {
         })
 
         return isItContained;
-    })
+    },this.tituloPost)
     //Se imprime el resultado de las pruebas
     console.log("WAS THE POST CREATED AND PUBLISHED?")
     console.log(grabItems)
@@ -120,10 +122,11 @@ When('User creates a new post and User deletes the new post', async function () 
     //Ingresar a Crear posts
     await pageObject.goToCreatePost(page, caseToUse);
     //Crear Nuevo Post
-    await pageObject.createPost(page, caseToUse, caseToUse, caseToUse);
+    this.tituloPost = await faker.name.findName();
+    await pageObject.createPost(page, this.tituloPost, this.tituloPost);
     // va en 7
     //Validar que si se creo el nuevo post
-    const grabItems = await page.evaluate(() => {
+    const grabItems = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
 
@@ -131,7 +134,7 @@ When('User creates a new post and User deletes the new post', async function () 
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case2")) {
+            if (title.innerHTML.includes(selector)) {
                 const lastElement = actualPublication[3]
                 const span = lastElement.querySelector(".flex.items-center span")
                 if (span.innerText.includes("PUBLISHED")) {
@@ -141,13 +144,13 @@ When('User creates a new post and User deletes the new post', async function () 
         })
 
         return isItContained;
-    })
+    },this.tituloPost)
 
     console.log("WAS THE POST CREATED?");
     console.log(grabItems);
 
     //Ingreso al post para eliminarlo
-    await pageObject.goToSpecificPost(page, caseToUse, 8);
+    await pageObject.goToSpecificPost(page, this.tituloPost, 8);
 
     //Elimino el post
     await pageObject.deletePost(page, caseToUse);
@@ -158,7 +161,7 @@ When('User creates a new post and User deletes the new post', async function () 
 
 Then('Validate if the post was deleted', async function () {
     //Validar que si se elimino el nuevo post
-    const grabItems2 = await page.evaluate(() => {
+    const grabItems2 = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item");
         let isItContained = false;
 
@@ -166,7 +169,7 @@ Then('Validate if the post was deleted', async function () {
             const actualPublication = publication.querySelectorAll("a");
             const firstElement = actualPublication[0];
             const title = firstElement.querySelector("h3");
-            if (title.innerHTML.includes("case2")) {
+            if (title.innerHTML.includes(selector)) {
                 isItContained = true;
             }
         })
@@ -176,7 +179,7 @@ Then('Validate if the post was deleted', async function () {
     console.log("WAS THE POST DELETED?")
     console.log(grabItems2)
     await browser.close();
-});
+},this.tituloPost);
 
 
 When('User creates a new post as a draft', async function () {
@@ -188,11 +191,12 @@ When('User creates a new post as a draft', async function () {
     //Ingresar a Crear posts
     await pageObject.goToCreatePost(page, caseToUse);
     //Crear Nuevo Post como Draft
-    await pageObject.draftPost(page, caseToUse);
+    this.tituloPost = await faker.name.findName();
+    await pageObject.draftPost(page, this.tituloPost);
 
     //THEN
     //Validar que si se creo el nuevo post
-    const grabItems = await page.evaluate(() => {
+    const grabItems = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
 
@@ -200,7 +204,7 @@ When('User creates a new post as a draft', async function () {
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case3")) {
+            if (title.innerHTML.includes(selector)) {
                 const lastElement = actualPublication[3]
                 const span = lastElement.querySelector(".flex.items-center span")
                 if (span.innerText.includes("PUBLISHED")) {
@@ -210,12 +214,12 @@ When('User creates a new post as a draft', async function () {
         })
 
         return isItContained;
-    })
+    },this.tituloPost)
 
     console.log("WAS THE POST PUBLISHED?")
     console.log(grabItems)
     //Validar que si se creo draft del post
-    const grabItems2 = await page.evaluate(() => {
+    const grabItems2 = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
 
@@ -223,7 +227,7 @@ When('User creates a new post as a draft', async function () {
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case3")) {
+            if (title.innerHTML.includes(selector)) {
                 const lastElement = actualPublication[3]
                 const span = lastElement.querySelector(".flex.items-center span")
                 if (span.innerText.includes("DRAFT")) {
@@ -233,7 +237,7 @@ When('User creates a new post as a draft', async function () {
         })
 
         return isItContained;
-    })
+    },this.tituloPost)
 
     console.log("WAS THE POST DRAFTED?")
     console.log(grabItems2)
@@ -243,11 +247,11 @@ When('User creates a new post as a draft', async function () {
 Then('publish the draft and validate it was published', async function () {
 
     //Ingreso al post para publicarlo
-    await pageObject.goToSpecificPost(page, caseToUse, 6);
+    await pageObject.goToSpecificPost(page, this.tituloPost, 6);
     //Publico el post
     await pageObject.publishDraftPost(page, caseToUse);
     //Valido si se publico el post
-    const grabItems3 = await page.evaluate(() => {
+    const grabItems3 = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
 
@@ -255,7 +259,7 @@ Then('publish the draft and validate it was published', async function () {
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case3")) {
+            if (title.innerHTML.includes(selector)) {
                 const lastElement = actualPublication[3]
                 const span = lastElement.querySelector(".flex.items-center span")
                 if (span.innerText.includes("PUBLISHED")) {
@@ -264,7 +268,7 @@ Then('publish the draft and validate it was published', async function () {
             }
         })
         return isItContained;
-    })
+    },this.tituloPost)
 
     console.log("WAS THE POST PUBLISHED?")
     console.log(grabItems3)
@@ -280,11 +284,12 @@ When('User creates a new post and shcedules it', async function () {
     //Ingresar a Crear posts
     await pageObject.goToCreatePost(page, caseToUse);
     //Schedule Nuevo Post 
-    await pageObject.schedulePost(page, caseToUse);
+    this.tituloPost = await faker.name.findName();
+    await pageObject.schedulePost(page, this.tituloPost);
 });
 
 Then('wait five minutes and validate if it was published', async function () {
-    const grabItems = await page.evaluate(() => {
+    const grabItems = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
 
@@ -292,7 +297,7 @@ Then('wait five minutes and validate if it was published', async function () {
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case4")) {
+            if (title.innerHTML.includes(selector)) {
                 const lastElement = actualPublication[3]
                 const span = lastElement.querySelector(".flex.items-center span")
                 if (span.innerText.includes("SCHEDULED")) {
@@ -302,7 +307,7 @@ Then('wait five minutes and validate if it was published', async function () {
         })
 
         return isItContained;
-    })
+    },this.tituloPost)
 
     console.log("WAS THE POST SCHEDULED?")
     console.log(grabItems)
@@ -311,7 +316,7 @@ Then('wait five minutes and validate if it was published', async function () {
     await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
     //Validate if post was Published
     await new Promise(r => setTimeout(r, 3000));
-    const grabItems2 = await page.evaluate(() => {
+    const grabItems2 = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
 
@@ -319,7 +324,7 @@ Then('wait five minutes and validate if it was published', async function () {
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case4")) {
+            if (title.innerHTML.includes(selector)) {
                 const lastElement = actualPublication[3]
                 const span = lastElement.querySelector(".flex.items-center span")
                 if (span.innerText.includes("PUBLISHED")) {
@@ -329,7 +334,7 @@ Then('wait five minutes and validate if it was published', async function () {
         })
 
         return isItContained;
-    })
+    },this.tituloPost)
     console.log("WAS THE POST PUBLISHED?")
     console.log(grabItems2)
     await page.screenshot({ path: `${caseFolder}/${genVar.port}-i8.png` })
@@ -348,13 +353,14 @@ When('User publishes a new post and then unpublishes it', async function () {
     //Ingresar a Crear posts
     await pageObject.goToCreatePost(page, caseToUse);
     //Crear Nuevo Post
-    await pageObject.createPost(page, caseToUse, caseToUse, caseToUse);
+    this.tituloPost = await faker.name.findName();
+    await pageObject.createPost(page, this.tituloPost, this.tituloPost);
     //va en 7
 
 
     //THEN
     //Validar que si se creo el nuevo post
-    const grabItems = await page.evaluate(() => {
+    const grabItems = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
 
@@ -362,7 +368,7 @@ When('User publishes a new post and then unpublishes it', async function () {
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case5")) {
+            if (title.innerHTML.includes(selector)) {
                 const lastElement = actualPublication[3]
                 const span = lastElement.querySelector(".flex.items-center span")
                 if (span.innerText.includes("PUBLISHED")) {
@@ -371,20 +377,20 @@ When('User publishes a new post and then unpublishes it', async function () {
             }
         })
         return isItContained;
-    })
+    },this.tituloPost)
 
     console.log("WAS THE POST PUBLISHED?")
     console.log(grabItems)
 
     //Ingreso al post para marcarlo como Draft
-    await pageObject.goToSpecificPost(page, caseToUse, 8);
+    await pageObject.goToSpecificPost(page, this.tituloPost, 8);
     //Se marca el post como draft
-    await pageObject.setPostAsDraft(page, caseToUse, 9);
+    await pageObject.setPostAsDraft(page, this.tituloPost, 9);
 });
 
 Then('validate if the post was drafted', async function () {
     //Validamos si el post esta Publicado
-    const grabItems2 = await page.evaluate(() => {
+    const grabItems2 = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
 
@@ -392,7 +398,7 @@ Then('validate if the post was drafted', async function () {
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case5")) {
+            if (title.innerHTML.includes(selector)) {
                 const lastElement = actualPublication[3]
                 const span = lastElement.querySelector(".flex.items-center span")
                 if (span.innerText.includes("PUBLISHED")) {
@@ -401,12 +407,12 @@ Then('validate if the post was drafted', async function () {
             }
         })
         return isItContained;
-    })
+    },this.tituloPost)
 
     console.log("WAS THE POST PUBLISHED?")
     console.log(grabItems2)
     //Validamos si el post esta se guardo como Draft
-    const grabItems3 = await page.evaluate(() => {
+    const grabItems3 = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
 
@@ -414,7 +420,7 @@ Then('validate if the post was drafted', async function () {
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case5")) {
+            if (title.innerHTML.includes(selector)) {
                 const lastElement = actualPublication[3]
                 const span = lastElement.querySelector(".flex.items-center span")
                 if (span.innerText.includes("DRAFT")) {
@@ -423,7 +429,7 @@ Then('validate if the post was drafted', async function () {
             }
         })
         return isItContained;
-    })
+    },this.tituloPost)
     console.log("WAS THE POST DRAFTED?")
     console.log(grabItems3)
     //...
@@ -439,12 +445,13 @@ When('User creates a new page', async function () {
     //Ingresar a Crear Pages
     await pageObject.goToNewPages(page, caseToUse);
     //Crear Nuevo Page
-    await pageObject.createNewPage(page, caseToUse, caseToUse, caseToUse);
+    this.tituloPage = await faker.name.findName();
+    await pageObject.createNewPage(page, this.tituloPage, this.tituloPage);
 });
 
 Then('validate if page was created', async function () {
     //Validar que si se Publico la nueva Page
-    const grabItems = await page.evaluate(() => {
+    const grabItems = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
 
@@ -452,7 +459,7 @@ Then('validate if page was created', async function () {
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case6")) {
+            if (title.innerHTML.includes(selector)) {
                 const lastElement = actualPublication[1]
                 const span = lastElement.querySelector(".flex.items-center span")
                 if (span.innerText.includes("PUBLISHED")) {
@@ -462,7 +469,7 @@ Then('validate if page was created', async function () {
         })
 
         return isItContained;
-    })
+    },this.tituloPage)
 
     console.log("WAS THE PAGE PUBLISHED?")
     console.log(grabItems)
@@ -478,11 +485,12 @@ When('User creates a new page and User deletes the new page', async function () 
     await pageObject.goToPages(page, caseToUse);
     //Ingresar a Crear Pages
     await pageObject.goToNewPages(page, caseToUse);
-    //Crear Nuevo Page
-    await pageObject.createNewPage(page, caseToUse, caseToUse, caseToUse);
+    //Crear Nuevo Page=
+    this.tituloPage = await faker.name.findName();
+    await pageObject.createNewPage(page, this.tituloPage, this.tituloPage);
     // screenshot va en 7
     //Validar que si se publico la nueva pagina
-    const grabItems = await page.evaluate(() => {
+    const grabItems = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
 
@@ -490,7 +498,7 @@ When('User creates a new page and User deletes the new page', async function () 
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case7")) {
+            if (title.innerHTML.includes(selector)) {
                 const lastElement = actualPublication[1]
                 const span = lastElement.querySelector(".flex.items-center span")
                 if (span.innerText.includes("PUBLISHED")) {
@@ -500,14 +508,14 @@ When('User creates a new page and User deletes the new page', async function () 
         })
 
         return isItContained;
-    })
+    },this.tituloPage)
 
     console.log("WAS THE PAGE CREATED?")
     console.log(grabItems)
     //Ingreso a la pagina para eliminarla
-    await pageObject.goToSpecificPage(page, caseToUse, 8);
+    await pageObject.goToSpecificPage(page, this.tituloPage, 8);
     //Elimino a la pagina
-    await pageObject.deletePage(page, caseToUse, 9);
+    await pageObject.deletePage(page, this.tituloPage, 9);
 
 
     await new Promise(r => setTimeout(r, 100));
@@ -517,7 +525,7 @@ When('User creates a new page and User deletes the new page', async function () 
 Then('Validate if the page was deleted', async function () {
 
     //Validar que si se elimino la nueva pagina
-    const grabItems2 = await page.evaluate(() => {
+    const grabItems2 = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
 
@@ -525,13 +533,13 @@ Then('Validate if the page was deleted', async function () {
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case7")) {
+            if (title.innerHTML.includes(selector)) {
                 isItContained = true;
             }
         })
 
         return !isItContained;
-    })
+    },this.tituloPage)
 
 
     console.log("WAS THE PAGE DELETED?")
@@ -550,12 +558,13 @@ When('User creates a new page as a draft', async function () {
     //Ingresar a Crear Pages
     await pageObject.goToNewPages(page, caseToUse);
     //Crear Nueva Pagina como draft
-    await pageObject.draftPage(page, caseToUse);
+    this.tituloPage = await faker.name.findName();
+    await pageObject.draftPage(page, this.tituloPage);
     //screenshot va en 5
 
 
     //Validar que si se Publico la nueva pagina
-    const grabItems = await page.evaluate(() => {
+    const grabItems = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
 
@@ -563,7 +572,7 @@ When('User creates a new page as a draft', async function () {
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case8")) {
+            if (title.innerHTML.includes(selector)) {
                 const lastElement = actualPublication[1]
                 const span = lastElement.querySelector(".flex.items-center span")
                 if (span.innerText.includes("PUBLISHED")) {
@@ -573,14 +582,14 @@ When('User creates a new page as a draft', async function () {
         })
 
         return isItContained;
-    })
+    },this.tituloPage)
 
     console.log("WAS THE PAGE PUBLISHED?")
     console.log(grabItems)
 
 
     //Validar que si se creo draft de la Pagina
-    const grabItems2 = await page.evaluate(() => {
+    const grabItems2 = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
 
@@ -588,7 +597,7 @@ When('User creates a new page as a draft', async function () {
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case8")) {
+            if (title.innerHTML.includes(selector)) {
                 const lastElement = actualPublication[1]
                 const span = lastElement.querySelector(".flex.items-center span")
                 if (span.innerText.includes("DRAFT")) {
@@ -598,7 +607,7 @@ When('User creates a new page as a draft', async function () {
         })
 
         return isItContained;
-    })
+    },this.tituloPage)
 
     console.log("WAS THE PAGE DRAFTED?")
     console.log(grabItems2)
@@ -606,13 +615,13 @@ When('User creates a new page as a draft', async function () {
 
 Then('publish the draft page and validate it was published', async function () {
     //Ingreso a la pagina para publicarla
-    await pageObject.goToSpecificPage(page, caseToUse, 6);
+    await pageObject.goToSpecificPage(page, this.tituloPage, 6);
 
 
     //Publico la pagina
-    await pageObject.publishDraftedPage(page, caseToUse, 7);
+    await pageObject.publishDraftedPage(page, this.tituloPage, 7);
     //Valido si se publico la Pagina
-    const grabItems3 = await page.evaluate(() => {
+    const grabItems3 = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
 
@@ -620,7 +629,7 @@ Then('publish the draft page and validate it was published', async function () {
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case8")) {
+            if (title.innerHTML.includes(selector)) {
                 const lastElement = actualPublication[1]
                 const span = lastElement.querySelector(".flex.items-center span")
                 if (span.innerText.includes("PUBLISHED")) {
@@ -630,7 +639,7 @@ Then('publish the draft page and validate it was published', async function () {
         })
 
         return isItContained;
-    })
+    },this.tituloPage)
 
     console.log("WAS THE PAGE PUBLISHED?")
     console.log(grabItems3)
@@ -649,10 +658,11 @@ When('User creates a new page and shcedules it', async function () {
     //Ingresar a Crear Pages
     await pageObject.goToNewPages(page, caseToUse);
     //Crear Nuevo Page
-    await pageObject.schedulePage(page, caseToUse);
+    this.tituloPage = await faker.name.findName();
+    await pageObject.schedulePage(page, this.tituloPage);
     //screenshot va en 7
     //Validar que si se programo para release la nueva Page 5 minutos despues de la hora de creacion
-    const grabItems = await page.evaluate(() => {
+    const grabItems = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
 
@@ -660,7 +670,7 @@ When('User creates a new page and shcedules it', async function () {
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case9")) {
+            if (title.innerHTML.includes(selector)) {
                 const lastElement = actualPublication[1]
                 const span = lastElement.querySelector(".flex.items-center span")
                 if (span.innerText.includes("SCHEDULED")) {
@@ -670,7 +680,7 @@ When('User creates a new page and shcedules it', async function () {
         })
 
         return isItContained;
-    })
+    },this.tituloPage)
 
     console.log("WAS THE PAGE SCHEDULED?")
     console.log(grabItems)
@@ -684,7 +694,7 @@ Then('wait five minutes and validate if the page was published', async function 
 
     //Validate if page was Published
     await new Promise(r => setTimeout(r, 3000));
-    const grabItems2 = await page.evaluate(() => {
+    const grabItems2 = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
 
@@ -692,7 +702,7 @@ Then('wait five minutes and validate if the page was published', async function 
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case9")) {
+            if (title.innerHTML.includes(selector)) {
                 const lastElement = actualPublication[1]
                 const span = lastElement.querySelector(".flex.items-center span")
                 if (span.innerText.includes("PUBLISHED")) {
@@ -702,7 +712,7 @@ Then('wait five minutes and validate if the page was published', async function 
         })
 
         return isItContained;
-    })
+    },this.tituloPage)
 
     console.log("WAS THE PAGE PUBLISHED?")
     console.log(grabItems2)
@@ -722,12 +732,13 @@ When('User publishes a new page and then unpublishes it', async function () {
     //Ingresar a Crear Pages
     await pageObject.goToNewPages(page, caseToUse);
     //Crear Nuevo Page
-    await pageObject.createNewPage(page, caseToUse, caseToUse, caseToUse);
+    this.tituloPage = await faker.name.findName();
+    await pageObject.createNewPage(page, this.tituloPage, this.tituloPage);
     // screenshot va en 7
 
 
     //Validar que si se creo la nueva pagina
-    const grabItems = await page.evaluate(() => {
+    const grabItems = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
 
@@ -735,7 +746,7 @@ When('User publishes a new page and then unpublishes it', async function () {
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case10")) {
+            if (title.innerHTML.includes(selector)) {
                 const lastElement = actualPublication[1]
                 const span = lastElement.querySelector(".flex.items-center span")
                 if (span.innerText.includes("PUBLISHED")) {
@@ -744,21 +755,21 @@ When('User publishes a new page and then unpublishes it', async function () {
             }
         })
         return isItContained;
-    })
+    },this.tituloPage)
 
     console.log("WAS THE PAGE PUBLISHED?")
     console.log(grabItems)
 
     //Ingreso a la page para marcarlo como Draft
-    await pageObject.goToSpecificPage(page, caseToUse, 8)
+    await pageObject.goToSpecificPage(page, this.tituloPage, 8)
 
     //Se marca la pagina como draft
-    await pageObject.setPageAsDraft(page, caseToUse, 9);
+    await pageObject.setPageAsDraft(page, this.tituloPage, 9);
 });
 
 Then('validate if the page was drafted', async function () {
     //Validamos si la pagina esta Publicado
-    const grabItems2 = await page.evaluate(() => {
+    const grabItems2 = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
 
@@ -766,7 +777,7 @@ Then('validate if the page was drafted', async function () {
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case10")) {
+            if (title.innerHTML.includes(selector)) {
                 const lastElement = actualPublication[1]
                 const span = lastElement.querySelector(".flex.items-center span")
                 if (span.innerText.includes("PUBLISHED")) {
@@ -775,14 +786,14 @@ Then('validate if the page was drafted', async function () {
             }
         })
         return isItContained;
-    })
+    },this.tituloPage)
 
     console.log("WAS THE PAGE PUBLISHED?")
     console.log(grabItems2)
 
 
     //Validamos si la page esta se guardo como Draft
-    const grabItems3 = await page.evaluate(() => {
+    const grabItems3 = await page.evaluate((selector) => {
         const elements = document.querySelectorAll(".gh-list-row.gh-posts-list-item")
         let isItContained = false
 
@@ -790,7 +801,7 @@ Then('validate if the page was drafted', async function () {
             const actualPublication = publication.querySelectorAll("a")
             const firstElement = actualPublication[0]
             const title = firstElement.querySelector("h3")
-            if (title.innerHTML.includes("case10")) {
+            if (title.innerHTML.includes(selector)) {
                 const lastElement = actualPublication[1]
                 const span = lastElement.querySelector(".flex.items-center span")
                 if (span.innerText.includes("DRAFT")) {
@@ -799,7 +810,7 @@ Then('validate if the page was drafted', async function () {
             }
         })
         return isItContained;
-    })
+    },this.tituloPage)
 
     console.log("WAS THE PAGE DRAFTED?")
     console.log(grabItems3)
@@ -1591,8 +1602,7 @@ When('User incorrectly updates header button background as empty', async functio
     await delay(500)
     await pageObject.openDesignElement(page, caseToUse, "Site-wide");
     designElementValue = ' '
-    await pageObject.updateDesignElementByName(page, caseToUse, "headerButtonBackground", designElementValue);
-    
+    await pageObject.updateDesignElementByName(page, caseToUse, "headerButtonBackground", designElementValue);    
 });
 
 // case 56
@@ -1736,5 +1746,345 @@ When('User updates footer code with incorrect information', async function () {
     codeArea ='footer'
     siteCode = faker.lorem.sentences(1)
     await pageObject.updateCode(page, caseToUse, siteCode,codeArea);
+});
+
+
+When('User creates a new tag and then saves it', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a tags
+    await pageObject.goToTagsMov(page, caseToUse);
+    //Crear Nuevo tag
+    this.tagName = faker.lorem.slug()
+    await pageObject.createNewTag(page, caseToUse, this.tagName);
+    await pageObject.goToTagsMov(page, caseToUse);
+});
+
+
+Then('validate if the tag was created', async function () {
+    const grabItems = await page.evaluate((selector) => {
+        const elements = document.querySelectorAll(".gh-list-row.gh-tags-list-item")
+        let isItContained = false
+        elements.forEach((publication) => {
+            const actualPublication = publication.querySelectorAll("a")
+            const firstElement = actualPublication[0]
+            const title = firstElement.querySelector("h3")
+            if (title.innerHTML.includes(selector)) {
+                isItContained = true
+            }
+        })
+
+        return isItContained;
+    },this.tagName)
+    //Se imprime el resultado de las pruebas
+    console.log("WAS THE TAG CREATED?")
+    console.log(grabItems)
+    await browser.close();
+});
+
+
+When('User creates a new tag with less than six characters then saves it', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a tags
+    await pageObject.goToTagsMov(page, caseToUse);
+    //Crear Nuevo tag
+    this.tagName = faker.lorem.slug()
+    let colorCode = faker.random.number({min:10000, max:99999});
+    console.log(colorCode)
+    await pageObject.createNewTagWithColor(page, caseToUse, this.tagName,colorCode.toString());
+    console.log("WAS THE TAG CREATED WITH A COLOR OF LESS THAN 6?")
+});
+
+
+When('User creates a new tag with more than six characters then saves it', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a tags
+    await pageObject.goToTagsMov(page, caseToUse);
+    //Crear Nuevo tag
+    this.tagName = faker.lorem.slug()
+    let colorCode = faker.random.number({min:1000000, max:9999999});
+    console.log(colorCode)
+    await pageObject.createNewTagWithColor(page, caseToUse, this.tagName,colorCode.toString());
+    console.log("WAS THE TAG CREATED WITH A COLOR OF MORE THAN 6?")
+});
+
+
+When('User creates a new tag with exactly six characters then saves it', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a tags
+    await pageObject.goToTagsMov(page, caseToUse);
+    //Crear Nuevo tag
+    this.tagName = faker.lorem.slug()
+    let colorCode = faker.random.number({min:100000, max:999999});
+    console.log(colorCode)
+    await pageObject.createNewTagWithColor(page, caseToUse, this.tagName,colorCode.toString());
+    console.log("WAS THE TAG CREATED WITH A COLOR OF EXACTLY 6?")
+});
+
+
+Then('validate if the tag was allowed', async function () {
+    await pageObject.validateIfColorAllowed(page, caseToUse);
+});
+
+
+When('User creates a new tag with more than fivehundred characters as a description, then saves it', async function () {
+     //Autenticar
+     await pageObject.loggin(page, caseToUse);
+     //Ingresar a tags
+     await pageObject.goToTagsMov(page, caseToUse);
+     //Crear Nuevo tag
+     this.tagName = faker.lorem.slug()
+     let description = faker.lorem.words(78);
+     console.log(description)
+     await pageObject.createNewTagWithDescription(page, caseToUse, this.tagName,description);
+     console.log("WAS THE TAG CREATED WITH A DESCRIPTION OF MORE THAN 500?")
+});
+
+
+When('User creates a new tag with less than fivehundred characters as a description, then saves it', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a tags
+    await pageObject.goToTagsMov(page, caseToUse);
+    //Crear Nuevo tag
+    this.tagName = faker.lorem.slug();
+    let description = faker.lorem.words(74);
+    console.log(description)
+    await pageObject.createNewTagWithDescription(page, caseToUse, this.tagName,description);
+    console.log("WAS THE TAG CREATED WITH A DESCRIPTION OF LESS THAN 500?")
+});
+
+
+When('User creates a new tag with exactly five hundred characters as a description, then saves it', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a tags
+    await pageObject.goToTagsMov(page, caseToUse);
+    //Crear Nuevo tag
+    this.tagName = faker.lorem.slug()
+    let description = faker.random.words(80);
+    console.log(description)
+    await pageObject.createNewTagWithDescription(page, caseToUse, this.tagName,description.substring(0,500));
+    console.log("WAS THE TAG CREATED WITH A DESCRIPTION OF EXACTLY 6?")
+});
+
+
+When('User creates a new member, by defining a valid name and email, and tried to save it', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    await pageObject.goToMembersMov(page, caseToUse);
+    //Crear Nuevo usuario
+    let userName = faker.name.findName()
+    let useremail = faker.internet.email()
+    await pageObject.createMember(page, caseToUse, userName, useremail);
+    console.log("WAS THE MEMBER CREATED WITH VALID EMAILS AND NAMES?")
+});
+
+
+When('User creates a new member, by defining a valid name and no email, and tried to save it', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    await pageObject.goToMembersMov(page, caseToUse);
+    //Crear Nuevo usuario
+    let userName = faker.name.findName()
+    let useremail = faker.internet.email()
+    await pageObject.createMember(page, caseToUse, userName, "");
+    console.log("WAS THE MEMBER CREATED?")
+});
+
+
+When('User creates a new member, by defining a valid name and a invalid email, and tried to save it', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    await pageObject.goToMembersMov(page, caseToUse);
+    //Crear Nuevo usuario
+    let userName = faker.name.findName()
+    let useremail = faker.name.findName()
+    await pageObject.createMember(page, caseToUse, userName, useremail);
+    console.log("WAS THE MEMBER CREATED?")
+});
+
+
+When('User creates a new member, by defining a valid name and email, set a note with less than fivehundred characters and try to save it', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    await pageObject.goToMembersMov(page, caseToUse);
+    //Crear Nuevo usuario
+    let userName = faker.name.findName();
+    let useremail = faker.internet.email();
+    let notes = faker.lorem.words(200);
+    await pageObject.createMemberWithNotes(page, caseToUse, userName, useremail,notes.substring(0,450));
+    console.log("WAS THE MEMBER CREATED?")
+});
+
+
+When('User creates a new member, by defining a valid name and email, set a note with exactly fivehundred characters and try to save it', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    await pageObject.goToMembersMov(page, caseToUse);
+    //Crear Nuevo usuario
+    let userName = faker.name.findName();
+    let useremail = faker.internet.email();
+    let notes = faker.lorem.words(200);
+    await pageObject.createMemberWithNotes(page, caseToUse, userName, useremail,notes.substring(0,500));
+    console.log("WAS THE MEMBER CREATED?")
+});
+
+
+When('User creates a new member, by defining a valid name and email, set a note with more than fivehundred characters and try to save it', async function () {
+    //Autenticar
+    await pageObject.loggin(page, caseToUse);
+    //Ingresar a usuario
+    await pageObject.goToMembersMov(page, caseToUse);
+    //Crear Nuevo usuario
+    let userName = faker.name.findName();
+    let useremail = faker.internet.email();
+    let notes = faker.lorem.words(200);
+    await pageObject.createMemberWithNotes(page, caseToUse, userName, useremail,notes.substring(0,501));
+    console.log("WAS THE MEMBER CREATED?")
+});
+
+
+When('User goes to his profile, deletes its name and tries to save', async function () {
+    await pageObject.loggin(page,caseToUse);
+    await new Promise(r => setTimeout(r, 100));
+    await pageObject.toMainUserMov(page,caseToUse);
+    await new Promise(r => setTimeout(r, 150));
+    await pageObject.setUserNameEmpty(page,caseToUse);
+});
+
+
+Then('validate if the new profile was allowed to save', async function () {
+    console.log("was the member updated?")
+    await pageObject.validateIfUserNameAllowed(page,caseToUse);
+    await new Promise(r => setTimeout(r, 100));
+    await browser.close();
+});
+
     
+Then('validate if the new member was allowed', async function () {
+    console.log("was the member updated?")
+    await pageObject.validateIfMemberAllowed(page, caseToUse);
+    await browser.close();
+});
+
+
+When('User goes to his profile, defines a new UserName saves.', async function () {
+    await pageObject.loggin(page,caseToUse);
+    await new Promise(r => setTimeout(r, 100));
+    await pageObject.toMainUserMov(page,caseToUse);
+    await new Promise(r => setTimeout(r, 150));
+    this.userName = await page.evaluate(() => document.getElementById('user-name').value);
+    console.log("ORIGINAL NAME: "+this.userName);
+    let userName2 = faker.name.findName();
+    console.log("NEW NAME: "+this.userName2);
+    await new Promise(r => setTimeout(r, 150));
+    await page.click('.content-cover.ember-view');
+    await pageObject.setUserName(page,caseToUse,userName2);
+    await new Promise(r => setTimeout(r, 150));
+    await pageObject.validateIfUserNameAllowed(page,caseToUse);
+});
+
+
+Then('returns to its original name and validate if the new profile was allowed to save', async function () {
+    await pageObject.setUserName(page,caseToUse,this.userName);
+    await new Promise(r => setTimeout(r, 150));
+    console.log("Was the profile updated?");
+    await pageObject.validateIfUserNameAllowed(page,caseToUse);
+    await browser.close();
+    
+});
+
+
+When('User goes to his profile, defines a new Email saves.', async function () {
+    await pageObject.loggin(page,caseToUse);
+    await new Promise(r => setTimeout(r, 100));
+    await pageObject.toMainUserMov(page,caseToUse);
+    await new Promise(r => setTimeout(r, 150));
+    this.userEmail = await page.evaluate(() => document.getElementById('user-email').value);
+    console.log("ORIGINAL EMAIL: "+this.userEmail);
+    let email2 = faker.internet.email();
+    console.log("NEW EMAIL: "+email2);
+    await new Promise(r => setTimeout(r, 150));
+    await page.click('.content-cover.ember-view');
+    await pageObject.setEmail(page,caseToUse,email2);
+    await new Promise(r => setTimeout(r, 150));
+    await pageObject.validateIfUserNameAllowed(page,caseToUse);
+});
+
+
+Then('returns to its original email and validate if the new profile was allowed to save', async function () {
+    await pageObject.setEmail(page,caseToUse,this.userEmail);
+    await new Promise(r => setTimeout(r, 150));
+    console.log("Was the profile updated?");
+    await pageObject.validateIfUserNameAllowed(page,caseToUse);
+    await browser.close();
+});
+
+
+When('User goes to his profile, defines a new invalid Email saves.', async function () {
+    await pageObject.loggin(page,caseToUse);
+    await new Promise(r => setTimeout(r, 100));
+    await pageObject.toMainUserMov(page,caseToUse);
+    await new Promise(r => setTimeout(r, 150));
+    let email2 = faker.name.findName();
+    console.log("NEW EMAIL: "+email2);
+    await new Promise(r => setTimeout(r, 150));
+    await page.click('.content-cover.ember-view');
+    await pageObject.setEmail(page,caseToUse,email2);
+    await new Promise(r => setTimeout(r, 150));
+});
+
+
+Then('Validate if the new profile was allowed to save', async function () {
+    console.log("Was the profile updated?");
+    await pageObject.validateIfUserNameAllowed(page,caseToUse);
+    await browser.close();
+});
+
+
+When('User goes to his profile, defines a new biography of twohundred characters and saves.', async function () {
+    await pageObject.loggin(page,caseToUse);
+    await new Promise(r => setTimeout(r, 100));
+    await pageObject.toMainUserMov(page,caseToUse);
+    await new Promise(r => setTimeout(r, 150));
+    let bio = faker.random.words(70).substring(0,200);
+    await new Promise(r => setTimeout(r, 150));
+    await page.click('.content-cover.ember-view');
+    await pageObject.setBio(page,caseToUse,bio);
+    await new Promise(r => setTimeout(r, 150));
+});
+
+
+When('User goes to his profile, defines a new biography of less than twohundred characters and saves.', async function () {
+    await pageObject.loggin(page,caseToUse);
+    await new Promise(r => setTimeout(r, 100));
+    await pageObject.toMainUserMov(page,caseToUse);
+    await new Promise(r => setTimeout(r, 150));
+    let bio = await faker.random.words(70).substring(0,150);
+    await new Promise(r => setTimeout(r, 150));
+    await page.click('.content-cover.ember-view');
+    await pageObject.setBio(page,caseToUse,bio);
+    await new Promise(r => setTimeout(r, 150));
+});
+
+
+When('User goes to his profile, defines a new biography of more than twohundred characters and saves.', async function () {
+    await pageObject.loggin(page,caseToUse);
+    await new Promise(r => setTimeout(r, 100));
+    await pageObject.toMainUserMov(page,caseToUse);
+    await new Promise(r => setTimeout(r, 150));
+    let bio = await faker.random.words(70).substring(0,250);
+    await new Promise(r => setTimeout(r, 150));
+    await page.click('.content-cover.ember-view');
+    await pageObject.setBio(page,caseToUse,bio);
+    await new Promise(r => setTimeout(r, 150));
 });

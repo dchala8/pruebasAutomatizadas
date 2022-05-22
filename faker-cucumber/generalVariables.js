@@ -1,5 +1,5 @@
-let initialPassword = "carlosmora345"
-let secondPassword = "carlosmora346"
+let initialPassword = "mateo041993"
+let secondPassword = "mateo041993"
 let port1 = '2368'
 let port2 = '2369'
 let validLanguages = ['en','es','fr','de','pt','zh']
@@ -8,7 +8,7 @@ let port = port1
 // let port = port2
 
 var genVar = {
-    user: 'morandres.carlos@gmail.com',
+    user: 'daachalabu@unal.edu.co',
     password: initialPassword,
     tempPassword: secondPassword,
     // password: secondPassword,

@@ -28,14 +28,14 @@ class PageObject {
         return true;
     }
 
-    async goToCreatePost(page,caseToUse) {
+    async goToCreatePost(page) {
         await page.click(".ember-view.gh-btn.gh-btn-primary.view-actions-top-row")
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i4.png`})
         await new Promise(r => setTimeout(r, 100));
         return true;
     }
 
-    async createPost(page,caseToUse,title,content){    
+    async createPost(page,title,content){    
         await page.type(".gh-editor-title.ember-text-area.gh-input.ember-view", title)
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i5.png`})
         await new Promise(r => setTimeout(r, 1000));
@@ -158,7 +158,7 @@ class PageObject {
         return true;
     }
 
-    async createNewPage(page,caseToUse,title,content){
+    async createNewPage(page,title,content){
         await page.type(".gh-editor-title.ember-text-area.gh-input.ember-view", title)
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i5.png`})
         await new Promise(r => setTimeout(r, 1000));
@@ -262,10 +262,24 @@ class PageObject {
     }
 
     //TAGS
-    async goToTags(page,caseToUse){
-        const [toTags] = await page.$x(pos.tagsPageLink);
-        if (toTags) {await toTags.click();}
+    async goToTagsMov(page,caseToUse){
+        await page.click(".gh-mobile-nav-bar-more")
+        await new Promise(r => setTimeout(r, 100));
+        const [button] = await page.$x("//a[contains(., 'Tags')]");
+        if (button) {
+            await button.click();
+        }
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i4.png`})
+        return true;
+    }
+
+    async goToTags(page,caseToUse){
+        const [toMembers] = await page.$x("//a[contains(., 'Tags')]");
+        if (toMembers) {
+            await toMembers.click();
+        }
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i13.png`})
+        await page.waitForSelector('.gh-btn-primary', { timeout: 5000 })
 
         return true;
     }
@@ -276,6 +290,17 @@ class PageObject {
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i5.png`})
         await delay(500)
         await page.type(pos.inputName, tagName);
+        await page.click(pos.primaryButton).catch(() => console.log("error in click on Save button")) //save button
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i6.png`})
+        return true;
+    }
+
+    async createNewTagWithColor(page,caseToUse, tagName, color){
+        await page.waitForSelector(pos.primaryButton, { timeout: 5000 })
+        await page.click(pos.primaryButton).catch(() => console.log("error in click on New tag button")) //new tag button
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i5.png`})
+        await page.type(pos.inputName, tagName);
+        await page.type("input[name=accent-color]",color)
         await page.click(pos.primaryButton).catch(() => console.log("error in click on Save button")) //save button
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i6.png`})
         return true;
@@ -344,6 +369,17 @@ class PageObject {
         return true;
     }
 
+    async goToMembersMov(page,caseToUse){
+        await page.click(".gh-mobile-nav-bar-more")
+        await new Promise(r => setTimeout(r, 100));
+        const [button] = await page.$x("//a[contains(., 'Members')]");
+        if (button) {
+            await button.click();
+        }
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i4.png`})
+        return true;
+    }
+
     async newMember(page,caseToUse, userName){
         await page.click('.gh-btn-primary').catch(() => console.log("error in click on New member button")) //new tag button
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i14.png`})
@@ -351,6 +387,31 @@ class PageObject {
         await delay(500)
         await page.type('input[name="name"]', userName);
         await page.type('input[name="email"]', useremail);
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button")) //save button
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i15.png`})
+
+        return true;
+    }
+
+    async createMember(page,caseToUse, userName,useremail){
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on New member button")) //new tag button
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i14.png`})
+        await delay(500)
+        await page.type('input[name="name"]', userName);
+        await page.type('input[name="email"]', useremail);
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button")) //save button
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i15.png`})
+
+        return true;
+    }
+
+    async createMemberWithNotes(page,caseToUse, userName,useremail,notes){
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on New member button")) //new tag button
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i14.png`})
+        await delay(500)
+        await page.type('input[name="name"]', userName);
+        await page.type('input[name="email"]', useremail);
+        await page.type('textarea[name="note"]', notes);
         await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button")) //save button
         await page.screenshot({path: `${caseFolder}/${genVar.port}-i15.png`})
 
@@ -653,6 +714,122 @@ class PageObject {
 
         return true;
     }
+
+
+    async validateIfColorAllowed(page,caseToUse){
+        let codeLength = await page.evaluate(() => {
+            let elements = document.getElementsByClassName('error');
+            return elements.length
+        });
+        console.log(codeLength)
+        if(codeLength>1){
+            console.log("FALSE")
+        }else{
+            console.log("TRUE")
+        }
+        return true;
+    }
+
+    async validateIfMemberAllowed(page,caseToUse){
+        let codeLength = await page.evaluate(() => {
+            let elements = document.getElementsByClassName('error');
+            return elements.length
+        });
+        console.log(codeLength)
+        if(codeLength>0){
+            console.log("FALSE")
+        }else{
+            console.log("TRUE")
+        }
+        return true;
+    }
+
+    async createNewTagWithDescription(page,caseToUse, tagName, description){
+        await page.waitForSelector(pos.primaryButton, { timeout: 5000 })
+        await page.click(pos.primaryButton).catch(() => console.log("error in click on New tag button")) //new tag button
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i5.png`})
+        await page.type(pos.inputName, tagName);
+        await page.type("textarea[name=description]",description)
+        await page.click(pos.primaryButton).catch(() => console.log("error in click on Save button")) //save button
+        await page.screenshot({path: `${caseFolder}/${genVar.port}-i6.png`})
+        return true;
+    }
+
+
+    async toMainUserMov(page,caseToUse){
+        await page.click(".gh-mobile-nav-bar-more")
+        await new Promise(r => setTimeout(r, 100));
+        await page.click(".flex-auto.flex.items-center")
+        await new Promise(r => setTimeout(r, 100));
+        const [toMembers] = await page.$x("//a[contains(., 'Your profile')]");
+        if (toMembers) {
+            await toMembers.click();
+        }
+        await new Promise(r => setTimeout(r, 100));
+        return true;
+    }
+
+    async setUserNameEmpty(page,caseToUse){
+        await new Promise(r => setTimeout(r, 150));
+        await page.click('.content-cover.ember-view')
+        await new Promise(r => setTimeout(r, 100));
+        let searchInput = await page.$('#user-name');
+        await searchInput.click({clickCount: 3});
+        await searchInput.press('Backspace');
+        await new Promise(r => setTimeout(r, 100));
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button"))
+    }
+
+
+    async validateIfUserNameAllowed(page,caseToUse){
+        let codeLength = await page.evaluate(() => {
+            let elements = document.getElementsByClassName('error');
+            return elements.length
+        });
+        console.log(codeLength)
+        if(codeLength>0){
+            console.log("FALSE")
+        }else{
+            console.log("TRUE")
+        }
+        return true;
+    }
+
+
+    async setUserName(page,caseToUse,description){
+        await new Promise(r => setTimeout(r, 100));
+        let searchInput = await page.$('#user-name');
+        await searchInput.click({clickCount: 3});
+        await searchInput.press('Backspace');
+        await new Promise(r => setTimeout(r, 100));
+        await page.type("input[id=user-name]",description)
+        await new Promise(r => setTimeout(r, 100));
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button"))
+    }
+
+
+    async setEmail(page,caseToUse,description){
+        await new Promise(r => setTimeout(r, 100));
+        let searchInput = await page.$('#user-email');
+        await searchInput.click({clickCount: 3});
+        await searchInput.press('Backspace');
+        await new Promise(r => setTimeout(r, 100));
+        await page.type("input[id=user-email]",description)
+        await new Promise(r => setTimeout(r, 100));
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button"))
+    }
+
+
+    async setBio(page,caseToUse,description){
+        await new Promise(r => setTimeout(r, 100));
+        let searchInput = await page.$('#user-bio');
+        await searchInput.click({clickCount: 3});
+        await searchInput.press('Backspace');
+        await new Promise(r => setTimeout(r, 100));
+        await page.type("textarea[id=user-bio]",description)
+        await new Promise(r => setTimeout(r, 100));
+        await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button"))
+    }
     
 }
 
@@ -668,4 +845,5 @@ async function selectText(page, selector) {
         await input.click({ clickCount: 3 })
     // });
 }
+
 module.exports = PageObject;
