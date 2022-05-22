@@ -13,6 +13,14 @@ function getValidRow(){
     return validData[rndInt];
 }
 
+const validHexColors = ["FF5733", "57A150", "2F73C9", "922D1F", "787A78", "D1CC60"];
+
+function getValidColor(){
+    let rndValue = Math.floor(Math.random() * validHexColors.length);
+    return validHexColors[rndValue];
+}
+
 module.exports = {
-    getValidRow
+    getValidRow,
+    getValidColor
 }

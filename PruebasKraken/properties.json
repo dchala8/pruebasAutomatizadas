@@ -1,7 +1,7 @@
 {
-    "GHOST_URL": "http://localhost:2369",
-    "USER": "je.suarezg1@uniandes.edu.co",
-    "PASSWORD": "Colombia22",
+    "GHOST_URL": "http://localhost:2368",
+    "USER": "j.gutierrezl@uniandes.edu.co",
+    "PASSWORD": "Campeon2022",
     "USER_NAME": "Jorge E Suarez González",
     "TAG_MENU": "//li/a[@href='#/tags/']",
     "NEW_TAG_BUTTON": "//a[@href='#/tags/new/']/span[text() = 'New tag']",
@@ -26,5 +26,7 @@
     "CHANGE_PASSWORD_BUTTON": "//button/span[text()='Change Password']",
     "SIGNOUT_OPTION": "//a[contains(@href,'#/signout')]",
     "SAVE_SETTINGS_BUTTON": "//button/span[text()='Save settings']",
-    "SAVE_BUTTON": "//button/span[text()='Save']"
+    "SAVE_BUTTON": "//button/span[text()='Save']",
+    "EXPAND_PUBLICATION_LANGUAGE": "//div[@class='gh-main-section']/section/div/div/div[contains(.//h4,'Publication Language')]/following-sibling::button/span",
+    "CODE_INJECTION_OPTION":"//h4[text()='Code injection']"
 }
