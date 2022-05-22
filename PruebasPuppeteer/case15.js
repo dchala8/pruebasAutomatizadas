@@ -35,6 +35,8 @@ var fs = require('fs');
     }
     await page.screenshot({ path: caseFolder + '4-Member-page.jpg' })
     await page.waitForSelector('.gh-btn-primary', { timeout: generalTimeout })
+
+    
     await page.click('.gh-btn-primary').catch(() => console.log("error in click on New member button")) //new tag button
     await page.screenshot({ path: caseFolder + '5-New-Member-page.jpg' })
     let datecode = Date.now()
