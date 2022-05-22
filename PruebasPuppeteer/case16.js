@@ -34,6 +34,7 @@ var fs = require('fs');
     if (toMembers) {
         await toMembers.click();
     }
+    
     await page.screenshot({ path: caseFolder + '4-admin-user.jpg' })
     await page.type('input[id="user-name"]', "Modified");
     await page.click('.gh-btn-primary').catch(() => console.log("error in click on Save button"))

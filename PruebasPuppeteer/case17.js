@@ -36,6 +36,8 @@ var fs = require('fs');
     if (toMembers) {
         await toMembers.click();
     }
+
+    
     await page.screenshot({ path: caseFolder + '4-admin-user.jpg' })
     await page.type('input[id="user-password-old"]', oldPassword);
     await page.type('input[id="user-password-new"]', newPassword);

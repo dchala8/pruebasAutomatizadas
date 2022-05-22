@@ -1,0 +1,61 @@
+[
+  {
+    "keyword": "Feature",
+    "name": "case40",
+    "line": 1,
+    "id": "case40",
+    "tags": [],
+    "uri": "features\\case40.feature",
+    "elements": [
+      {
+        "id": "case40;ingresar-a-perfil-de-usuario,-definir-una-biografía-de-más-de-200-caractéres-e-intentar-salvar",
+        "keyword": "Scenario",
+        "line": 2,
+        "name": "Ingresar a perfil de usuario, definir una biografía de más de 200 caractéres e intentar salvar",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 3,
+            "name": "User visits ghost for \"case40\"",
+            "match": {
+              "location": "features\\support\\steps.test.js:35"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2379000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 4,
+            "name": "User goes to his profile, defines a new biography of more than twohundred characters and saves.",
+            "match": {
+              "location": "features\\support\\steps.test.js:2073"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 5902000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 5,
+            "name": "Validate if the new profile was allowed to save",
+            "match": {
+              "location": "features\\support\\steps.test.js:2040"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3000000
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
