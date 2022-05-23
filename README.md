@@ -96,14 +96,14 @@ La ejecución de casos con generación de datos sigue el mismo proceso realizado
 - Abrir una consola de línea de comandos y ubicarse en la caperta mencionada anteriormente.
 - Ejecutar el comando **npm install** para descargar las dependencias y librerías requeridas
 - Antes de ejecutar las pruebas es necesario modificar las siguientes llaves del archivo **properties.json** ubicado en la carpeta: **pruebasAutomatizadas/PruebasKraken**:
-- "GHOST_URL": "Colocar la URL donde se encuentra desplegada la instalación de Ghost". Ejemplo: http://localhost:2369.
-- "USER": "El correo de autenticación del usuario principal creado en la instalación de Ghost".
-- "PASSWORD": "Clave del usuario utilizado anteriormente en USER".
-- "USER_NAME" "Nombre del usuario registrado como principal en Ghost".
+    - "GHOST_URL": "Colocar la URL donde se encuentra desplegada la instalación de Ghost". Ejemplo: http://localhost:2369.
+    - "USER": "El correo de autenticación del usuario principal creado en la instalación de Ghost".
+    - "PASSWORD": "Clave del usuario utilizado anteriormente en USER".
+    - "USER_NAME" "Nombre del usuario registrado como principal en Ghost".
 - Para lanzar las pruebas definidas en el feature:
-- Desde la consola de línea de comandos, ubicarse en la ruta **pruebasAutomatizadas/PruebasKraken**
-- Ejecutar el comando **npx kraken-node run**
-- Verificar los resultados de la ejecución en la carpeta **pruebasAutomatizadas/PruebasKraken/reports**
+    - Desde la consola de línea de comandos, ubicarse en la ruta **pruebasAutomatizadas/PruebasKraken**
+    - Ejecutar el comando **npx kraken-node run**
+    - Verificar los resultados de la ejecución en la carpeta **pruebasAutomatizadas/PruebasKraken/reports**
 
 Para los escenarios de prueba con generación de datos en Kraken utilizamos diferentes estrategias:
 * Datos aleatorios: Se realizó uso de la herramienta Faker para generar cadenas de caracteres aleatorias con diferentes longitudes, con el fin de verificar los valores límites permitidos en los campos de texto. También se utilizó la librería integrada de Faker, especialmente para crear datos de tipo String cuando el tipo de dato a generar no era una restricción.
