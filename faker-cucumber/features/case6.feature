@@ -1,3 +1,4 @@
+@case6
 Feature: case6
 	Scenario: create a page on ghost
 		Given User visits ghost for "case6"

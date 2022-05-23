@@ -1,3 +1,4 @@
+@case21
 Feature: case21
 	Scenario: Ingresar a tags, crear un nuevo tag, definir nombre, salvar y verificar que se haya creado
 		Given User visits ghost for "case21"

@@ -1,3 +1,4 @@
+@case33
 Feature: case33
 	Scenario: Ingresar a miembros, definir nombre, definir correo válido, definir nota con mas de 500 caractéres, salvar y verificar que se haya creado
 		Given User visits ghost for "case33"

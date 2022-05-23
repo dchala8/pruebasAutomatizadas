@@ -1,3 +1,4 @@
+@case2
 Feature: case2
 	Scenario: create a post on ghost
 		Given User visits ghost for "case2"

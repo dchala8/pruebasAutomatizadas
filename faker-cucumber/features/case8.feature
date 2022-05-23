@@ -1,3 +1,4 @@
+@case8
 Feature: case8
 	Scenario: create a page, not publish it, validate it isnt published, finally publish it
 		Given User visits ghost for "case8"

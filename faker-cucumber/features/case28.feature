@@ -1,3 +1,4 @@
+@case28
 Feature: case28
 	Scenario: Ingresar a miembros, definir nombre, definir correo válido, salvar y verificar que se haya creado
 		Given User visits ghost for "case28"
