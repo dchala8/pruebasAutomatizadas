@@ -86,6 +86,29 @@ Para realizar las pruebas VRT se seleccionó la herramienta ResembleJS, siguiend
 
 El reporte HTML de las pruebas de regresión visual de estos escenarios se encuentra en la ruta **pruebasAutomatizadas/ResembleJS_Kraken/results/2022-05-15T20.38.23.354Z/** con el nombre **report.html**. En el reporte se evidencian las comparaciones y resultados de cada uno de los pasos de los escenarios indicados anteriormente.
 
+## Ejecución de pruebas con generación de datos / KRAKEN
+
+La ejecución de casos con generación de datos sigue el mismo proceso realizado para ejecutar los escenarios creados en "Ejecución de Pruebas - Herramienta Kraken":
+
+- Hacer un fork al repositorio
+- Clonar desde el repositorio creado a partir del fork anterior
+- Abrir el editor de código de su preferencia y ubicarse en la siguiente carpeta: **pruebasAutomatizadas/PruebasKraken**
+- Abrir una consola de línea de comandos y ubicarse en la caperta mencionada anteriormente.
+- Ejecutar el comando **npm install** para descargar las dependencias y librerías requeridas
+- Antes de ejecutar las pruebas es necesario modificar las siguientes llaves del archivo **properties.json** ubicado en la carpeta: **pruebasAutomatizadas/PruebasKraken**:
+- "GHOST_URL": "Colocar la URL donde se encuentra desplegada la instalación de Ghost". Ejemplo: http://localhost:2369.
+- "USER": "El correo de autenticación del usuario principal creado en la instalación de Ghost".
+- "PASSWORD": "Clave del usuario utilizado anteriormente en USER".
+- "USER_NAME" "Nombre del usuario registrado como principal en Ghost".
+- Para lanzar las pruebas definidas en el feature:
+- Desde la consola de línea de comandos, ubicarse en la ruta **pruebasAutomatizadas/PruebasKraken**
+- Ejecutar el comando **npx kraken-node run**
+- Verificar los resultados de la ejecución en la carpeta **pruebasAutomatizadas/PruebasKraken/reports**
+
+Para los escenarios de prueba con generación de datos en Kraken utilizamos diferentes estrategias:
+* Datos aleatorios: Se realizó uso de la herramienta Faker para generar cadenas de caracteres con diferentes longitudes. También se utilizó la librería integrada de Faker, especialmente para crear datos de tipo String.
+* Datos pseuso aleatorios dinámicos: Se utilizaron en escenariospositivos donde se requiere obtener utilizar data predefinida para obtener respuestas esperadas. En la funcionalidad de miembros se utilizó data para crear interactuar con los miembros de la aplicación (crear, actualizar, modificar). También se utilizó en escenarios donde se seleccionaba un color de un pool de datos para modificar valores de configuración.
+
 ## Ejecución de Pruebas - Herramienta Puppeteer (carpeta cucumber implementation)
 1. PreRequisitos: 
     - Instalacion de NodeJS almenos en Version 12.22.1
