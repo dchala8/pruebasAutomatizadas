@@ -106,8 +106,8 @@ La ejecución de casos con generación de datos sigue el mismo proceso realizado
 - Verificar los resultados de la ejecución en la carpeta **pruebasAutomatizadas/PruebasKraken/reports**
 
 Para los escenarios de prueba con generación de datos en Kraken utilizamos diferentes estrategias:
-* Datos aleatorios: Se realizó uso de la herramienta Faker para generar cadenas de caracteres con diferentes longitudes. También se utilizó la librería integrada de Faker, especialmente para crear datos de tipo String.
-* Datos pseuso aleatorios dinámicos: Se utilizaron en escenariospositivos donde se requiere obtener utilizar data predefinida para obtener respuestas esperadas. En la funcionalidad de miembros se utilizó data para crear interactuar con los miembros de la aplicación (crear, actualizar, modificar). También se utilizó en escenarios donde se seleccionaba un color de un pool de datos para modificar valores de configuración.
+* Datos aleatorios: Se realizó uso de la herramienta Faker para generar cadenas de caracteres aleatorias con diferentes longitudes, con el fin de verificar los valores límites permitidos en los campos de texto. También se utilizó la librería integrada de Faker, especialmente para crear datos de tipo String cuando el tipo de dato a generar no era una restricción.
+* Datos pseuso aleatorios dinámicos: Se utilizaron especialmente en escenarios positivos donde se requiere obtener utilizar data predefinida para obtener respuestas esperadas. En la funcionalidad de miembros se utilizó data para crear interactuar con los miembros de la aplicación (crear, actualizar, modificar). También se utilizó en escenarios donde se requiere cambiar el color de una característica en especial. Allí se seleccionaba un color en hexadecimal de un pool de datos para modificar valores de configuración.
 
 ## Ejecución de Pruebas - Herramienta Puppeteer (carpeta cucumber implementation)
 1. PreRequisitos: 
