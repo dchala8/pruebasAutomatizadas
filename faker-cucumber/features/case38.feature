@@ -1,3 +1,4 @@
+@case38
 Feature: case38
 	Scenario: Ingresar a perfil de usuario, definir una biografía de twohundred caractéres, salvar y verificar que los cambios persisten
 		Given User visits ghost for "case38"

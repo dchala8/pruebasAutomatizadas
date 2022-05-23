@@ -1,3 +1,4 @@
+@case29
 Feature: case29
 	Scenario: Ingresar a miembros, definir nombre, no ingresar correo e intentar salvar
 		Given User visits ghost for "case29"

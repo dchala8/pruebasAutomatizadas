@@ -1,3 +1,4 @@
+@case37
 Feature: case37
 	Scenario: Ingresar a perfil de usuario, definir un nuevo correo válido, salvar y verificar que el correo haya cambiado. Finalmente, dejar el correo original
 		Given User visits ghost for "case37"

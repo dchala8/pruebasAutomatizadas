@@ -1,3 +1,4 @@
+@case35
 Feature: case35
 	Scenario: Ingresar a perfil de usuario, definir un nuevo nombre, salvar y verificar que el nombre haya cambiado. Finalmente, dejar el nombre original
 		Given User visits ghost for "case35"

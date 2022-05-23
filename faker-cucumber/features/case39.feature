@@ -1,3 +1,4 @@
+@case39
 Feature: case39
 	Scenario: Ingresar a perfil de usuario, definir una biografía de menos de 200 caractéres, salvar y verificar que los cambios persisten
 		Given User visits ghost for "case39"

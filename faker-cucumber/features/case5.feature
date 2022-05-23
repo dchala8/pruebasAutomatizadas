@@ -1,3 +1,4 @@
+@case5
 Feature: case5
 	Scenario: create a post, publish it, unpublish it, validate if it was drafted
 		Given User visits ghost for "case5"

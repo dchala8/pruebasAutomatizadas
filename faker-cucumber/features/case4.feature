@@ -1,3 +1,4 @@
+@case4
 Feature: case4
 	Scenario: create a post, schedule it, wait 5 minutes, validate if it published it self
 		Given User visits ghost for "case4"

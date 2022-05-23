@@ -1,3 +1,4 @@
+@case40
 Feature: case40
 	Scenario: Ingresar a perfil de usuario, definir una biografía de más de 200 caractéres e intentar salvar
 		Given User visits ghost for "case40"

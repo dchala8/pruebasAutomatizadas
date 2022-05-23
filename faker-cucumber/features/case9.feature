@@ -1,3 +1,4 @@
+@case9
 Feature: case9
 	Scenario: create a page, schedule it, wait 5 minutes, validate if it published it self
 		Given User visits ghost for "case9"

@@ -1,3 +1,4 @@
+@case25
 Feature: case25
 	Scenario: Ingresar a tags, crear un nuevo tag, definir nombre, ingresar una descripción con mas de 500 caracteres e intentar salvar
 		Given User visits ghost for "case25"

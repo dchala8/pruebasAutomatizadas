@@ -109,6 +109,16 @@ El reporte HTML de las pruebas de regresión visual de estos escenarios se encue
     - Ejecutar el comando node index2.js, en este arcvhivo se encuentra una constante llamada "casesAndImages", la cual es un array compuesto de arrays de 2 elementos en donde se indica el numero de caso y la cantidad de imagenes por caso.
     - Los resultados de resmble se podran observar en la carpeta "results2" en donde hay una carpeta para cada caso en donde estan las imagnes comparadas y el archivo html.
 
+## Ejecucion de pruebas con faker con cucumber
+1. PreRequisitos: 
+    - Instalacion de NodeJS almenos en Version 12.22.1
+2. Instrucciones:
+    - Entrar a la carpeta llamada "faker-cucumber".
+    - Ejecutar el comando npm i para instalar los paquetes necesarios.
+    - En el archivo generalVariables.js cambiar la informacion correspondiente a initialPassword, donde se pondra la contraseña actual del usuario administrador de ghost, second password corresponde a la contraseña que se usara en las pruebas 17 y 18 cuando se realizan cambios de contraseña y se revierten respectivamente, port1 para indicar el puerto de localhost en donde se esta ejecutando la instalacion de ghost y finalmente dentro del objego genVar el elemento user como el usuario administrador de la instalacion de ghost
+    - Ejecutar el comando node "npm test", con esto se ejecutaran todos los casos de prueba, si se desea ejecutar un caso concreto se puede usar el comando: npx cucumber-js --tags "@case62", en donde se puede reemplazar el numero del caso por elq ue se desee testear
+    - Los resultados se podran observar en la carpeta resemble-c "results2" en donde hay una carpeta para cada caso en donde estan las imagnes comparadas y el archivo html.
+
 ## Ejecución de Pruebas - Herramienta Puppeteer (carpeta PruebasPuppeteer version anterior sin pageObject ni given, when, then)
 1. PreRequisitos: 
     - Instalacion de NodeJS almenos en Version 12.22.1

@@ -1,3 +1,4 @@
+@case22
 Feature: case22
 	Scenario: Ingresar a tags, crear un nuevo tag, definir nombre, ingresar un color con menos de 6 caracteres e intentar salvar
 		Given User visits ghost for "case22"
