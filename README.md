@@ -222,3 +222,9 @@ Para los escenarios de prueba con generación de datos en Kraken se usan diferen
     - En el archivo generalVariables.js cambiar la informacion correspondiente a initialPassword, donde se pondra la contraseña actual del usuario administrador de ghost, second password corresponde a la contraseña que se usara en las pruebas 17 y 18 cuando se realizan cambios de contraseña y se revierten respectivamente, port1 para indicar el puerto de localhost en donde se esta ejecutando la instalacion de ghost y finalmente dentro del objego genVar el elemento user como el usuario administrador de la instalacion de ghost
     - Ejecutar el comando node "npm test", con esto se ejecutaran todos los casos de prueba, si se desea ejecutar un caso concreto se puede usar el comando: npx cucumber-js --tags "@case62", en donde se puede reemplazar el numero del caso por elq ue se desee testear
     - Los resultados se podran observar en la carpeta resemble-c "results2" en donde hay una carpeta para cada caso en donde estan las imagnes comparadas y el archivo html.
+
+
+## Enlace a retrospectiva DAKI
+https://app.mural.co/t/ingdesoftparalaweb9165/m/ingdesoftparalaweb9165/1653776603602/c92880dfc9336372cb1ed6850e48a2aff493c0f8?sender=u432ffd9bf15f4d185ece3188
+
+## Enlace a video de presentación
