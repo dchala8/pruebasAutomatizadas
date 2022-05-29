@@ -212,6 +212,8 @@ Para los escenarios de prueba con generación de datos en Kraken se usan diferen
     - Entrar a la carpeta llamada "Pruebas Exploratorias Ripper".
     - Ejecutar el comando npm i para instalar los paquetes necesarios.
     - Ir al archivo llamado generalVariables.js y abrirlo
-    - dentro del mismo, en el campo URL, poner la direccion de despliegue de Ghost, dentro del campu values, ir a ember7 y colocar en el el correo de loggin de Ghost, y en ember9 colocar la contraseña, guardar el archivo.
+    - Dentro del mismo, en el campo URL, poner la direccion de despliegue de Ghost, dentro del campu values, ir a ember7 y colocar en el el correo de loggin de Ghost, y en ember9 colocar la contraseña, guardar el archivo.
     - Abrir una terminal ubicada en la carpeta y ejecutar el comando node index.js, esto correra las pruebas en la URL especificada anteriormente, esperar que terminen.
-    - Dentro de la carpeta Pruebas Exploratorias Ripper se ha creado una carpeta llamada results, ingresar a esta y ejecutar el comando 
+    - Dentro de la carpeta Pruebas Exploratorias Ripper se ha creado una carpeta llamada results, ingresar a esta y ejecutar el comando npm install -g http-server.
+    - Una vez el comando anterior termine, ejecutar http-server
+    - Cuando el comando finalice, ir desde su explorador web a la URL generada por el comando http-server, tipicamente http://192.168.5.100:8080, y una vez ahi ingresar a la carpeta que sale, navegar al explorador chrome y una vez dentro abrir result.html para ver los resultados.
