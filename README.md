@@ -1,6 +1,6 @@
 # Pruebas E2E Automatizadas sobre Ghost
 
-## 1. Equipo de proyecto
+## Equipo de proyecto
 | Apellidos          | Nombres        | Correo @uniandes             |
 | ------------------ | -------------- | ---------------------------- |
 | Chala Burbano      | Daniel Andres  | d.chala@uniandes.edu.co      |
@@ -8,7 +8,7 @@
 | Mora Rocha         | Carlos Andres  | ca.morar1@uniandes.edu.co    |
 | Suárez González    | Jorge Enrique  | je.suarezg1@uniandes.edu.co  |
 
-## 2. Funcionalidades bajo prueba
+## 1. Funcionalidades bajo prueba
 1. Login
 2. Crear post
 3. Modificar post
@@ -26,6 +26,13 @@
 15. Iniciar sesión
 16. Ver sitio
 17. Cambiar nombre del sitio
+
+## 2. Pruebas exploratorias manuales
+1. Ejecución
+- Para ejecutar las pruebas exploratorias manuales se ha creado un archivo con el inventario de pruebas que contiene los escenarios a validar por cada funcionalidad, la fecha de ejecución, el tester responsable de la ejecución, así como el tipo de prueba y el nombrel escenario. El archivo se encuentra en la ruta **pruebasAutomatizadas/PruebasExploratoriasManuales/**
+
+2. Resultados
+- Los resultados de las pruebas manuales ejecutados durante la semana 1 del proyecto se encuentra relacionados en el archivo de inventario de pruebas. Allí se encuentran relacionadas las evidencias de la ejecución de cada escenario de prueba, el resultado de cada prueba y el identificador de los issues creado en la herramienta de gestion de incidencias (Github issues). 
 
 ## 3. Pruebas de reconocimiento usando Monkey testing
 1. Instalación y configuración
