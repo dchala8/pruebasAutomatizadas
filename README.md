@@ -1,6 +1,6 @@
 # Pruebas E2E Automatizadas sobre Ghost
 
-## Equipo de proyecto
+## 1. Equipo de proyecto
 | Apellidos          | Nombres        | Correo @uniandes             |
 | ------------------ | -------------- | ---------------------------- |
 | Chala Burbano      | Daniel Andres  | d.chala@uniandes.edu.co      |
@@ -8,7 +8,7 @@
 | Mora Rocha         | Carlos Andres  | ca.morar1@uniandes.edu.co    |
 | Suárez González    | Jorge Enrique  | je.suarezg1@uniandes.edu.co  |
 
-## Funcionalidades bajo prueba
+## 2. Funcionalidades bajo prueba
 1. Login
 2. Crear post
 3. Modificar post
@@ -27,7 +27,31 @@
 16. Ver sitio
 17. Cambiar nombre del sitio
 
-## Escenarios de prueba
+## 3. Pruebas de reconocimiento usando Monkey testing
+1. Instalación y configuración
+- Hacer un fork al repositorio
+- Clonar desde el repositorio creado a partir del fork anterior 
+- Abrir el editor de código de su preferencia y ubicarse en la siguiente carpeta: **pruebasAutomatizadas/pruebas-de-reconocmimiento-monkey**
+- Abrir una consola de línea de comandos y ubicarse en la caperta mencionada anteriormente.
+- Instalar dependencias haciendo uso del comando **npm i**
+
+Los siguientes cambios se hacen para el monkey sencillo, pero se pueden realizar para el smart-monkey en su correspondiente archivo smart-monkey-config.json:
+Dirigirse al archivo monkey-config.json cambiar la baseUrl por aquella que este usando la instalacion de ghost en pruebas cambiar las variables de usuario y contraseña, usar aquellas que se encuentren en uso para el usuario admin de la version de ghost a probar
+
+2. Ejecución
+- Ejecute el comando **cypress run -C monkey-config.json --headed o cypress run -C smart-monkey-config.json --headed**
+Puede omitir el comando --headed si no desea ver la ejecucion del programa
+
+3. Resultados
+En la carpeta resultados podra encontrar un video de la prueba realizada en cypress y un reporte html con los pasos realizados, nuevas ejecuciones borraran las realizadas previamente, en el repo de manera original se encuentra un reporte con 411 pasos realizados
+
+## 4. Pruebas de reconocimiento usando Ripper
+
+
+
+## 5. Pruebas E2E
+Para las pruebas E2E se han propuesto los siguientes escenarios de pruebas:
+
 1. Crear post, publicarlo, modificar el post y ver que el post se actualice.
 2. Crear post, publicarlo, eliminar el post y verificar que ya no esté publicado.
 3. Crear post y no publicarlo, verificar que no esté publicado, publicarlo y verificar que esté publicado.
@@ -49,7 +73,23 @@
 19. Crear post, visualizarlo en View site, modificar post, validar en View Site post con el cambio realizado.
 20. Ingresar a configuraciones, seleccionar general, expandir títulos y descripción, cambiar nombre del sitio, verificar en el sitio que tenga el nuevo título.
 
-## Ejecución de Pruebas - Herramienta Kraken 
+### Ejecución con herramienta Puppeteer (carpeta cucumber implementation)
+1. PreRequisitos: 
+    - Instalacion de NodeJS almenos en Version 12.22.1
+    - Instalacion de Ghost en Version 4.41.3
+    - Instalacion de Ghost en Version 4.26.1
+2. Instrucciones:
+    - Hacer un fork al repositorio
+    - Clonar desde el repositorio creado a partir del fork anterior
+    - Entrar a la carpeta llamada "cucumber implementation".
+    - Ejecutar el comando npm i para instalar los paquetes necesarios.
+    - Ir al archivo llamado generalVariables.js y abrirlo
+    - Dentro del mismo encontrara una estructura llamada genVar, dentro de ella podra editar los campos, "user" que representa el correo electronico para hacer login a Ghost debe colocar en este campo el correo correspondiente a su usuario de Ghost, "password" representa la contraseña usada inicialmente para el loggin, "tempPassword" representa la contraseña usada para las pruebas de cambio de contraseña, finalmente port1 y port2 representan los puertos de localhost que se usan para cada instalacion de ghost, podra comentar y descomentar en el area indicada para probar una version u otra.
+    - Una vez terminada la configuracion del archivo generalVariables.js, puede proceder a ejecutar los casos de prueba, para hacer esto escriba en la consola ubicada en la carpeta "cucumber implementation" el comando npm test de esta manera se ejecutaran los features correspondientes a cada caso.
+    - Debido a que estas imagenes seran usadas en las pruebas usando resemble, las evidencisa de cada prueba se ubicaran en la carpeta "resemble-c/V2" con la siguiente estructura "case<numero_de_caso>/<numero_de_puerto>-i<numero_de_imagen>"
+    - La prueba debe correrse una seguna vez con el puerto de la segunda instalacion de ghost
+
+### Ejecución con Herramienta Kraken 
 1. Prerequisitos:
     - NodeJS versión 16 o superior
     - Ghost version 4.41.3
@@ -78,17 +118,61 @@
         - Escenario 19. Crear post, visualizarlo en View site, modificar post, validar en View Site post con el cambio realizado.
         - Escenario 20. Ingresar a configuraciones, seleccionar general, expandir títulos y descripción, cambiar nombre del sitio, verificar en el sitio que tenga el nuevo título.
 
-## Ejecución de pruebas de regresión visual VRT / KRAKEN
-Para realizar las pruebas VRT se seleccionó la herramienta ResembleJS, siguiendo los siguientes pasos:
+## 6. Pruebas de regresión visual VRT
 
-1. Se almacenaron las imagenes obtenidas de las pruebas E2E de cada versión de la aplicación en dos carpetas diferentes. Las rutas de las carpetas son **pruebasAutomatizadas/ResembleJS_Kraken/results/Ghost_4_26/** y **pruebasAutomatizadas/ResembleJS_Kraken/results/Ghost_4_41/**
-2. Una vez almacenadas, se ejecutó el comando **node index2.js** desde la ruta **pruebasAutomatizadas/ResembleJS_Kraken/**
+### Ejecución con herramienta KRAKEN
+Para realizar las pruebas VRT se seleccionó la herramienta ResembleJS. A continuación, se detallan las actividades necesarias para realizar la ejecución de las pruebas de forma correcta:
 
-El reporte HTML de las pruebas de regresión visual de estos escenarios se encuentra en la ruta **pruebasAutomatizadas/ResembleJS_Kraken/results/2022-05-15T20.38.23.354Z/** con el nombre **report.html**. En el reporte se evidencian las comparaciones y resultados de cada uno de los pasos de los escenarios indicados anteriormente.
+1. Prerrequisitos:
+    - NodeJS versión 16 o superior
+    - ResembleJS versión 4.1.0 o superior
+    - Ejecución de pruebas automatizadas previas que generan capturas de pantalla de la ABP en las versiones 4.26.1 y 4.41.3
+    - Las imágenes para realizar la comparación deben 
+        - Ser tipo PNG
+        - Ser el mismo número y tener los mismos nombres para las dos versiones. Se espera que los escenarios de pruebas se ejecuten en las dos versiones, con esto, el resultado debería ser el mismo. Ejemplo: se tienen 3 escenarios de pruebas, cada uno con 10 pasos; se espera que existan 30 archivos de imagen para la versión 4.26 y otros 30 (con los mismos nombres) tomados de la versión 4.41
+        - Conservar el siguiente patrón de nombramiento: screenshotScenario<#>_StepNumber<#>.png 
+            Ejemplo: screenshotScenario10_StepNumber1.png
+2. Instrucciones:
+    - Hacer un fork al repositorio
+    - Clonar desde el repositorio creado a partir del fork anterior
+    - Abrir el editor de código de su preferencia y ubicarse en la siguiente carpeta: **pruebasAutomatizadas/ResembleJS_Kraken**
+    - Abrir una consola de línea de comandos y ubicarse en la caperta mencionada anteriormente
+    - Ejecutar el comando **npm install** para descargar las dependencias y librerías requeridas
+    - Eliminar los archivos de la carpeta **../ResembleJS_Kraken/results/Ghost_4_26** 
+    - Copiar los archivos de imagen de la ejecución de pruebas sobre la versión 4.26.1 en la carpeta **../ResembleJS_Kraken/results/Ghost_4_26** 
+    - Eliminar los archivos de la carpeta **../ResembleJS_Kraken/results/Ghost_4_41** 
+    - Copiar los archivos de imagen de la ejecución de pruebas sobre la versión 4.41.3 en la carpeta **../ResembleJS_Kraken/results/Ghost_4_41** 
+    - Ejecutar el comando **node index2.js** desde la ruta **pruebasAutomatizadas/ResembleJS_Kraken/**
+    - Al finalizar la ejecución se podrá ver el resultado de la misma en la línea de comandos
+    - La ejecución habrá generado una nueva carpeta bajo la ruta **../ResembleJS_Kraken/results/** esta carpeta contiene el reporte de la ejecución en formato html, revíselo y analice los resultados
 
-## Ejecución de pruebas con generación de datos / KRAKEN
+### Ejecución con herramienta Puppeteer
+1. PreRequisitos: 
+    - NodeJS versión 12.22.1 o superior
+    - ResembleJS versión 4.1.0 o superior
+    - Ejecución de pruebas automatizadas previas que generan capturas de pantalla de la ABP en las versiones 4.26.1 y 4.41.3
+    - Las imágenes para realizar la comparación deben 
+        - Ser tipo PNG
+        - Conservar el siguiente patrón de nombramiento: <#puerto_ghost>-i<#paso>.png 
+            Ejemplo para la versión 4.26.1: 2368-i1.png
+            Ejemplo para la versión 4.41.3: 2369-i1.png
+        - Ser la misma cantidad. Se espera que los escenarios de pruebas se ejecuten en las dos versiones, con esto, el resultado debería ser el mismo. Ejemplo: se tienen 3 escenarios de pruebas, cada uno con 10 pasos; se espera que existan 30 archivos de imagen para la versión 4.26.1 (sus nombres empiezan con 2368-i) y otros 30 tomados de la versión 4.41 (sus nombres empiezan con 2369-i)
+        
+2. Instrucciones:
+    - Hacer un fork al repositorio
+    - Clonar desde el repositorio creado a partir del fork anterior
+    - Abrir el editor de código de su preferencia y ubicarse en la siguiente carpeta: **pruebasAutomatizadas/resemble-c**
+    - Abrir una consola de línea de comandos y ubicarse en la caperta mencionada anteriormente
+    - Ejecutar el comando **npm i** para descargar las dependencias y librerías requeridas
+    - Bajo la carpeta **pruebasAutomatizadas/resemble-c/V2** crear una nueva carpeta por cada caso de prueba con el nombre "case<#>"; ejemplo: case1
+    - Copiar los archivos de imagen de la ejecución de pruebas sobre las dos versiones (4.26.1y 4.41.3) en la carpeta de caso de prueba correspondiente ("case<#>")
+    - Ejecutar el comando **node index2.js**, en este archivo se encuentra una constante llamada "casesAndImages", la cual es un array compuesto de arrays de 2 elementos en donde se indica el numero de caso y la cantidad de imágenes por caso
+    - Los resultados de resemble se podran observar en la carpeta "results2" en donde hay una carpeta para cada caso en donde estan las imágenes comparadas y el archivo html con el reporte, revíselo y analice los resultados
 
-La ejecución de casos con generación de datos sigue el mismo proceso realizado para ejecutar los escenarios creados en "Ejecución de Pruebas - Herramienta Kraken":
+## 7. Pruebas con generación de datos
+### Ejecución con herramienta Kraken
+
+La ejecución de casos con generación de datos sigue el mismo proceso realizado para ejecutar los escenarios creados en "Pruebas E2E - Ejecución con Herramienta Kraken":
 
 - Hacer un fork al repositorio
 - Clonar desde el repositorio creado a partir del fork anterior
@@ -105,34 +189,12 @@ La ejecución de casos con generación de datos sigue el mismo proceso realizado
     - Ejecutar el comando **npx kraken-node run**
     - Verificar los resultados de la ejecución en la carpeta **pruebasAutomatizadas/PruebasKraken/reports**
 
-Para los escenarios de prueba con generación de datos en Kraken utilizamos diferentes estrategias:
-* Datos aleatorios: Se realizó uso de la herramienta Faker para generar cadenas de caracteres aleatorias con diferentes longitudes, con el fin de verificar los valores límites permitidos en los campos de texto. También se utilizó la librería integrada de Faker, especialmente para crear datos de tipo String cuando el tipo de dato a generar no era una restricción.
-* Datos pseuso aleatorios dinámicos: Se utilizaron especialmente en escenarios positivos donde se requiere obtener utilizar data predefinida para obtener respuestas esperadas. En la funcionalidad de miembros se utilizó data para crear interactuar con los miembros de la aplicación (crear, actualizar, modificar). También se utilizó en escenarios donde se requiere cambiar el color de una característica en especial. Allí se seleccionaba un color en hexadecimal de un pool de datos para modificar valores de configuración.
+Para los escenarios de prueba con generación de datos en Kraken se usan diferentes estrategias:
+* Datos aleatorios: Se usa la herramienta Faker para generar cadenas de caracteres aleatorias con diferentes longitudes, con el fin de verificar los valores límites permitidos en los campos de texto. También se utiliza la librería integrada de Faker, especialmente para crear datos de tipo String cuando el tipo de dato a generar no es una restricción
+* Datos pseudo aleatorios dinámicos: Se utilizan especialmente en escenarios positivos donde se requiere utilizar data predefinida para obtener respuestas esperadas. En la funcionalidad de miembros se utiliza data para interactuar con los miembros de la aplicación (crear, actualizar, modificar). También se utiliza en escenarios donde se requiere cambiar el color de una característica en especial. Allí se selecciona un color en hexadecimal de un pool de datos para modificar valores de configuración
 
-## Ejecución de Pruebas - Herramienta Puppeteer (carpeta cucumber implementation)
-1. PreRequisitos: 
-    - Instalacion de NodeJS almenos en Version 12.22.1
-    - Instalacion de Ghost en Version 4.41.3
-    - Instalacion de Ghost en Version 4.26.1
-2. Instrucciones:
-    - Entrar a la carpeta llamada "cucumber implementation".
-    - Ejecutar el comando npm i para instalar los paquetes necesarios.
-    - Ir al archivo llamado generalVariables.js y abrirlo
-    - Dentro del mismo encontrara una estructura llamada genVar, dentro de ella podra editar los campos, "user" que representa el correo electronico para hacer login a Ghost debe colocar en este campo el correo correspondiente a su usuario de Ghost, "password" representa la contraseña usada inicialmente para el loggin, "tempPassword" representa la contraseña usada para las pruebas de cambio de contraseña, finalmente port1 y port2 representan los puertos de localhost que se usan para cada instalacion de ghost, podra comentar y descomentar en el area indicada para probar una version u otra.
-    - Una vez terminada la configuracion del archivo generalVariables.js, puede proceder a ejecutar los casos de prueba, para hacer esto escriba en la consola ubicada en la carpeta "cucumber implementation" el comando npm test de esta manera se ejecutaran los features correspondientes a cada caso.
-    - Debido a que estas imagenes seran usadas en las pruebas usando resemble, las evidencisa de cada prueba se ubicaran en la carpeta "resemble-c/V2" con la siguiente estructura "case<numero_de_caso>/<numero_de_puerto>-i<numero_de_imagen>"
-    - La prueba debe correrse una seguna vez con el puerto de la segunda isntalacion de ghost
 
-## Ejecucion de pruebas con resemble
-1. PreRequisitos: 
-    - Instalacion de NodeJS almenos en Version 12.22.1
-2. Instrucciones:
-    - Entrar a la carpeta llamada "resemble-c".
-    - Ejecutar el comando npm i para instalar los paquetes necesarios.
-    - Ejecutar el comando node index2.js, en este arcvhivo se encuentra una constante llamada "casesAndImages", la cual es un array compuesto de arrays de 2 elementos en donde se indica el numero de caso y la cantidad de imagenes por caso.
-    - Los resultados de resmble se podran observar en la carpeta "results2" en donde hay una carpeta para cada caso en donde estan las imagnes comparadas y el archivo html.
-
-## Ejecucion de pruebas con faker con cucumber
+### Ejecución con herramienta Puppeteer usando faker con cucumber
 1. PreRequisitos: 
     - Instalacion de NodeJS almenos en Version 12.22.1
 2. Instrucciones:
@@ -141,15 +203,4 @@ Para los escenarios de prueba con generación de datos en Kraken utilizamos dife
     - En el archivo generalVariables.js cambiar la informacion correspondiente a initialPassword, donde se pondra la contraseña actual del usuario administrador de ghost, second password corresponde a la contraseña que se usara en las pruebas 17 y 18 cuando se realizan cambios de contraseña y se revierten respectivamente, port1 para indicar el puerto de localhost en donde se esta ejecutando la instalacion de ghost y finalmente dentro del objego genVar el elemento user como el usuario administrador de la instalacion de ghost
     - Ejecutar el comando node "npm test", con esto se ejecutaran todos los casos de prueba, si se desea ejecutar un caso concreto se puede usar el comando: npx cucumber-js --tags "@case62", en donde se puede reemplazar el numero del caso por elq ue se desee testear
     - Los resultados se podran observar en la carpeta resemble-c "results2" en donde hay una carpeta para cada caso en donde estan las imagnes comparadas y el archivo html.
-
-## Ejecución de Pruebas - Herramienta Puppeteer (carpeta PruebasPuppeteer version anterior sin pageObject ni given, when, then)
-1. PreRequisitos: 
-    - Instalacion de NodeJS almenos en Version 12.22.1
-    - Instalacion de Ghost en Version 4.41.3 y/o 4.26.1
-2. Instrucciones:
-    - Entrar a la carpeta llamada "PruebasPuppeteer".
-    - Ejecutar el comando npm i para instalar los paquetes necesarios.
-    - Ir al archivo llamado generalVariables.js y abrirlo
-    - Dentro del mismo encontrara una estructura llamada genVar, dentro de ella podra editar los campos, "user" que representa el correo electronico para hacer login a Ghost debe colocar en este campo el correo correspondiente a su usuario de Ghost, "password" representa la contraseña usada inicialmente para el loggin, "tempPassword" representa la contraseña usada para las pruebas de cambio de contraseña, finalmente port1 y port2 representan los puertos de localhost que se usan para cada instalacion de ghost, podra comentar y descomentar en el area indicada para probar una version u otra si lo desea.
-    - Una vez terminada la configuracion del archivo generalVariables.js, puede proceder a ejecutar los casos de prueba, para hacer esto escriba en la consola ubicada en la carpeta "PruebasPuppeteer" el comando node case<numero_de_caso>.js por ejemplo "node case1.js" de esta manera se ejecutaran las pruebas correspondientes a cada caso, esto generara una carpeta con el nombre del caso y las capturas de pantalla correspondientes, repetir el caso sobreescribira las evidencias de dicho caso
 
