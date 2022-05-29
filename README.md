@@ -8,6 +8,10 @@
 | Mora Rocha         | Carlos Andres  | ca.morar1@uniandes.edu.co    |
 | Suárez González    | Jorge Enrique  | je.suarezg1@uniandes.edu.co  |
 
+## Estrategia de pruebas ##
+
+El documento de estrategia de pruebas elaborado para la entrega final se encuentra en la siguiente ruta **pruebasAutomatizadas/estrategia-pruebas-final.pdf**
+
 ## 1. Funcionalidades bajo prueba
 1. Login
 2. Crear post
