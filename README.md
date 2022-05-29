@@ -163,7 +163,5 @@ Para los escenarios de prueba con generación de datos en Kraken utilizamos dife
     - Ejecutar el comando npm i para instalar los paquetes necesarios.
     - Ir al archivo llamado generalVariables.js y abrirlo
     - dentro del mismo, en el campo URL, poner la direccion de despliegue de Ghost, dentro del campu values, ir a ember7 y colocar en el el correo de loggin de Ghost, y en ember9 colocar la contraseña, guardar el archivo.
-    - Abrir una terminal ubicada en la carpeta y ejecutar el comando
-    - Dentro del mismo encontrara una estructura llamada genVar, dentro de ella podra editar los campos, "user" que representa el correo electronico para hacer login a Ghost debe colocar en este campo el correo correspondiente a su usuario de Ghost, "password" representa la contraseña usada inicialmente para el loggin, "tempPassword" representa la contraseña usada para las pruebas de cambio de contraseña, finalmente port1 y port2 representan los puertos de localhost que se usan para cada instalacion de ghost, podra comentar y descomentar en el area indicada para probar una version u otra si lo desea.
-    - Una vez terminada la configuracion del archivo generalVariables.js, puede proceder a ejecutar los casos de prueba, para hacer esto escriba en la consola ubicada en la carpeta "PruebasPuppeteer" el comando node case<numero_de_caso>.js por ejemplo "node case1.js" de esta manera se ejecutaran las pruebas correspondientes a cada caso, esto generara una carpeta con el nombre del caso y las capturas de pantalla correspondientes, repetir el caso sobreescribira las evidencias de dicho caso
-
+    - Abrir una terminal ubicada en la carpeta y ejecutar el comando node index.js, esto correra las pruebas en la URL especificada anteriormente, esperar que terminen.
+    - Dentro de la carpeta Pruebas Exploratorias Ripper se ha creado una carpeta llamada results, ingresar a esta y ejecutar el comando 
