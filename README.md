@@ -204,3 +204,14 @@ Para los escenarios de prueba con generación de datos en Kraken se usan diferen
     - Ejecutar el comando node "npm test", con esto se ejecutaran todos los casos de prueba, si se desea ejecutar un caso concreto se puede usar el comando: npx cucumber-js --tags "@case62", en donde se puede reemplazar el numero del caso por elq ue se desee testear
     - Los resultados se podran observar en la carpeta resemble-c "results2" en donde hay una carpeta para cada caso en donde estan las imagnes comparadas y el archivo html.
 
+## Ejecución de Pruebas - Herramienta RIPuppet (carpeta Pruebas Exploratorias Ripper)
+1. PreRequisitos: 
+    - Instalacion de NodeJS almenos en Version 12.22.1
+    - Instalacion de Ghost en Version 4.41.3 y/o 4.26.1
+2. Instrucciones:
+    - Entrar a la carpeta llamada "Pruebas Exploratorias Ripper".
+    - Ejecutar el comando npm i para instalar los paquetes necesarios.
+    - Ir al archivo llamado generalVariables.js y abrirlo
+    - dentro del mismo, en el campo URL, poner la direccion de despliegue de Ghost, dentro del campu values, ir a ember7 y colocar en el el correo de loggin de Ghost, y en ember9 colocar la contraseña, guardar el archivo.
+    - Abrir una terminal ubicada en la carpeta y ejecutar el comando node index.js, esto correra las pruebas en la URL especificada anteriormente, esperar que terminen.
+    - Dentro de la carpeta Pruebas Exploratorias Ripper se ha creado una carpeta llamada results, ingresar a esta y ejecutar el comando 
