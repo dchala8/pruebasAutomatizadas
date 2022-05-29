@@ -29,10 +29,10 @@
 
 ## 2. Pruebas exploratorias manuales
 1. Ejecución
-- Para ejecutar las pruebas exploratorias manuales se ha creado un archivo con el inventario de pruebas que contiene los escenarios a validar por cada funcionalidad, la fecha de ejecución, el tester responsable de la ejecución, así como el tipo de prueba y el nombrel escenario. El archivo se encuentra en la ruta **pruebasAutomatizadas/PruebasExploratoriasManuales/**
+- Para ejecutar las pruebas exploratorias manuales se ha creado un archivo con el inventario de pruebas que contiene los escenarios a validar por cada funcionalidad, la fecha de ejecución, el tester responsable de la ejecución, así como el tipo de prueba y el nombre del escenario. El archivo se encuentra en la ruta **pruebasAutomatizadas/PruebasExploratoriasManuales/**
 
 2. Resultados
-- Los resultados de las pruebas manuales ejecutados durante la semana 1 del proyecto se encuentra relacionados en el archivo de inventario de pruebas. Allí se encuentran relacionadas las evidencias de la ejecución de cada escenario de prueba, el resultado de cada prueba y el identificador de los issues creado en la herramienta de gestion de incidencias (Github issues). 
+- Los resultados de las pruebas manuales ejecutadas durante la semana 1 del proyecto se encuentran en el archivo de inventario de pruebas indicado anteriormente. Allí se encuentran relacionadas las evidencias de la ejecución de cada escenario de prueba, el resultado de cada prueba y el identificador de los issues creado en la herramienta de gestion de incidencias (Github issues). 
 
 ## 3. Pruebas de reconocimiento usando Monkey testing
 1. Instalación y configuración
