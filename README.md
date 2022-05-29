@@ -228,3 +228,4 @@ Para los escenarios de prueba con generación de datos en Kraken se usan diferen
     - Los resultados se podran observar en la carpeta resemble-c "results2" en donde hay una carpeta para cada caso en donde estan las imagnes comparadas y el archivo html.
 
 ## Enlace a video de presentación
+https://uniandes-my.sharepoint.com/:v:/g/personal/ca_morar1_uniandes_edu_co/EQ3-XV_MY7NHlHtWJxHOcjcBuzj3n-Op8cym92LpRQc7Pw?e=kmj1ox
