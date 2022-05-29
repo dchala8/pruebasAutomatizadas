@@ -43,11 +43,23 @@ Dirigirse al archivo monkey-config.json cambiar la baseUrl por aquella que este 
 Puede omitir el comando --headed si no desea ver la ejecucion del programa
 
 3. Resultados
-En la carpeta resultados podra encontrar un video de la prueba realizada en cypress y un reporte html con los pasos realizados, nuevas ejecuciones borraran las realizadas previamente, en el repo de manera original se encuentra un reporte con 411 pasos realizados
+- En la carpeta resultados podra encontrar un video de la prueba realizada en cypress y un reporte html con los pasos realizados, nuevas ejecuciones borraran las realizadas previamente, en el repo de manera original se encuentra un reporte con 411 pasos realizados
 
 ## 4. Pruebas de reconocimiento usando Ripper
-
-
+1. PreRequisitos: 
+    - Instalacion de NodeJS almenos en Version 12.22.1
+    - Instalacion de Ghost en Version 4.41.3 y/o 4.26.1
+2. Instrucciones:
+    - Hacer un fork al repositorio
+    - Clonar desde el repositorio creado a partir del fork anterior 
+    - Entrar a la carpeta llamada "Pruebas Exploratorias Ripper".
+    - Ejecutar el comando **npm i** para instalar los paquetes necesarios.
+    - Ir al archivo llamado generalVariables.js y abrirlo
+    - Dentro del mismo, en el campo URL, poner la direccion de despliegue de Ghost, dentro del campu values, ir a ember7 y colocar en el el correo de loggin de Ghost, y en ember9 colocar la contraseña, guardar el archivo.
+    - Abrir una terminal ubicada en la carpeta y ejecutar el comando **node index.js**, esto correra las pruebas en la URL especificada anteriormente, esperar que terminen.
+    - Dentro de la carpeta Pruebas Exploratorias Ripper se ha creado una carpeta llamada results, ingresar a esta y ejecutar el comando **npm install -g http-server** 
+    - Una vez el comando anterior termine, ejecutar el comando **http-server**
+    - Cuando el comando finalice, ir desde su explorador web a la URL generada por el comando **http-server**, tipicamente http://192.168.5.100:8080, y una vez ahi ingresar a la carpeta que sale, navegar al explorador chrome y una vez dentro abrir result.html para ver los resultados.
 
 ## 5. Pruebas E2E
 Para las pruebas E2E se han propuesto los siguientes escenarios de pruebas:
@@ -203,17 +215,3 @@ Para los escenarios de prueba con generación de datos en Kraken se usan diferen
     - En el archivo generalVariables.js cambiar la informacion correspondiente a initialPassword, donde se pondra la contraseña actual del usuario administrador de ghost, second password corresponde a la contraseña que se usara en las pruebas 17 y 18 cuando se realizan cambios de contraseña y se revierten respectivamente, port1 para indicar el puerto de localhost en donde se esta ejecutando la instalacion de ghost y finalmente dentro del objego genVar el elemento user como el usuario administrador de la instalacion de ghost
     - Ejecutar el comando node "npm test", con esto se ejecutaran todos los casos de prueba, si se desea ejecutar un caso concreto se puede usar el comando: npx cucumber-js --tags "@case62", en donde se puede reemplazar el numero del caso por elq ue se desee testear
     - Los resultados se podran observar en la carpeta resemble-c "results2" en donde hay una carpeta para cada caso en donde estan las imagnes comparadas y el archivo html.
-
-## Ejecución de Pruebas - Herramienta RIPuppet (carpeta Pruebas Exploratorias Ripper)
-1. PreRequisitos: 
-    - Instalacion de NodeJS almenos en Version 12.22.1
-    - Instalacion de Ghost en Version 4.41.3 y/o 4.26.1
-2. Instrucciones:
-    - Entrar a la carpeta llamada "Pruebas Exploratorias Ripper".
-    - Ejecutar el comando npm i para instalar los paquetes necesarios.
-    - Ir al archivo llamado generalVariables.js y abrirlo
-    - Dentro del mismo, en el campo URL, poner la direccion de despliegue de Ghost, dentro del campu values, ir a ember7 y colocar en el el correo de loggin de Ghost, y en ember9 colocar la contraseña, guardar el archivo.
-    - Abrir una terminal ubicada en la carpeta y ejecutar el comando node index.js, esto correra las pruebas en la URL especificada anteriormente, esperar que terminen.
-    - Dentro de la carpeta Pruebas Exploratorias Ripper se ha creado una carpeta llamada results, ingresar a esta y ejecutar el comando npm install -g http-server.
-    - Una vez el comando anterior termine, ejecutar http-server
-    - Cuando el comando finalice, ir desde su explorador web a la URL generada por el comando http-server, tipicamente http://192.168.5.100:8080, y una vez ahi ingresar a la carpeta que sale, navegar al explorador chrome y una vez dentro abrir result.html para ver los resultados.
